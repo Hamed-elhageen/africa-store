@@ -1,0 +1,154 @@
+<div class="container grid grid-cols-1 gap-5 mt-10 md:grid-cols-4 ">
+  <div class="md:grid-cols-1 filteration border border-[#444444] rounded-[8px] p-5 h-fit pb-10">
+    <div class="space-y-4">
+
+
+      <!-- Category Section -->
+      <div>
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-lg font-bold text-white ">Category</h2>
+          <button (click)="toggleshowing()" class="text-gray-400 transition-colors hover:text-white ">
+            <i class="transition-all fas fa-chevron-down text-main_color " [class.rotate-180]="!showThings"></i>
+          </button>        </div>
+        <div class="mb-3 space-y-2" *ngIf="showThings">
+          <div *ngFor="let category of categories" class="flex ">
+            <!-- Custom Radio Button -->
+            <div class="flex items-center mb-4 ">
+              <input
+                type="radio"
+                id="{{category.id}}"
+                name="category"
+                [(ngModel)]="selectedCategory"
+                [value]="category.id"
+                class="w-4 h-4 transition duration-300 border-2 border-gray-300 rounded-full appearance-none checked:bg-main_color checked:border-red-500 focus:outline-none focus:ring-2 focus:ring-main_color"
+              />
+              <div class="absolute w-4 h-4 border-2 border-gray-300 rounded-full pointer-events-none"></div>
+            </div>
+            <label for="{{category.id}}" class="flex w-full ml-2 text-gray-700 duration-200 hover:text-white">
+              {{category.name}} <span class="text-gray-500 ms-auto">({{category.count}})</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="bg-[#666666] w-full h-[2px] mb-5" *ngIf="showThings" ></div>
+
+
+
+
+
+      <!-- Club Section -->
+      <div class="flex items-center justify-between mt-4 mb-4">
+        <h2 class="text-lg font-bold text-white ">Clubs</h2>
+        <button (click)="toggleshowingclubs()" class="text-gray-400 transition-colors hover:text-white">
+          <i class="fas fa-chevron-down text-main_color" [class.rotate-180]="!showclubs"></i>
+        </button>        </div>
+<div *ngIf="showclubs">
+        @for (item of clubs; track $index) {
+          <div class="border border-[#444444] w-full flex items-center gap-5 px-5 py-2 rounded-[4px] mb-3">
+            <img [src]="item.clubLogo" alt="photo">
+            <p class="text-[#A5A5A5] text-sm font-normal">{{item.clubName}}</p>
+          </div>
+
+        }
+      </div>
+      <button class="w-full text-right text-main_color" *ngIf="showclubs">see more</button>
+      <div class="bg-[#666666] w-full h-[2px] mb-5" *ngIf="showThings" ></div>
+
+
+
+
+
+      <!-- price part  -->
+
+      <div class="flex items-center justify-between mt-4 mb-4">
+        <h2 class="text-lg font-bold text-white ">Price</h2>
+        <button (click)="toggleshowingprice()" class="text-gray-400 transition-colors hover:text-white">
+          <i class="fas fa-chevron-down text-main_color" [class.rotate-180]="!showprice"></i>
+        </button>        </div>
+
+        <div class="" *ngIf="showprice">
+          <div class="space-y-5">
+            <h2 class="text-lg font-bold">Price</h2>
+
+            <!-- Improved Range Slider Container -->
+            <div class="relative h-8 px-2">
+              <!-- Track -->
+              <div class="absolute w-full h-1 transform -translate-y-1/2 bg-gray-200 rounded-full top-1/2"></div>
+
+              <!-- Active Range -->
+              <div class="absolute h-1 transform -translate-y-1/2 rounded-full bg-main_color top-1/2"
+                   [style.left]="(minPrice / maxRange) * 100 + '%'"
+                   [style.right]="100 - (maxPrice / maxRange) * 100 + '%'"></div>
+
+              <!-- Thumb for Min Price -->
+              <div class="absolute w-4 h-4 transform -translate-y-1/2 rounded-full shadow cursor-pointer bg-main_color top-1/2"
+                   [style.left]="(minPrice / maxRange) * 100 + '%'"
+                   (mousedown)="startDrag($event, 'min')"></div>
+
+              <!-- Thumb for Max Price -->
+              <div class="absolute w-4 h-4 transform -translate-y-1/2 rounded-full shadow cursor-pointer bg-main_color top-1/2"
+                   [style.left]="(maxPrice / maxRange) * 100 + '%'"
+                   (mousedown)="startDrag($event, 'max')"></div>
+
+              <!-- Invisible Slider for Mobile Support -->
+              <input type="range" class="absolute w-full opacity-0 bg-transparent border border-[#666666] rounded-md" [value]="minPrice" min="0" [max]="maxRange">
+              <input type="range" class="absolute w-full opacity-0 border border-[#666666] rounded-md" [value]="maxPrice" min="0" [max]="maxRange">
+            </div>
+
+            <!-- Price Inputs (unchanged) -->
+            <div class="flex flex-col gap-3 ">
+              <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">From</label>
+                <div class="relative">
+                  <input type="number" [(ngModel)]="minPrice" (change)="validateRange()" class="w-full py-2 pl-12 pr-3 bg-transparent border border-[#666666] rounded-md text-white">
+                  <span class="absolute text-gray-500 left-3 top-2">EGP</span>
+                </div>
+              </div>
+              <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">To</label>
+                <div class="relative">
+                  <input type="number" [(ngModel)]="maxPrice" (change)="validateRange()" class="w-full py-2 pl-12 pr-3 bg-transparent border border-[#666666] rounded-md mb-8 text-white">
+                  <span class="absolute text-gray-500 left-3 top-2">EGP</span>
+                </div>
+              </div>
+            </div>
+
+            <button (click)="resetFilters()" class="w-full py-2 font-bold text-white transition-all duration-200 border-0 rounded-md bg-main_color ">
+              Reset all filters
+            </button>
+          </div>    </div>
+
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- the products right section -->
+  <div class="md:col-span-3">
+    <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(275px,1fr))] justify-between gap-x-5 gap-y-8">
+      @for (item of products; track $index) {
+        <app-card
+          [productImage]="item.productImage"
+          [title]="item.title"
+          [discription]="item.discription"
+          [price]="item.price"
+          [priceBeforediscount]="item.priceBeforediscount"
+        ></app-card>
+      }
+    </div>
+  </div>
+</div>

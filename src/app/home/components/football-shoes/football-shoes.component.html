@@ -1,0 +1,26 @@
+<div class="container mb-20 text-white">
+  <div class="flex items-center justify-between heading">
+    <h3 class="mb-10">Football shoes</h3>
+    <button [routerLink]="'/home/mainhome'" class="z-30 flex gap-1 px-6 py-2 mb-8 bg-transparent border rounded-lg w-fit border-main_color md:hidden">show more <img src="arrow-up-right.svg" alt="arrow image" /></button>
+  </div>  <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(275px,1fr))] justify-between gap-x-5 gap-y-8">
+
+    @for (item of products; track $index) {
+      <app-card
+      [productImage]="item.productImage"
+      [title]="item.title"
+      [discription]="item.discription"
+      [price]="item.price"
+      [priceBeforediscount]="item.priceBeforediscount"
+    ></app-card>
+    }
+
+
+
+
+
+
+
+
+  </div>
+</div>
+

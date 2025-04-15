@@ -1,0 +1,15 @@
+<div class="card bg-[#333333] w-auto md:w-[282px] rounded-[20px] text-white">
+  <a routerLink="/details/maindetails/{{id}}">  <img [src]="productImage" alt="arsenal shirt" class="w-[400px] md:w-auto md:h-auto h-[390px]" >
+  </a>
+  <div class="p-4 content">
+          <div class="flex items-center justify-between mb-4 gap-x-5">
+              <h6 class="font-semibold text-secondary_color">{{title}}</h6>
+              <i class="text-2xl text-green-700 fa-regular fa-heart"></i>
+          </div>
+  <h6 class="mb-4 font-normal ">{{discription}}</h6>
+  <div class="flex items-center gap-6 ">
+      <h5>{{price}}</h5>
+      <del class="text-[16px] font-bold text-[#A5A5A5]">{{priceBeforediscount}}</del>
+  </div>
+</div>
+</div>

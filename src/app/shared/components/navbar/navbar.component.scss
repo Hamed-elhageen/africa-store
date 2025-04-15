@@ -1,0 +1,30 @@
+@tailwind components;
+li {
+  @apply flex items-center justify-between h-full px-6 py-4 font-bold transition-all duration-200;
+}
+@layer components {
+  .active {
+    @apply border-b border-main_color text-main_color;
+  }
+  li:hover {
+    @apply active; /* Apply active styles on hover */
+  }
+}
+
+
+/* Add this if you want smooth animations */
+#navbar-cta {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#navbar-cta.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  display: none !important;
+}
+
+#navbar-cta.block {
+  opacity: 1;
+  transform: translateY(0);
+  display: block;
+}

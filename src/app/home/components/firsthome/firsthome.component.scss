@@ -1,0 +1,14 @@
+.neymar{
+  background-image: url("/neymar.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: calc(100vh - 50px);
+}
+@media(max-width:768px){
+  .neymar{
+    background-position-x: 74%;
+
+  }
+}
+
+

@@ -1,0 +1,130 @@
+@if (cartProducts.length>0)
+{
+<div class="container grid grid-cols-1 lg:grid-cols-3 gap-5 text-[#FFFFFF] px-4 sm:px-0 mt-8">
+
+  <!-- Shopping Cart Column -->
+  <div class="py-6 lg:col-span-2 lg:py-10">
+    <div class="flex items-center justify-between mb-4 lg:mb-6">
+      <h4 class="text-lg lg:text-xl">Shopping Cart</h4>
+      <p class="text-sm lg:text-base">{{cartProducts.length}} Items</p>
+    </div>
+    <div class="bg-white w-full h-[1px] mb-6 lg:mb-8"></div>
+
+    <!-- Product headers - hidden on mobile, shown on md+ -->
+    <div class="justify-between hidden mb-6 md:flex lg:mb-8">
+      <p class="font-bold text-base lg:text-[18px]">Product details</p>
+      <p class="font-bold text-base lg:text-[18px]">Quantity</p>
+      <p class="font-bold text-base lg:text-[18px]">Overall price</p>
+    </div>
+
+    <!-- Cart Items -->
+    <div class="space-y-4 lg:space-y-5">
+      @for (item of cartProducts; track $index) {
+        <app-cartitem
+        [title]="item.title"
+        [productImage]="item.productImage"
+        [price]="item.price"
+        [size]="item.size"
+        [quantity]="item.quantity"
+        ></app-cartitem>
+        <div class="bg-[#444444] h-[1px] w-full my-5"></div>
+
+
+      }
+
+    </div>
+  </div>
+
+  <!-- Order Summary Column -->
+  <div class="bg-[#333333] rounded-xl lg:rounded-[20px] px-4 lg:px-5 py-6 lg:py-10 h-fit lg:sticky lg:top-5 mb-8 lg:mb-0">
+    <h4 class="text-lg lg:text-xl">Order Summary</h4>
+    <div class="bg-[#FFFFFF] h-[1px] w-full my-4 lg:my-5"></div>
+
+    <div class="space-y-6 lg:space-y-8">
+      <!-- Shipping Address -->
+      <div class="flex justify-between">
+        <div>
+          <p class="text-base lg:text-[18px] font-medium lg:font-normal mb-2 lg:mb-4">Hamed Elhageen</p>
+          <p class="text-[#D6D6D6] text-sm lg:text-base mb-1">Beheira</p>
+          <p class="text-[#D6D6D6] text-sm lg:text-base">Damanhour, alfawaa street</p>
+        </div>
+        <a class="font-bold text-sm lg:text-[16px] text-[#62D587] self-start">Edit</a>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="flex justify-between">
+        <div>
+          <p class="text-base lg:text-[18px] font-medium lg:font-normal mb-2 lg:mb-4">Payments method</p>
+          <p class="text-[#D6D6D6] text-sm lg:text-base mb-1">Credit Card</p>
+          <p class="text-[#D6D6D6] text-sm lg:text-base flex gap-2 items-center">
+            •••• •••• •••• 5050
+            <img src="master card.png" alt="card" class="w-6 h-4 lg:w-auto lg:h-auto">
+          </p>
+        </div>
+        <a class="font-bold text-sm lg:text-[16px] text-[#62D587] self-start">Edit</a>
+      </div>
+
+      <!-- Promo Code -->
+      <div>
+        <p class="mb-4 lg:mb-6 text-base lg:text-[18px]">Do you have promo code?</p>
+        <div class="flex gap-2 mb-8 lg:gap-3 lg:mb-12">
+          <input type="text" name="promocode"
+                 class="border border-[#666666] bg-transparent py-2 rounded-lg lg:rounded-[10px] flex-1 px-3 lg:px-4
+                        placeholder:text-[#D6D6D6] text-sm lg:text-base"
+                 placeholder="Promo code">
+          <button class="bg-[#666666] px-3 lg:px-4 py-2 rounded-lg lg:rounded-[10px] text-sm lg:text-base">
+            Apply
+          </button>
+        </div>
+      </div>
+
+      <!-- Price Breakdown -->
+      <div class="space-y-3 lg:space-y-4">
+        <div class="flex justify-between">
+          <p class="text-sm lg:text-[18px]">Sub total (3 items)</p>
+          <h5 class="text-base lg:text-lg">8520 EGP</h5>
+        </div>
+
+        <div class="flex justify-between">
+          <p class="text-sm lg:text-[18px]">Shipping cost</p>
+          <h5 class="text-base lg:text-lg">120 EGP</h5>
+        </div>
+
+        <div class="flex justify-between">
+          <p class="text-sm lg:text-[18px]">Discount</p>
+          <h5 class="text-base lg:text-lg">100 EGP</h5>
+        </div>
+
+        <div class="flex justify-between pt-3 lg:pt-4 border-t border-[#444444]">
+          <p class="text-base lg:text-[18px] font-medium">Total (Incl VAT)</p>
+          <h5 class="text-lg font-bold lg:text-xl">1780 EGP</h5>
+        </div>
+      </div>
+
+      <!-- Checkout Button -->
+      <button [routerLink]="'/home/mainhome'"
+              class="flex items-center justify-center w-full px-4 py-3 text-sm font-medium rounded-lg lg:px-6 lg:py-4 bg-main_color lg:text-base">
+        Proceed to Checkout
+      </button>
+    </div>
+  </div>
+  </div>
+}
+@else {
+  <div class="container text-white">
+    <div class="flex items-center justify-between mb-4 text lg:mb-6 ">
+      <h4 class="text-lg lg:text-xl"> Cart</h4>
+      <p class="text-sm lg:text-base">({{cartProducts.length}}) Items</p>
+
+    </div>
+    <div class="bg-white w-full h-[1px] mb-6 lg:mb-8"></div>
+
+    <div class="flex flex-col items-center justify-center">
+      <img src="empty cart.svg" alt="empty cart" class="my-10">
+<p class="text-[20px] md:text[25px] mb-5">You have no orders yet !</p>
+<p class="text-[18px] mb-5">Place orders now</p>
+<h5 class="mb-16 text-main_color ">Start shopping</h5>
+    </div>
+  </div>
+
+}

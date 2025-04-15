@@ -1,0 +1,14 @@
+.mine{
+  background-image:url("/cat background.svg");
+  background-size: cover;
+}
+.card-style {
+  @apply border  h-[300px] rounded-[20px] mine pt-[32px] pb-[24px]  relative;
+}
+
+.category-photo{
+  @apply absolute bottom-0 right-3;
+}
+.category-button{
+  @apply absolute flex items-center justify-center gap-1 text-white bottom-6 w-[90%]  border rounded-xl py-2 left-1/2 -translate-x-1/2  backdrop-blur-lg bg-gradient-to-r from-[#1C6F37]/50 via-[#1C6F37]/30 to-[#1C6F37]/30
+}

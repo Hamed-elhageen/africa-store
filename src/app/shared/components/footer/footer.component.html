@@ -1,0 +1,115 @@
+<footer class="container py-10 text-white ">
+  <div class="w-full h-[2px] bg-white mb-12 hidden md:block"  ></div>
+    <!-- two Sections "products and branches"-->
+    <div class="grid w-full grid-cols-1 gap-6 md:grid-cols-4">
+      <!-- Products -->
+      <div>
+        <button (click)="showProducts = !showProducts"
+          class="flex justify-between w-full text-lg font-semibold">
+          Products
+          <span [class.rotate-180]="showProducts" class="transition-transform md:hidden">
+            <img src="arrow bottom.svg" alt="">
+          </span>
+        </button>
+        <hr class="mt-2 border-gray-500 md:hidden" />
+        <ul [class.hidden]="!showProducts && isMobile" class="mt-2 space-y-2 text-gray-300 md:block">
+          <li><a href="#" class="hover:text-white">Sports Shoes</a></li>
+          <li><a href="#" class="hover:text-white">Football Shoes</a></li>
+          <li><a href="#" class="hover:text-white">Sports Equipment</a></li>
+          <li><a href="#" class="hover:text-white">Sports Accessories</a></li>
+          <li><a href="#" class="hover:text-white">Track Trip</a></li>
+          <li><a href="#" class="hover:text-white">Sports Bags</a></li>
+          <li><a href="#" class="hover:text-white">Club Shirts</a></li>
+          <li><a href="#" class="hover:text-white">Original Club Shirts</a></li>
+          <li><a href="#" class="hover:text-white">Sports wear</a></li>
+        </ul>
+      </div>
+
+      <!-- Branches -->
+      <div class="w-full md:col-span-3">
+        <button (click)="showBranches = !showBranches"
+          class="flex justify-between w-full text-lg font-semibold">
+          Branches
+          <span [class.rotate-180]="showBranches" class="transition-transform md:hidden">
+            <img src="arrow bottom.svg" alt="">
+          </span>
+        </button>
+        <hr class="mt-2 border-gray-500 md:hidden" />
+        <!-- Branches List with multi-column layout -->
+        <div [class.hidden]="!showBranches && isMobile" class="mt-2 text-gray-300 md:block">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- Downtown Column -->
+            <div>
+              <h3 class="font-semibold text-white"></h3>
+              <ul class="mt-2 space-y-2">
+                <li><a href="#" class="hover:text-white">Downtown</a></li>
+                <li><a href="#" class="hover:text-white">Nasr City</a></li>
+                <li><a href="#" class="hover:text-white">Alf-maskan</a></li>
+                <li><a href="#" class="hover:text-white">Maadi</a></li>
+                <li><a href="#" class="hover:text-white">Shaubra El-Kheima</a></li>
+                <li><a href="#" class="hover:text-white">6th of October</a></li>
+                <li><a href="#" class="hover:text-white">Haram</a></li>
+                <li><a href="#" class="hover:text-white">Helwen</a></li>
+                <li><a href="#" class="hover:text-white">Fayoum</a></li>
+                <li><a href="#" class="hover:text-white">Banha</a></li>
+              </ul>
+            </div>
+
+            <!-- Tanta Column -->
+            <div>
+              <ul class="mt-2 space-y-2">
+                <li><a href="#" class="hover:text-white">tanta</a></li>
+                <li><a href="#" class="hover:text-white">Kafr El-Shakih "Dessouk"</a></li>
+                <li><a href="#" class="hover:text-white">Beni Suef</a></li>
+                <li><a href="#" class="hover:text-white">Beheira "Damanhour"</a></li>
+                <li><a href="#" class="hover:text-white">Beheiro "iTay El-Baroud</a></li>
+                <li><a href="#" class="hover:text-white"> El-Mahalla</a></li>
+                <li><a href="#" class="hover:text-white"> Zagazig</a></li>
+                <li><a href="#" class="hover:text-white">Mansoura "Bus Station"</a></li>
+                <li><a href="#" class="hover:text-white">Mansoura "University District"</a></li>
+                <li><a href="#" class="hover:text-white">Alexandria "Agamy" </a></li>
+              </ul>
+            </div>
+
+            <!-- Mansaura Column -->
+            <div>
+              <ul class="mt-2 space-y-2">
+                <li><a href="#" class="hover:text-white">Mansoura</a></li>
+                <li><a href="#" class="hover:text-white">Damietta </a></li>
+                <li><a href="#" class="hover:text-white">Minya </a></li>
+                <li><a href="#" class="hover:text-white">Minya "Mallawi"</a></li>
+                <li><a href="#" class="hover:text-white">Qanater El-Khairiya</a></li>
+                <li><a href="#" class="hover:text-white">Menoufia "Shibin El-Kom</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full h-[2px] bg-white mt-12 mb-12 hidden md:block"></div>
+
+    <!-- Social Media & Logo -->
+    <div class="flex flex-col items-center justify-between w-full mt-6 md:flex-row">
+      <!-- Social Icons -->
+        <div class="text-center">
+          <h6 class="my-5">connect with us</h6>
+      <div class="flex gap-4">
+        <img src="tlegram.png" alt="Telegram" />
+        <img src="instgram.png" alt="Instagram" />
+        <img src="facebook.png" alt="Facebook" />
+        <img src="tiktok.png" alt="TikTok" />
+      </div>
+    </div>
+
+      <!-- Africa Logo -->
+      <div class="mt-4 md:mt-0">
+        <img src="footer logo.svg" alt="Africa Logo" />
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="mt-3 text-sm text-center text-gray-400 md:text-left">
+      © 2024 Africa Store, Inc. All rights reserved
+    </div>
+</footer>
