@@ -1,0 +1,75 @@
+<div class="grid h-screen grid-cols-1 md:grid-cols-2 ">
+  <!-- the left side with its background -->
+    <div class="relative items-end hidden px-12 py-20 text-white align-text-bottom md:grid-cols-1 mybackground md:flex">
+      <div class="z-3 absolute top-0 left-0 w-full h-full overlay bg-gradient-to-b from-[#1a191904] via-[#000000A3] to-[#000000]"></div>
+      <div class="absolute z-5">
+      <img src="small logo.svg" alt="small logo">
+      <h1 class="my-6">Amazing Platform!</h1>
+      <p class="mb-6 text-lg font-normal text-[#F1F2F4]">Africa Store is the best website to get your sports equipment </p>
+      <div class="flex gap-5">
+        <img src="maged mostafa.png" alt="maged mostafa">
+        <div>
+          <h6>Majed Mostafa</h6>
+          <p class="text-[12px] font-medium">CEO of Africa Store <span class="text-[#FFFFFF80]">Digita creator</span></p>
+        </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- right side -->
+ <!-- tow input fields and there labels -->
+    <div class="relative text-white md:grid-cols-1 ">
+      <div class="md:w-[480px] w-[400px] mx-auto my-auto absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] px-5 md:px-0">
+        <img src="small logo.svg" alt="small logo" class="block mx-auto mb-3 md:hidden" >
+        <h3 class="mb-6 text-center">Login to your account</h3>
+        <label for="email " class="flex items-center gap-1 mb-3 text-sm font-semibold"> Email address <span class="text-[#E03137] text-l">*</span></label>
+        <input type="email" name="email" id="email" class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-6 rounded-[10px]" placeholder="Input your registered email">
+
+        <label for="password" class="flex items-center gap-1 mb-3 text-sm font-semibold"> Password <span class="text-[#E03137] text-l">*</span></label>
+        <div class="relative flex justify-between">
+          <input type="password" name="password" id="password" class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-6 rounded-[10px]" placeholder="Input your password account">
+          <i class="absolute fa-solid fa-eye-slash top-5 right-5" ></i>
+        </div>
+
+
+        <!-- remember me and forgot password -->
+        <div class="flex items-center justify-between mb-8">
+          <label class="inline-flex items-center">
+            <input type="checkbox" class="w-5 h-5 text-green-600 bg-gray-500 border-gray-300 rounded-lg focus:ring-green-500" />
+            <span class="ml-2 text-[#A5A5A5]">Remember Me</span>
+          </label>
+          <button [routerLink]="'/authentication/forgotpassword'" class="text-sm font-medium text-main_color">Forgot Password</button>
+        </div>
+<!-- login button -->
+        <button [routerLink]="'/home/mainhome'" class="flex items-center justify-center w-full px-6 py-4 mb-8 font-bold text-white rounded-lg bg-main_color">Login</button>
+       <!-- or login with -->
+<div class="flex items-center gap-3 mb-8">
+   <div class="bg-[#F1F2F4] w-[183px] h-[2px]"></div>
+   <p class="text-[#A5A5A5] w-[100px]"> or login with </p>
+   <div class="bg-[#F1F2F4] w-[183px] h-[2px]"></div>
+</div>
+
+<!-- google and facebook buttons -->
+ <div class="flex items-center w-full gap-4 mb-8">
+  <button class="flex-1 border border-[#FFFFFF] py-4 px-6 rounded-xl flex items-center gap-1 justify-center"><img src="google.svg" alt="google icon"> Google </button>
+  <button class="flex-1 border border-[#FFFFFF] py-4 px-6 rounded-xl flex justify-center gap-1"> <img src="facebook.svg" alt="facebook">  Facebook</button>
+</div>
+
+ <p class="w-full text-center">You’re new in here? <button [routerLink]="'/authentication/register'" class="text-main_color">Create Account</button> </p>
+
+
+ <p class="text-[#A5A5A5] relative top-16  text-sm">© 2024 Africa Store . Alrights reserved. <span class="text-white">Terms & Conditions</span> <span class="text-white">Privacy Policy</span></p>
+
+
+
+
+      </div>
+
+
+
+    </div>
+
+
+</div>

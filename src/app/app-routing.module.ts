@@ -42,6 +42,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('../app/allcategories/allcategories.module').then((m) => m.AllcategoriesModule),
   },
+  {
+    path: 'authentication',
+    loadChildren: () =>
+      import('../app/auth/auth.module').then((m) => m.AuthModule),
+  },
 ];
 
 @NgModule({
