@@ -1,15 +1,27 @@
 @tailwind components;
+
 li {
-  @apply flex items-center justify-between h-full px-6 py-4 font-bold transition-all duration-200;
+  @apply flex items-center justify-between h-full px-6 py-4 font-bold transition-all duration-500 relative;
 }
+
+.desktop li::after {
+  content: "";
+  @apply absolute bottom-0 left-0 w-0 bg-main_color h-0 transition-all duration-500;
+}
+
 @layer components {
   .active {
     @apply border-b border-main_color text-main_color;
   }
-  li:hover {
-    @apply active; /* Apply active styles on hover */
+
+  .desktop :hover::after {
+    @apply w-full h-[1px]; /* Animate underline */
+  }
+  .desktop li:hover{
+    @apply text-main_color
   }
 }
+
 
 
 /* Add this if you want smooth animations */
@@ -28,3 +40,71 @@ li {
   transform: translateY(0);
   display: block;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Animation styles */
+.mobile-menu-animation-wrapper {
+    transition: max-height 0.5s ease-in-out;
+
+    #navbar-cta {
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+  }
+
+  /* Utility classes for animation */
+  .max-h-0 {
+    max-height: 0;
+  }
+
+  .max-h-\[500px\] {
+    max-height: 500px;
+  }
+
+  .opacity-0 {
+    opacity: 0;
+  }
+
+  .opacity-100 {
+    opacity: 1;
+  }
+
+  .translate-y-\[-20px\] {
+    transform: translateY(-20px);
+  }
+
+  .translate-y-0 {
+    transform: translateY(0);
+  }
+
+  /* Preserve all original desktop styles */
+  .desktop {
+    /* Your original desktop styles are preserved exactly */
+  }
+
+  /* Ensure mobile menu is hidden on desktop */
+  @media (min-width: 768px) {
+    .mobile-menu-animation-wrapper {
+      display: none;
+    }
+  }
+
+  a{
+    cursor: pointer;
+  }
