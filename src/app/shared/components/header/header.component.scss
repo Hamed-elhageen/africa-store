@@ -4,19 +4,13 @@ li {
   @apply flex items-center justify-between h-full px-6 py-4 font-bold transition-all duration-500 relative;
 }
 
-.desktop li::after {
-  content: "";
-  @apply absolute bottom-0 left-0 w-0 bg-main_color h-0 transition-all duration-500;
-}
+
 
 @layer components {
   .active {
-    @apply border-b border-main_color text-main_color;
+    @apply  text-main_color;
   }
 
-  .desktop :hover::after {
-    @apply w-full h-[1px]; /* Animate underline */
-  }
   .desktop li:hover{
     @apply text-main_color
   }
@@ -108,3 +102,8 @@ li {
   a{
     cursor: pointer;
   }
+.scrolled{
+    background-color: black;
+    box-shadow: 0px 2px 18px 2px rgb(20, 20, 20);
+
+}

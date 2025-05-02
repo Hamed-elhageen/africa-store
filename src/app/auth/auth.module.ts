@@ -7,6 +7,13 @@ import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassw
 import { UpdatepasswordComponent } from './components/updatepassword/updatepassword.component';
 import { VerificationComponent } from './components/verification/verification.component';
 import { SuccessComponent } from './components/success/success.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+
+
+
 
 
 const routes: Routes = [
@@ -46,7 +53,11 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    FormsModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule ,                     //for handling loading animations
+    HttpClientModule,
   ]
 })
 export class AuthModule { }

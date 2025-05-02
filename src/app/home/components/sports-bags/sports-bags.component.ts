@@ -7,62 +7,71 @@ import { title } from 'node:process';
   styleUrl: './sports-bags.component.scss'
 })
 export class SportsBagsComponent {
-    products:any=[
-      {
-        productImage:"/new bag.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE"
-      },
-      {
-        productImage:"/new bag.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE"
-      },
-      {
-        productImage:"/new bag.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE"
-      },
-      {
-        productImage:"/new bag.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE"
-      },
-      {
-        productImage:"/new bag.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE"
-      },
-      {
-        productImage:"/new bag.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE"
-      },
-      {
-        productImage:"/new bag.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE"
-      },
-      {
-        productImage:"/new bag.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE"
-      },
-    ]
+    products: any[] = [
+        {
+          id: 1,
+          productImage: "/new bag.png",
+          title: "bracelona bag",
+          discription: "original cotton braca bag",
+          price: "350 LE",
+          priceBeforediscount: "420 LE"
+        },
+        {
+          id: 2,
+          productImage: "/new bag.png",
+          title: "bracelona bag",
+          discription: "original cotton braca bag",
+          price: "350 LE",
+          priceBeforediscount: "420 LE"
+        },
+        {
+          id: 3,
+          productImage: "/new bag.png",
+          title: "bracelona bag",
+          discription: "original cotton braca bag",
+          price: "350 LE",
+          priceBeforediscount: "420 LE"
+        },
+        {
+          id: 4,
+          productImage: "/new bag.png",
+          title: "bracelona bag",
+          discription: "original cotton braca bag",
+          price: "350 LE",
+          priceBeforediscount: "420 LE"
+        },
+        {
+          id: 5,
+          productImage: "/new bag.png",
+          title: "bracelona bag",
+          discription: "original cotton braca bag",
+          price: "350 LE",
+          priceBeforediscount: "420 LE"
+        },
+        {
+          id: 6,
+          productImage: "/new bag.png",
+          title: "bracelona bag",
+          discription: "original cotton braca bag",
+          price: "350 LE",
+          priceBeforediscount: "420 LE"
+        },
+        {
+          id: 7,
+          productImage: "/new bag.png",
+          title: "bracelona bag",
+          discription: "original cotton braca bag",
+          price: "350 LE",
+          priceBeforediscount: "420 LE"
+        },
+        {
+          id: 8,
+          productImage: "/new bag.png",
+          title: "bracelona bag",
+          discription: "original cotton braca bag",
+          price: "350 LE",
+          priceBeforediscount: "420 LE"
+        },
+      ];
+
 }

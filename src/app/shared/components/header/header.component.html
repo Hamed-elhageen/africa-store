@@ -1,4 +1,4 @@
-<nav class="mb-10">
+<nav class="sticky top-0 left-0 mb-10 z-[1000000000] bg-black"  [ngClass]="{ 'transparent': !isScrolled, 'scrolled': isScrolled }" [class.scrolled]="isScrolled" >
     <div class="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto text-white">
       <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="W-Logo-small-1 2.svg" alt="Logo" />
@@ -25,18 +25,22 @@
       <!-- Desktop navigation (always visible on md and up) - EXACTLY AS ORIGINAL -->
       <div class="hidden w-full md:flex md:w-auto md:order-1 desktop" id="desktop-nav">
         <ul class="flex flex-col p-4 font-bold text-white bg-neutral-900 md:bg-transparent md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:border-0">
-          <li class="active">
-            <a  (click)="scrollTo('home')" aria-current="page">Home</a>
-          </li>
-          <li>
-            <a  (click)="scrollTo('Our products')">Our products</a>
-          </li>
-          <li>
-            <a  (click)="scrollTo('Why us')">Why us</a>
-          </li>
-          <li>
-            <a  (click)="scrollTo('Service')">Service</a>
-          </li>
+            <li [ngClass]="{ 'active': currentSection === 'home' }">
+                <a (click)="scrollTo('home')">Home</a>
+              </li>
+
+              <li [ngClass]="{ 'active': currentSection === 'Our products' }">
+                <a (click)="scrollTo('Our products')">Our products</a>
+              </li>
+
+              <li [ngClass]="{ 'active': currentSection === 'Why us' }">
+                <a (click)="scrollTo('Why us')">Why us</a>
+              </li>
+
+              <li [ngClass]="{ 'active': currentSection === 'Service' }">
+                <a (click)="scrollTo('Service')">Service</a>
+              </li>
+
         </ul>
       </div>
 
@@ -79,7 +83,7 @@
               <a (click)="scrollTo('Service')">Service</a>
             </li>
             <li class="flex items-center justify-center gap-8 md:hidden">
-              <button [routerLink]="'/authentication/login'" class="flex items-center justify-center flex-1 py-2 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">login</button>
+              <button [routerLink]="'/authentication/login'" class=" bg-main_color flex items-center justify-center flex-1 py-2 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">login</button>
               <button [routerLink]="'/authentication/register'" class="flex items-center justify-center flex-1 py-2 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">sign up</button>
             </li>
           </ul>

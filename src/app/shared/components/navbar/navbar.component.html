@@ -1,4 +1,4 @@
-<nav class="">
+<nav class="sticky top-0 left-0 z-[100000000]" [class.scrolled]="isScrolled"  [ngClass]="{ 'transparent': !isScrolled, 'scrolled': isScrolled }">
   <div class="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto text-white">
     <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
       <img src="W-Logo-small-1 2.svg" alt="Logo" />
@@ -23,17 +23,34 @@
     </div>
 
     <!-- Desktop navigation (always visible on md and up) -->
-    <div class="hidden  px-6 py-3 bg-white md:flex md:order-1 rounded-[100px] w-[400px] items-center justify-between" id="desktop-nav">
-      <input type="text" name="search" placeholder="What you are looking for " class="text-gray-600 focus:border-0 focus:outline-0">
-      <i class="text-gray-600 fa-solid fa-magnifying-glass"></i>
-
-    </div>
+    <div class="hidden px-6 py-3 bg-white md:flex md:order-1 rounded-[100px] w-[400px] items-center justify-between hover:scale-[1.02] transition-transform duration-300 ease-in-out" id="desktop-nav">
+        <input
+          type="text"
+          name="search"
+          placeholder="What you are looking for"
+          class="text-gray-600 transition-all duration-300 focus:border-0 focus:outline-0 focus:placeholder:opacity-0"
+        >
+        <i class="text-gray-600 transition-transform duration-300 fa-solid fa-magnifying-glass hover:scale-110"></i>
+      </div>
 
     <!-- Desktop sign-up button -->
     <div class="hidden gap-3 md:flex md:order-3">
-      <button [routerLink]="'/cart/maincart'" class="flex items-center justify-center p-3 bg-white rounded-full w-[56px] h-[56px] relative">            <i class="text-lg text-black fa-solid fa-cart-arrow-down"></i>  <span class="absolute top-1 -right-1 rounded-full number bg-danger_color  w-[22px] h-[22px] border border-white flex justify-center items-center " >5</span>    </button>
-      <button [routerLink]="'/favorites/mainfavorites'" class="flex items-center justify-center p-3 bg-white rounded-full w-[56px] h-[56px] relative">            <i class="text-lg text-black fa-regular fa-heart"></i> <span class="absolute top-1 -right-1 rounded-full number bg-danger_color  w-[22px] h-[22px] border border-white flex justify-center items-center " >5</span>     </button>
-      <button [routerLink]="'/authentication/register'" type="button" class="bg-main_color text-white rounded-[100px] py-3 px-6 w-[180px] font-bold hover:bg-[#00af6cad] transition-all duration-200 flex justify-between items-center">
+        <button
+        [routerLink]="'/cart/maincart'"
+        class="flex items-center justify-center p-3 bg-white rounded-full w-[56px] h-[56px] relative hover:scale-105 active:scale-95 transition-transform duration-200 ease-in-out"
+      >
+        <i class="text-lg text-black transition-transform duration-200 fa-solid fa-cart-arrow-down hover:scale-110"></i>
+        <span class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[22px] h-[22px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">5</span>
+      </button>
+
+      <button
+        [routerLink]="'/favorites/mainfavorites'"
+        class="flex items-center justify-center p-3 bg-white rounded-full w-[56px] h-[56px] relative hover:scale-105 active:scale-95 transition-transform duration-200 ease-in-out"
+      >
+        <i class="text-lg text-black transition-transform duration-200 fa-regular fa-heart hover:scale-110"></i>
+        <span class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[22px] h-[22px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">5</span>
+      </button>
+      <button [routerLink]="'/authentication/register'" type="button" class="bg-main_color text-white rounded-[100px] py-3 px-6 w-[180px] font-bold  flex justify-between items-center transition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">
         <i class="fa-regular fa-user"></i>
         Sign Up
       </button>
@@ -60,23 +77,29 @@
           <a href="#">Contact</a>
         </li>
         <li class="flex items-center justify-center gap-8 md:hidden">
-          <button class="flex items-center justify-center flex-1 py-2 text-white rounded bg-main_color" >login</button>
-          <button class="flex items-center justify-center flex-1 py-2 text-white bg-transparent border rounded border-main_color">sign up</button>
+          <button class="flex items-center justify-center flex-1 py-2 text-white rounded bg-main_color transition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]" >login</button>
+          <button class="flex items-center justify-center flex-1 py-2 text-white bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03] transition-all duration-500">sign up</button>
         </li>
       </ul>
     </div>
   </div>
 
-  <div class="h-[44px] bg-secondary_color  text-white  items-center hidden md:flex">
-
+  <div class="h-[44px] bg-secondary_color text-white items-center hidden md:flex">
     <div class="container flex items-center gap-10">
-      <a routerLink="/allcategories/maincategories">All categories</a>
-      <p>T-Shirts</p>
-      <p>Football shoes</p>
-      <p>Sports Shoes<p>
-      <p>Sports T-Shirts</p>
-      <p>Sports Accessories<p>
-      <p>Sports bags<p>
+      <a
+        routerLink="/allcategories/maincategories"
+        class="relative py-2 transition-all duration-300 hover:scale-105 hover:opacity-90 "
+      >
+        All categories
+      </a>
+      @for (item of allcategories; track $index) {
+        <a
+          routerLink="/allcategories/maincategories"
+          class="relative py-2 transition-all duration-300 hover:scale-105 hover:opacity-90 "
+        >
+          {{item.categoryName}}
+        </a>
+      }
     </div>
   </div>
 </nav>

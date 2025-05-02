@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './forgotpassword.component.scss'
 })
 export class ForgotpasswordComponent {
-
+email:string=""
 }

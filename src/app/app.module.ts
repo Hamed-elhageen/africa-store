@@ -9,11 +9,14 @@ import { AppComponent } from './app.component';
 import { MainlandingComponent } from './landing/components/mainlanding/mainlanding.component';
 import { SharedModule } from './shared/shared.module';
 import { LandingModule } from './landing/landing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule],
-  providers: [provideClientHydration()],
+  imports: [BrowserModule, AppRoutingModule,HttpClientModule ,NgxSpinnerModule,BrowserAnimationsModule],
+providers: [provideClientHydration()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

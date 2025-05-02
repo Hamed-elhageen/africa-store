@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainlayoutComponent } from '../shared/components/mainlayout/mainlayout.component';
 import { DetaileditemComponent } from './components/detaileditem/detaileditem.component';
 import { MaindetailsComponent } from './components/maindetails/maindetails.component';
+import { HomemainlayoutComponent } from '../shared/components/homemainlayout/homemainlayout.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: MainlayoutComponent,
+    component: HomemainlayoutComponent,
     children: [
       {
         path: 'maindetails/:id',

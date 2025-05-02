@@ -5,6 +5,7 @@
   </div>  <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(275px,1fr))] justify-between gap-x-5 gap-y-8">
     @for (item of products; track $index) {
       <app-card
+      [id]="item.id"
       [productImage]="item.productImage"
       [title]="item.title"
       [discription]="item.discription"

@@ -2,11 +2,12 @@
   background-image: url("/van persi.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 130px);
 }
 @media(max-width:768px){
   .neymar{
     background-position-x: 74%;
+    height: calc(100vh - 88px);
 
   }
 }

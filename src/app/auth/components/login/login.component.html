@@ -24,18 +24,83 @@
       <div class="md:w-[480px] w-[400px] mx-auto my-auto absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] px-5 md:px-0">
         <img src="small logo.svg" alt="small logo" class="block mx-auto mb-3 md:hidden" >
         <h3 class="mb-6 text-center">Login to your account</h3>
-        <label for="email " class="flex items-center gap-1 mb-3 text-sm font-semibold"> Email address <span class="text-[#E03137] text-l">*</span></label>
-        <input type="email" name="email" id="email" class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-6 rounded-[10px]" placeholder="Input your registered email">
 
-        <label for="password" class="flex items-center gap-1 mb-3 text-sm font-semibold"> Password <span class="text-[#E03137] text-l">*</span></label>
+        <form  [formGroup]="loginForm" (ngSubmit)="login()">
+
+
+            <label for="email " class="flex items-center gap-1 mb-3 text-sm font-semibold"><i class="mr-1 text-white fa-solid fa-envelope"></i> Email address <span class="text-[#E03137] text-l">*</span></label>
+
+            <input
+            formControlName="email"
+            type="email"
+            name="email"
+            id="email"
+            required
+            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-3 rounded-[10px] transition-all duration-300"
+            placeholder="Input your registered email"
+            [ngClass]="{
+            'border-red-700': email!.touched && email!.invalid
+            }"
+            >
+
+        <small
+        *ngIf="email!.touched && email!.errors?.['required']"
+        class="mb-5 text-red-700">
+        <i class="mr-1 fa-solid fa-circle-exclamation"></i>sorry, you must add your email to login
+        </small>
+
+        <small
+        *ngIf="email!.touched && email!.errors?.['pattern']"
+        class="text-red-700 ">
+        <i class="mb-5 mr-1 fa-solid fa-circle-exclamation"></i>Please enter a valid email address.
+        </small>
+
+
+
+
+        <label for="password" class="flex items-center gap-1 mt-5 mb-3 text-sm font-semibold"><i class="mr-1 text-white fa-solid fa-key"></i> Password <span class="text-[#E03137] text-l">*</span></label>
         <div class="relative flex justify-between">
-          <input type="password" name="password" id="password" class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-6 rounded-[10px]" placeholder="Input your password account">
-          <i class="absolute fa-solid fa-eye-slash top-5 right-5" ></i>
+            <input
+         formControlName="password"
+       [type]="passwordVisibility ? 'text' : 'password' "
+       name="password"
+       id="password"
+       class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-3 rounded-[10px]"
+       placeholder="Input your password account"
+       [ngClass]="{
+         'border-red-700': password!.touched && password!.invalid
+       }"
+       required
+       pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
+            <i class="absolute cursor-pointer fa-solid fa-eye-slash top-5 right-5" (click)="togglePasswordVisibility()" [hidden]="!passwordVisibility"></i>
+            <i class="absolute cursor-pointer fa-solid fa-eye top-5 right-5" (click)="togglePasswordVisibility()" [hidden]="passwordVisibility"></i>
         </div>
+
+        <small
+        *ngIf="password!.touched && password!.errors?.['required']"
+        class="mb-5 text-red-700">
+        <i class="mr-1 fa-solid fa-circle-exclamation"></i>you must enter your password to login
+      </small>
+
+      <small
+        *ngIf="password!.touched && password!.errors?.['pattern']"
+        class="mb-5 mr-6 text-red-700">
+        <i class="mr-1 fa-solid fa-circle-exclamation"></i>Password must be at least 8 characters long and include at least one letter and one number.
+      </small>
+
+
+      
+      <!-- <small
+        *ngIf="passwordInput.dirty &&passwordInput.value!==correctPassword"
+        class="mb-5 text-red-700">
+        <i class="mr-1 fa-solid fa-circle-exclamation"></i>incorrect password
+      </small> -->
+
 
 
         <!-- remember me and forgot password -->
-        <div class="flex items-center justify-between mb-8">
+        <div class="flex items-center justify-between mt-5 mb-8">
           <label class="inline-flex items-center">
             <input type="checkbox" class="w-5 h-5 text-green-600 bg-gray-500 border-gray-300 rounded-lg focus:ring-green-500" />
             <span class="ml-2 text-[#A5A5A5]">Remember Me</span>
@@ -43,7 +108,8 @@
           <button [routerLink]="'/authentication/forgotpassword'" class="text-sm font-medium text-main_color">Forgot Password</button>
         </div>
 <!-- login button -->
-        <button [routerLink]="'/home/mainhome'" class="flex items-center justify-center w-full px-6 py-4 mb-8 font-bold text-white rounded-lg bg-main_color">Login</button>
+        <button type="submit"  class="flex items-center justify-center w-full px-6 py-4 mb-8 font-bold text-white rounded-lg bg-main_color" [disabled]="loginForm.invalid"  (click)="login()">Login</button>
+    </form>
        <!-- or login with -->
 <div class="flex items-center gap-3 mb-8">
    <div class="bg-[#F1F2F4] w-[183px] h-[2px]"></div>
@@ -70,6 +136,7 @@
 
 
     </div>
+<!-- Your existing login form HTML -->
 
 
 </div>

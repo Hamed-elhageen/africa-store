@@ -41,7 +41,7 @@ const routes: Routes = [
     SportsShoesComponent,
     SportsTshirtsComponent,
     SportsAccessoriesComponent,
-    SportsBagsComponent
+    SportsBagsComponent,
   ],
   imports: [
     CommonModule,RouterModule.forChild(routes),
