@@ -49,7 +49,7 @@ const routes: Routes = [
     ForgotpasswordComponent,
     UpdatepasswordComponent,
     VerificationComponent,
-    SuccessComponent
+    SuccessComponent,
   ],
   imports: [
     CommonModule,

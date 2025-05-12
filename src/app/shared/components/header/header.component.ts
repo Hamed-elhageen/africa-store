@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { LoginService } from '../../../auth/services/login.service';
 
 @Component({
   selector: 'app-header',
@@ -41,4 +42,21 @@ scrollTo(sectionId: string) {
     }
   }
 
+
+
+
+
+//   for authentication
+isLogged: boolean = false;
+
+constructor(private authService: LoginService) {
+  this.authService.isUserLoggedSubject.subscribe({
+    next: (status: boolean) => {
+      this.isLogged = status;
+    },
+    error: (err) => {
+      console.error('Error subscribing to login status:', err);
+    }
+  });
+}
 }

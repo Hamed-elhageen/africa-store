@@ -51,8 +51,10 @@ get password(){
 
 // linking the form and its fields in html with reactive forms
 loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required ,Validators.email]),
+    password: new FormControl('', [Validators.required ,Validators.pattern(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+    )]),
   });
 
 

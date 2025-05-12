@@ -47,12 +47,16 @@
       <!-- Desktop sign-up button - EXACTLY AS ORIGINAL -->
       <div class="hidden md:flex md:order-3">
         <button
+        [hidden]="isLogged"
           [routerLink]="'/authentication/register'"
           type="button"
           class="bg-main_color text-white rounded-[10px] py-4 px-6 w-[180px] font-bold transition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]"
         >
           Sign Up
         </button>
+        <img         [hidden]="!isLogged"
+        src="profile.png" alt="profile" class="w-16 rounded-full">
+        
       </div>
 
       <!-- Mobile menu with animation (only changed part) -->
