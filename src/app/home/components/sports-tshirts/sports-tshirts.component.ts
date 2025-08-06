@@ -8,63 +8,63 @@ import { Component } from '@angular/core';
 export class SportsTshirtsComponent {
   products:any=[
     {
-      productImage:"/arsenal shirt.svg",
+      productImage:"/arsenal-shirt.svg",
       title:"Arsenal shirt",
       discription:" original arsenal tshirt ...",
       price:"290 LE",
       priceBeforediscount:"320 LE"
     },
     {
-      productImage:"/arsenal shirt.svg",
+      productImage:"/arsenal-shirt.svg",
       title:"Arsenal shirt",
       discription:" original arsenal tshirt ...",
       price:"290 LE",
       priceBeforediscount:"320 LE"
     },
     {
-      productImage:"/arsenal shirt.svg",
+      productImage:"/arsenal-shirt.svg",
       title:"Arsenal shirt",
       discription:" original arsenal tshirt ...",
       price:"290 LE",
       priceBeforediscount:"320 LE"
     },
     {
-      productImage:"/arsenal shirt.svg",
+      productImage:"/arsenal-shirt.svg",
       title:"Arsenal shirt",
       discription:" original arsenal tshirt ...",
       price:"290 LE",
       priceBeforediscount:"320 LE"
     },
     {
-      productImage:"/arsenal shirt.svg",
+      productImage:"/arsenal-shirt.svg",
       title:"Arsenal shirt",
       discription:" original arsenal tshirt ...",
       price:"290 LE",
       priceBeforediscount:"320 LE"
     },
     {
-      productImage:"/arsenal shirt.svg",
+      productImage:"/arsenal-shirt.svg",
       title:"Arsenal shirt",
       discription:" original arsenal tshirt ...",
       price:"290 LE",
       priceBeforediscount:"320 LE"
     },
     {
-      productImage:"/arsenal shirt.svg",
+      productImage:"/arsenal-shirt.svg",
       title:"Arsenal shirt",
       discription:" original arsenal tshirt ...",
       price:"290 LE",
       priceBeforediscount:"320 LE"
     },
     {
-      productImage:"/arsenal shirt.svg",
+      productImage:"/arsenal-shirt.svg",
       title:"Arsenal shirt",
       discription:" original arsenal tshirt ...",
       price:"290 LE",
       priceBeforediscount:"320 LE"
     },
     {
-      productImage:"/arsenal shirt.svg",
+      productImage:"/arsenal-shirt.svg",
       title:"Arsenal shirt",
       discription:" original arsenal tshirt ...",
       price:"290 LE",

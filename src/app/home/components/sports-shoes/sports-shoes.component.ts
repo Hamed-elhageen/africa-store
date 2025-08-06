@@ -8,49 +8,49 @@ import { Component } from '@angular/core';
 export class SportsShoesComponent {
   products:any=[
     {
-      productImage:"/sports shoes.png",
+      productImage:"/sports-shoes.png",
       title:"sports shoes",
       discription:" original shoes with high quality ...",
       price:"450 LE",
       priceBeforediscount:"520 LE"
     },
     {
-      productImage:"/sports shoes.png",
+      productImage:"/sports-shoes.png",
       title:"sports shoes",
       discription:" original shoes with high quality ...",
       price:"450 LE",
       priceBeforediscount:"520 LE"
     },
     {
-      productImage:"/sports shoes.png",
+      productImage:"/sports-shoes.png",
       title:"sports shoes",
       discription:" original shoes with high quality ...",
       price:"450 LE",
       priceBeforediscount:"520 LE"
     },
     {
-      productImage:"/sports shoes.png",
+      productImage:"/sports-shoes.png",
       title:"sports shoes",
       discription:" original shoes with high quality ...",
       price:"450 LE",
       priceBeforediscount:"520 LE"
     },
     {
-      productImage:"/sports shoes.png",
+      productImage:"/sports-shoes.png",
       title:"sports shoes",
       discription:" original shoes with high quality ...",
       price:"450 LE",
       priceBeforediscount:"520 LE"
     },
     {
-      productImage:"/sports shoes.png",
+      productImage:"/sports-shoes.png",
       title:"sports shoes",
       discription:" original shoes with high quality ...",
       price:"450 LE",
       priceBeforediscount:"520 LE"
     },
     {
-      productImage:"/sports shoes.png",
+      productImage:"/sports-shoes.png",
       title:"sports shoes",
       discription:" original shoes with high quality ...",
       price:"450 LE",

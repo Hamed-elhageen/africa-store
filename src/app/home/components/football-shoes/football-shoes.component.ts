@@ -8,49 +8,49 @@ import { Component } from '@angular/core';
 export class FootballShoesComponent {
   products:any=[
     {
-      productImage:"/cr7 shoes.png",
+      productImage:"/cr7-shoes.png",
       title:"CR7 shoes",
       discription:"cristiano ronaldo original shoes",
       price:"450 LE",
       priceBeforediscount:"520 LE"
     },
     {
-      productImage:"/cr7 shoes.png",
+      productImage:"/cr7-shoes.png",
       title:"CR7 shoes",
       discription:"cristiano ronaldo original shoes",
       price:"450 LE",
       priceBeforediscount:"520 LE"
     },
     {
-      productImage:"/cr7 shoes.png",
+      productImage:"/cr7-shoes.png",
       title:"CR7 shoes",
       discription:"cristiano ronaldo original shoes",
       price:"450 LE",
       priceBeforediscount:"520 LE"
     },
     {
-      productImage:"/cr7 shoes.png",
+      productImage:"/cr7-shoes.png",
       title:"CR7 shoes",
       discription:"cristiano ronaldo original shoes",
       price:"450 LE",
       priceBeforediscount:"520 LE"
     },
     {
-      productImage:"/cr7 shoes.png",
+      productImage:"/cr7-shoes.png",
       title:"CR7 shoes",
       discription:"cristiano ronaldo original shoes",
       price:"450 LE",
       priceBeforediscount:"520 LE"
     },
     {
-      productImage:"/cr7 shoes.png",
+      productImage:"/cr7-shoes.png",
       title:"CR7 shoes",
       discription:"cristiano ronaldo original shoes",
       price:"450 LE",
       priceBeforediscount:"520 LE"
     },
     {
-      productImage:"/cr7 shoes.png",
+      productImage:"/cr7-shoes.png",
       title:"CR7 shoes",
       discription:"cristiano ronaldo original shoes",
       price:"450 LE",

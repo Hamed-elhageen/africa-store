@@ -10,7 +10,7 @@ export class SportsBagsComponent {
     products: any[] = [
         {
           id: 1,
-          productImage: "/new bag.png",
+          productImage: "/new-bag.png",
           title: "bracelona bag",
           discription: "original cotton braca bag",
           price: "350 LE",
@@ -18,7 +18,7 @@ export class SportsBagsComponent {
         },
         {
           id: 2,
-          productImage: "/new bag.png",
+          productImage: "/new-bag.png",
           title: "bracelona bag",
           discription: "original cotton braca bag",
           price: "350 LE",
@@ -26,7 +26,7 @@ export class SportsBagsComponent {
         },
         {
           id: 3,
-          productImage: "/new bag.png",
+          productImage: "/new-bag.png",
           title: "bracelona bag",
           discription: "original cotton braca bag",
           price: "350 LE",
@@ -34,7 +34,7 @@ export class SportsBagsComponent {
         },
         {
           id: 4,
-          productImage: "/new bag.png",
+          productImage: "/new-bag.png",
           title: "bracelona bag",
           discription: "original cotton braca bag",
           price: "350 LE",
@@ -42,7 +42,7 @@ export class SportsBagsComponent {
         },
         {
           id: 5,
-          productImage: "/new bag.png",
+          productImage: "/new-bag.png",
           title: "bracelona bag",
           discription: "original cotton braca bag",
           price: "350 LE",
@@ -50,7 +50,7 @@ export class SportsBagsComponent {
         },
         {
           id: 6,
-          productImage: "/new bag.png",
+          productImage: "/new-bag.png",
           title: "bracelona bag",
           discription: "original cotton braca bag",
           price: "350 LE",
@@ -58,7 +58,7 @@ export class SportsBagsComponent {
         },
         {
           id: 7,
-          productImage: "/new bag.png",
+          productImage: "/new-bag.png",
           title: "bracelona bag",
           discription: "original cotton braca bag",
           price: "350 LE",
@@ -66,7 +66,7 @@ export class SportsBagsComponent {
         },
         {
           id: 8,
-          productImage: "/new bag.png",
+          productImage: "/new-bag.png",
           title: "bracelona bag",
           discription: "original cotton braca bag",
           price: "350 LE",
