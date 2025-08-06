@@ -9,7 +9,7 @@ export class MaincartComponent {
 cartProducts:any=
 [
 {
-      productImage:"/cr7 shoes.png",
+      productImage:"/cr7-shoes.png",
       title:"bracelona-bag",
       discription:"original cotton braca bag",
       price:"350 LE",
