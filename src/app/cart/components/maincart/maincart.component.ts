@@ -10,6 +10,15 @@ cartProducts:any=
 [
 {
       productImage:"/cr7 shoes.png",
+      title:"bracelona-bag",
+      discription:"original cotton braca bag",
+      price:"350 LE",
+      priceBeforediscount:"420 LE",
+      size:"M",
+      quantity:'1'
+    },
+    {
+      productImage:"/new-bag.png",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",
@@ -18,7 +27,7 @@ cartProducts:any=
       quantity:'1'
     },
     {
-      productImage:"/new bag.png",
+      productImage:"/sports-shoes.png",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",
@@ -27,16 +36,7 @@ cartProducts:any=
       quantity:'1'
     },
     {
-      productImage:"/sports shoes.png",
-      title:"bracelona bag",
-      discription:"original cotton braca bag",
-      price:"350 LE",
-      priceBeforediscount:"420 LE",
-      size:"M",
-      quantity:'1'
-    },
-    {
-      productImage:"/new bag.png",
+      productImage:"/new-bag.png",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",
@@ -54,7 +54,7 @@ cartProducts:any=
       quantity:'1'
     },
     {
-      productImage:"/new bag.png",
+      productImage:"/new-bag.png",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",
@@ -72,7 +72,7 @@ cartProducts:any=
       quantity:'1'
     },
     {
-      productImage:"/arsenal shirt.svg",
+      productImage:"/arsenal-shirt.svg",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",
