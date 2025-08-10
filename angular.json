@@ -37,8 +37,10 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
+            "styles": [             "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
+
+                 "src/styles.scss"
+
             ],
             "scripts": [  "node_modules/flowbite/dist/flowbite.min.js"
 ],

@@ -1,78 +1,95 @@
-<nav class="sticky top-0 left-0 mb-10 z-[1000000000] bg-black"  [ngClass]="{ 'transparent': !isScrolled, 'scrolled': isScrolled }" [class.scrolled]="isScrolled" >
-    <div class="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto text-white">
-      <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="header-logo.svg" alt="Logo" />
-      </a>
+<!-- full width black header -->
+<nav class="sticky top-0 left-0 mb-10 z-[1000000000] bg-black transition-all duration-300	shadow-green-400 "  [ngClass]="{ 'transparent': !isScrolled, 'bg-gray-950': isScrolled, 'myshadow': isScrolled }"  >
+    <!-- the header with the container -->
+    <div class="container flex flex-wrap items-center justify-between p-4 mx-auto text-white">
+        <!-- logo -->
+        <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="header-logo.svg" alt="Logo" />
+        </a>
 
-      <!-- Mobile menu button (hidden on md and up) -->
-      <div class="flex md:order-2 md:hidden">
-        <button
-          (click)="toggleMenu()"
-          type="button"
-          class="inline-flex items-center justify-center p-2 text-sm text-gray-500 rounded-lg focus:outline-none"
-          aria-controls="navbar-cta"
-          [attr.aria-expanded]="isMenuOpen"
-        >
-          <img
-            src="for-nav.svg"
-            alt="Menu"
-            class="w-12 transition-transform duration-300 ease-in-out"
-            [class.rotate-45]="isMenuOpen"
-          >
+
+        <!-- Mobile menu button (hidden on md and up) -->
+        <div class="flex md:order-2 md:hidden">
+            <button
+                (click)="toggleMenu()"
+                type="button"
+                class="inline-flex items-center justify-center p-2 text-sm text-gray-500 rounded-lg focus:outline-none"
+                aria-controls="navbar-cta"
+                [attr.aria-expanded]="isMenuOpen"
+            >
+                <img
+                    src="for-nav.svg"
+                    alt="Menu"
+                    class="w-12 transition-transform duration-300 ease-in-out"
+                    [ngClass]="{'rotate-45': isMenuOpen}"
+                >
         </button>
-      </div>
+        </div>
 
-      <!-- Desktop navigation (always visible on md and up) - EXACTLY AS ORIGINAL -->
-      <div class="hidden w-full md:flex md:w-auto md:order-1 desktop" id="desktop-nav">
-        <ul class="flex flex-col p-4 font-bold text-white bg-neutral-900 md:bg-transparent md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:border-0">
-            <li [ngClass]="{ 'active': currentSection === 'home' }">
-                <a (click)="scrollTo('home')">Home</a>
-              </li>
+        <!-- Desktop navigation (always visible on md and up) - EXACTLY AS ORIGINAL -->
+        <div class="hidden w-full md:flex md:w-auto md:order-1 desktop" id="desktop-nav">
+            <ul class="flex flex-col p-4 font-bold text-white bg-neutral-900 md:bg-transparent md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:border-0">
+                <li [ngClass]="{ 'active': currentSection === 'home' }">
+                    <a (click)="scrollTo('home')">Home</a>
+                </li>
 
-              <li [ngClass]="{ 'active': currentSection === 'Our products' }">
-                <a (click)="scrollTo('Our products')">Our products</a>
-              </li>
+                <li [ngClass]="{ 'active': currentSection === 'Our products' }">
+                    <a (click)="scrollTo('Our products')">Our products</a>
+                </li>
 
-              <li [ngClass]="{ 'active': currentSection === 'Why us' }">
-                <a (click)="scrollTo('Why us')">Why us</a>
-              </li>
+                <li [ngClass]="{ 'active': currentSection === 'Why us' }">
+                    <a (click)="scrollTo('Why us')">Why us</a>
+                </li>
 
-              <li [ngClass]="{ 'active': currentSection === 'Service' }">
-                <a (click)="scrollTo('Service')">Service</a>
-              </li>
+                <li [ngClass]="{ 'active': currentSection === 'Service' }">
+                    <a (click)="scrollTo('Service')">Service</a>
+                </li>
+            </ul>
+        </div>
 
-        </ul>
-      </div>
+        <!-- Desktop sign-up button - EXACTLY AS ORIGINAL -->
+        <div class="hidden md:flex md:order-3">
+            <button
+                [hidden]="isLogged"
+                [routerLink]="'/authentication/register'"
+                type="button"
+                class="bg-main_color text-white rounded-[10px] py-4 px-6 w-[180px] font-bold transition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]"
+            >
+                Sign Up
+            </button>
+                <!-- صورة المستخدم -->
+<div class="relative" (click)="toggleProfileMenuOpen()">
+  <img [hidden]="!isLogged" src="images5.jpeg" alt="User" class="w-10 h-10 rounded-full cursor-pointer" />
 
-      <!-- Desktop sign-up button - EXACTLY AS ORIGINAL -->
-      <div class="hidden md:flex md:order-3">
-        <button
-        [hidden]="isLogged"
-          [routerLink]="'/authentication/register'"
-          type="button"
-          class="bg-main_color text-white rounded-[10px] py-4 px-6 w-[180px] font-bold transition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]"
-        >
-          Sign Up
-        </button>
-        <img         [hidden]="!isLogged"
-        src="profile.png" alt="profile" class="w-16 rounded-full">
+  <!-- القائمة بتظهر بس لما menuOpen = true -->
+  <div *ngIf="profileMenuOpen" class="absolute right-0 z-[255555555558888888888] w-48 h-auto mt-2 text-left  rounded-md shadow-lg bg-green-700 ">
+    <ul class="py-2">
+      <li class="px-4 py-2 cursor-pointer hover:bg-gray-100">👤 Your Profile</li>
+      <li class="px-4 py-2 cursor-pointer hover:bg-gray-100">🔒 Change Passwrod</li>
+      <li class="px-4 py-2 text-red-500 cursor-pointer hover:bg-gray-100">🚪 Logout</li>
+    </ul>
+  </div>
+</div>
 
-      </div>
+        </div>
 
-      <!-- Mobile menu with animation (only changed part) -->
-      <div
-        class="w-full overflow-hidden mobile-menu-animation-wrapper md:hidden"
-        [class.max-h-0]="!isMenuOpen"
-        [class.max-h-[500px]]="isMenuOpen"
-      >
+        <!-- صورة المستخدم -->
+
+
+        <!-- Mobile menu with animation -->
         <div
-          class="items-center justify-between w-full"
-          id="navbar-cta"
-          [class.opacity-0]="!isMenuOpen"
-          [class.opacity-100]="isMenuOpen"
-          [class.translate-y-[-20px]]="!isMenuOpen"
-          [class.translate-y-0]="isMenuOpen"
+            class="w-full overflow-hidden mobile-menu-animation-wrapper md:hidden"
+            [class.max-h-0]="!isMenuOpen"
+            [class.max-h-[500px]]="isMenuOpen"
         >
+            <div
+                class="items-center justify-between w-full"
+                id="navbar-cta"
+                [class.opacity-0]="!isMenuOpen"
+                [class.opacity-100]="isMenuOpen"
+                [class.translate-y-[-20px]]="!isMenuOpen"
+                [class.translate-y-0]="isMenuOpen"
+            >
           <ul class="flex flex-col py-4 font-bold text-white">
             <li class="active">
               <a (click)="scrollTo('home')" aria-current="page">Home</a>
@@ -87,8 +104,8 @@
               <a (click)="scrollTo('Service')">Service</a>
             </li>
             <li class="flex items-center justify-center gap-8 md:hidden">
-              <button [routerLink]="'/authentication/login'" class=" bg-main_color flex items-center justify-center flex-1 py-2 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">login</button>
-              <button [routerLink]="'/authentication/register'" class="flex items-center justify-center flex-1 py-2 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">sign up</button>
+              <button [hidden]="isLogged" [routerLink]="'/authentication/login'" class=" bg-main_color flex items-center justify-center flex-1 py-2 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">login</button>
+              <button [hidden]="isLogged" [routerLink]="'/authentication/register'" class="flex items-center justify-center flex-1 py-2 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">sign up</button>
             </li>
           </ul>
         </div>

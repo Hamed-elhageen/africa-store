@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VerifyRegisterComponent } from './verify-register.component';
+import { NotfoundComponent } from './notfound.component';
 
-describe('VerifyRegisterComponent', () => {
-  let component: VerifyRegisterComponent;
-  let fixture: ComponentFixture<VerifyRegisterComponent>;
+describe('NotfoundComponent', () => {
+  let component: NotfoundComponent;
+  let fixture: ComponentFixture<NotfoundComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [VerifyRegisterComponent]
+      declarations: [NotfoundComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(VerifyRegisterComponent);
+    fixture = TestBed.createComponent(NotfoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

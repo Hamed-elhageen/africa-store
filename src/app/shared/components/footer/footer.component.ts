@@ -7,49 +7,48 @@ import { Category } from '../../modles/category';
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-  showProducts = false;
-  showBranches = false;
-  isMobile = window.innerWidth < 768; // Adjust breakpoint as needed
+    showProducts = false;
+    showBranches = false;
+  isMobile = window.innerWidth < 768;                                                  //is mobile will be trun if the width of the screen you are opening is less than 768
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.isMobile = event.target.innerWidth < 768; // Adjust breakpoint as needed
-  }
+    @HostListener('window:resize', ['$event'])
+    onResize(event: any) {
+    this.isMobile = event.target.innerWidth < 768;                            // here you are lestening on the window resize , if its size became less than 768 , so ismobile will be true
+    }
 
-  public allcategories:Category[]=[
-      {
-          categoryName:"Football shirts",
-          categoryid:"1",
-          categoryimage:"/germany.png"
-      },
-      {
-          categoryName:"Sports shirts",
-          categoryid:"2",
-          categoryimage:"/shirts.svg"
-      },
-      {
-          categoryName:"Sports shoes",
-          categoryid:"3",
-          categoryimage:"/shoes.svg"
-      },
-      {
-          categoryName:"Sports bags",
-          categoryid:"4",
-          categoryimage:"/bags.svg"
-      },
-      {
-          categoryName:"Sports accessories",
-          categoryid:"5",
-          categoryimage:"/gloves.svg"
-      },
-      {
-          categoryName:"Football shoes",
-          categoryid:"6",
-          categoryimage:"/stars.svg"
-      },
-  ] ;
+    public allcategories:Category[]=[
+        {
+            categoryName:"Football shirts",
+            categoryid:"1",
+            categoryimage:"/germany.png"
+        },
+        {
+            categoryName:"Sports shirts",
+            categoryid:"2",
+            categoryimage:"/shirts.svg"
+        },
+        {
+            categoryName:"Sports shoes",
+            categoryid:"3",
+            categoryimage:"/shoes.svg"
+        },
+        {
+            categoryName:"Sports bags",
+            categoryid:"4",
+            categoryimage:"/bags.svg"
+        },
+        {
+            categoryName:"Sports accessories",
+            categoryid:"5",
+            categoryimage:"/gloves.svg"
+        },
+        {
+            categoryName:"Football shoes",
+            categoryid:"6",
+            categoryimage:"/stars.svg"
+        }, ] ;
 
-  branches: string[] = [
+    branches: string[] = [
     // First Column
     'Downtown',
     'Nasr City',
@@ -81,6 +80,6 @@ export class FooterComponent {
     'Minya "Mallawi"',
     'Qanater El-Khairiya',
     'Menoufia "Shibin El-Kom"'
-  ];
+    ] ;
 
 }

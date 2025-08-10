@@ -6,22 +6,18 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
 
-
-
 //  configuration for sweet alert , data about the alert which will appear and you can change it                           This creates a reusable toast notification with custom styling and position.
 // Will be used to show login success or error messages.
 const Toast = Swal.mixin({
     toast: true,
-    position: 'top',
+    position: 'center',
     customClass: {
-      popup: 'colored-toast',
+  popup: 'my-toast-style'
     },
     showConfirmButton: false,
-    timer: 1500,
+    timer: 4000,
     timerProgressBar: false,
   });
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -29,7 +25,6 @@ const Toast = Swal.mixin({
 })
 
 export class LoginComponent {
-
  correctPassword:string="12345abcde"
  passwordVisibility:boolean=false
  togglePasswordVisibility(){
@@ -38,15 +33,13 @@ export class LoginComponent {
 //  ****************************************************************************************************************************************************
 // authentication start
 // this is for authentication
+//here we picked up the two input fields
 get email(){
     return this.loginForm.get('email')
 }
 get password(){
     return this.loginForm.get('password')
 }
-
-
-
 
 
 // linking the form and its fields in html with reactive forms
@@ -66,25 +59,20 @@ loginForm = new FormGroup({
     ){}
 
 
-
-
-
+//as i said to you in the service , first you will send the request with the login function and after that you handle the error function of success fucntion , and here you need create from data funciton to send the input fields values as form data with the login request
 
     login(){                                                                                                                          //this is the login function which i will use when clicking on login button and it will use the service and the fucntions inside it to handle the login request process and sending the token to the local storage after it using handle success function
-        if(this.loginForm.valid){
+        if(this.loginForm.valid){                                                                                            //cecking of the form is valid , means checking that all its input fields are valid
             this.spinner.show();
             const formData =this.createFormData();                                                          //using the funciton createformData which i did under , i will get the data in the form in the shape of formdata
 
             this.loginService.login(formData).subscribe({                                                      //using the login funciton which is in the service which sends the request and when it returns a response with a token i will be passed to handle success fucntion which will send the token to the local storage and update the login status;
                                                                                                                                         //as you know login function was taking as a parameter the data in the form and take it to the backend to check
-                next:(response)=>this.handleSuccess(response),
-                error:(err)=>this.handleError(err)
+                next:(response)=>this.handleSuccess(response),                                         //if there is no error , it will execute next function which contains handle success function
+                error:(err)=>this.handleError(err)                                                                  // and if there is an error it will execute the error function which execute handleerror function
             })
         }
     }
-
-
-
 
 
 
@@ -108,7 +96,7 @@ loginForm = new FormGroup({
 
     handleSuccess(response:any){                                                                                    //you use this function in login function above and you passed to it a response and now we will know what it will do to this response
         this.spinner.hide();
-        const token =response.access;
+        const token =response.data.token;                                                                              //now you picked up the token back from the backend
         this.loginService.handleLoginSuccess(token);                                                      //this function was taking the token and save it to the local storage
         // this.loginService.isUserLoggedSubject.next(true);
         this.router.navigate(['/']); // Go to homepage
@@ -153,20 +141,6 @@ loginForm = new FormGroup({
           title: this.errorMessage,
         });
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

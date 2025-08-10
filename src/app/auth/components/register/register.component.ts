@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { RegisterService } from '../../services/register.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -15,7 +15,7 @@ const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
-    timer: 3000,
+    timer: 6000,
     timerProgressBar: true,
   });
 
@@ -26,7 +26,7 @@ const Toast = Swal.mixin({
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
     passwordVisibility: boolean = false;
 
     togglePasswordVisibility() {
@@ -36,7 +36,39 @@ export class RegisterComponent {
     // ***************************************************************************************
     //  authentication
 
-    // firstly picking up the form and its input fields
+    //linking the form and its input fields with the html
+    registerForm!:FormGroup
+        ngOnInit(): void {
+    this.registerForm = new FormGroup({
+        nameInput: new FormControl('', [Validators.required]),
+        emailInput: new FormControl('', [Validators.required, Validators.pattern( /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),]),
+        passwordInput: new FormControl('', [Validators.required,Validators.pattern( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),]),
+        confirmPasswordInput: new FormControl('', [Validators.required,Validators.pattern( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),]),
+    },
+    {
+    validators: this.passwordsMatchValidator(),                                                                        //the validator of the match and mismatch between password input and confirm password input , is put on the form level not on the confirm password validators , because it compare between tow fields and when you put it inside one of this , it wont see the another
+  }
+);
+        }
+
+
+
+
+
+passwordsMatchValidator(): ValidatorFn {
+  return (group: AbstractControl): { [key: string]: any } | null => {
+    const password = group.get('passwordInput')?.value;
+    const confirmPassword = group.get('confirmPasswordInput')?.value;
+
+    return password === confirmPassword ? null : { passwordsMismatch: true };
+  };
+}
+
+
+
+
+
+    // firstly picking up the form and its input fields so i can work on them
     get nameInput() {
         return this.registerForm.get('nameInput');
     }
@@ -46,22 +78,29 @@ export class RegisterComponent {
     get passwordInput() {
         return this.registerForm.get('passwordInput');
     }
+    get confirmPasswordInput() {
+        return this.registerForm.get('confirmPasswordInput');
+    }
 
-    registerForm = new FormGroup({
-        nameInput: new FormControl('', [Validators.required]),
-        emailInput: new FormControl('', [
-            Validators.required,
-            Validators.pattern(
-                /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-            ),
-        ]),
-        passwordInput: new FormControl('', [
-            Validators.required,
-            Validators.pattern(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-            ),
-        ]),
-    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -80,17 +119,30 @@ export class RegisterComponent {
     register(){
         if(this.registerForm.valid){
             this.ngxSpinner.show();                                                                                              //here iam checking if the form is good and there are no errors in it show, first show the spinner
+
             const formData=this.createFormData();                                                                    //after that i will create and object containing the form data using the funciton createFormData  which is declared under
 
             this.registerService.register(formData).subscribe({                                                   //here we used the function register which is in the register service and it takes from us the form data and if every thing is good at the server and the user is not logged before , it will return a token
                 next:(response)=>{
-                    this.handleSuccess(response.access)                                                               //this token will be passed to the handleSuccess function which is declared under and will add the token to the local storage and update isUserLoggedSubject to true
+                    this.router.navigateByUrl('/authentication/verifyregister')                                                            //this token will be passed to the handleSuccess function which is declared under and will add the token to the local storage and update isUserLoggedSubject to true
+                    this.ngxSpinner.hide()
+                        localStorage.setItem('handle', this.registerForm.value.emailInput);                                        //now i save the email to the local storage because i will use it in the verify register to send with the code (not needing to put input field and take it from the user again => best user experience)
+                    Toast.fire({
+    icon: 'success',
+    title: ' تم ارسال رمز التاكيد لبريدك الالكترونى'
+  });
+
                 },
                 error:(err)=>{
+                    console.log("Registration error details:", err.error);
+  if (err.error?.message === 'validation errors') {
+    console.log("Validation issues:", err.error.data);
+  }
                     this.handleError(err);                                                                                       //if the reqeust is sent and where there any errors , it will be handled in the handError function which is declared under
                 }
             })
         }
+
     }
 
 
@@ -110,6 +162,7 @@ createFormData(){                                                               
     formData.append('name',this.nameInput?.value || '')
     formData.append('email',this.emailInput?.value || '')
     formData.append('password',this.passwordInput?.value||'')
+formData.append('password_confirmation', this.confirmPasswordInput?.value || '')
     return formData;
 }
 
@@ -122,16 +175,16 @@ createFormData(){                                                               
 
 
 
-handleSuccess(response:any){
-    this.ngxSpinner.hide()
-    const token = response.access;
-this.registerService.handleRegisterSuccess(token);
+// handleSuccess(response:any){
+//     this.ngxSpinner.hide()
+//     const token = response.access;
+// this.registerService.handleRegisterSuccess(token);
 
-Toast.fire({
-    icon: 'success',
-    title: 'تم التسجيل بنجاح'
-  });
-}
+// Toast.fire({
+//     icon: 'success',
+//     title: 'تم التسجيل بنجاح'
+//   });
+// }
 
 
 
@@ -152,23 +205,26 @@ handleError(error: any) {
   this.ngxSpinner.hide();
 
   if (error instanceof HttpErrorResponse) {
-    if (error.status === 400) {
-      this.errorMessage = 'البريد الإلكتروني مستخدم بالفعل أو البيانات غير صحيحة';
+    // 422 = أخطاء validation
+    if (error.status === 422 && error.error?.data) {
+      this.errorMessage = Object.values(error.error.data).join('\n');
+    }
+    // باقي الأكواد
+    else if (error.status === 400) {
+      this.errorMessage = error.error?.message || 'البيانات غير صحيحة';
     } else if (error.status === 500) {
       this.errorMessage = 'حدث خطأ في الخادم';
     } else if (error.status === 0) {
       this.errorMessage = 'تأكد من اتصال الإنترنت';
     } else {
-      this.errorMessage = 'حدث خطأ غير متوقع';
+      this.errorMessage = error.error?.message || 'حدث خطأ غير متوقع';
     }
-  } else {
+  }
+  else {
     this.errorMessage = 'حدث خطأ غير معروف';
   }
 
-  Toast.fire({
-    icon: 'error',
-    title: this.errorMessage,
-  });
+  Toast.fire({ icon: 'error', title: this.errorMessage });
 }
 
 

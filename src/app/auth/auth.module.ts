@@ -10,6 +10,8 @@ import { SuccessComponent } from './components/success/success.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { VerifyregisterComponent } from './components/verifyregister/verifyregister.component';
+import { NotfoundComponent } from '../shared/components/notfound/notfound.component';
 
 
 
@@ -17,6 +19,12 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 const routes: Routes = [
+      {
+    path: '',
+    redirectTo: '/register',
+    pathMatch: 'full',
+  },
+
   {
     path: 'login',
     component: LoginComponent ,
@@ -24,6 +32,10 @@ const routes: Routes = [
   {
     path: 'register',
     component:RegisterComponent ,
+  },
+    {
+    path: 'verifyregister',
+    component:VerifyregisterComponent ,
   },
   {
     path: 'forgotpassword',
@@ -40,6 +52,9 @@ const routes: Routes = [
   {
     path: 'success',
     component:SuccessComponent ,
+  },
+  {
+    path:'**',component:NotfoundComponent
   }
 ];
 @NgModule({
@@ -50,6 +65,7 @@ const routes: Routes = [
     UpdatepasswordComponent,
     VerificationComponent,
     SuccessComponent,
+    VerifyregisterComponent,
   ],
   imports: [
     CommonModule,
@@ -58,6 +74,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     NgxSpinnerModule ,                     //for handling loading animations
     HttpClientModule,
+
   ]
 })
 export class AuthModule { }

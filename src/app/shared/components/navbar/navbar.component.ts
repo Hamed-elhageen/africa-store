@@ -1,12 +1,13 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Category } from '../../modles/category';
+import { LoginService } from '../../../auth/services/login.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent {
+export class NavbarComponent  {
   isMenuOpen = false;
   isScrolled = false;
 
@@ -57,4 +58,18 @@ export class NavbarComponent {
           categoryimage:"/stars.svg"
       },
   ] ;
+
+
+  //for authentication
+  isLogged: boolean = false;
+constructor(private authService: LoginService) {
+  this.authService.isUserLoggedSubject.subscribe({
+    next: (status: boolean) => {
+      this.isLogged = status;
+    },
+    error: (err) => {
+      console.error('Error subscribing to login status:', err);
+    }
+  });
+}
 }

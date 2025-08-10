@@ -4,8 +4,6 @@ li {
   @apply flex items-center justify-between h-full px-6 py-4 font-bold transition-all duration-500 relative;
 }
 
-
-
 @layer components {
   .active {
     @apply  text-main_color;
@@ -16,7 +14,9 @@ li {
   }
 }
 
-
+.myshadow{
+    box-shadow: 0px 5px 15px 1px rgb(5, 52, 5)
+}
 
 /* Add this if you want smooth animations */
 #navbar-cta {

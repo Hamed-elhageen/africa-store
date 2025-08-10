@@ -46,7 +46,7 @@ export class VerificationComponent {
     if (storedEmail) {
       this.email = storedEmail;
     } else {
-      this.router.navigate(['/authentication/forgotpassword']);
+    //   this.router.navigate(['/authentication/forgotpassword']);
     }
   }
 

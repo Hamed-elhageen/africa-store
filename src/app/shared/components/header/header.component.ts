@@ -11,9 +11,8 @@ export class HeaderComponent {
     isMenuOpen = false;
     // for making position stiky after scrlling
     isScrolled=false;
-
-    currentSection: string = 'home'; // default to 'home' , to add active to the link i click , because routerLinkActive work only with routerLink when routing to another component and another page
-
+    // default to 'home' , to add active to the link i click , because routerLinkActive work only with routerLink when routing to another component and another page
+    currentSection: string = 'home';
 
 
     // functions for openign and closing the menue in mobile
@@ -25,12 +24,12 @@ export class HeaderComponent {
   }
 
 
-//   function to make the header sticky when scrolling a part  of pixels
-@HostListener('window:scroll', [])
-  onWindowScroll() {
+//   function to make the sticky header with another styles  when scrolling a part  of pixels
+@HostListener('window:scroll', [])                           //function to lesten on scroll
+    onWindowScroll() {
     this.isScrolled = window.scrollY > 88;
     // here i am telling him thai is scrolling will be true when it scroll 88 pixel and in the html , i will add condition , if is scrolled true , git it another background for examble
-  }
+}
 
 
 //   for going and scroll to each section when clicking on its link and make it active
@@ -46,9 +45,12 @@ scrollTo(sectionId: string) {
 
 
 
+
+
+
+
 //   for authentication
 isLogged: boolean = false;
-
 constructor(private authService: LoginService) {
   this.authService.isUserLoggedSubject.subscribe({
     next: (status: boolean) => {
@@ -58,5 +60,11 @@ constructor(private authService: LoginService) {
       console.error('Error subscribing to login status:', err);
     }
   });
+}
+
+
+profileMenuOpen:boolean=false;
+toggleProfileMenuOpen(){
+    this.profileMenuOpen=!this.profileMenuOpen;
 }
 }
