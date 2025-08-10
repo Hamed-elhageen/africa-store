@@ -102,7 +102,7 @@ loginForm = new FormGroup({
         this.router.navigate(['/']); // Go to homepage
         Toast.fire({
           icon: 'success',
-          title: 'تم تسجيل الدخول بنجاح'
+          title: 'تم تسجيل الدخول بنجااااااح'
         });
 
     }
