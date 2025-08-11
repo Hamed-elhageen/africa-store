@@ -61,7 +61,7 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
             localStorage.removeItem('token')
         }
         this.isUserLoggedSubject.next(false);                                                                                               //so here we updated isUserLoggedSubject with false
-        this.router.navigateByUrl('/auth/login');                                                                                           // and now navigate him to the login page again
+        this.router.navigateByUrl('/authentication/login');                                                                                           // and now navigate him to the login page again
     }
 
 

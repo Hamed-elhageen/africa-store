@@ -11,9 +11,8 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root'
 })
 export class ForgetPasswordService {
-    private accessToken: string | null = null;
     public httpOptionAuth: { headers: HttpHeaders } = { headers: new HttpHeaders() };
-  constructor(private httpClient:HttpClient,
+    constructor(private httpClient:HttpClient,
     public router:Router,
     public ngxSpinner:NgxSpinnerService,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -22,9 +21,10 @@ export class ForgetPasswordService {
 
 
 //   this if the function that will send the email to the server , if everything is good at server .. it will return a code of four numbers , if there is an error , it will handeled , all of this in the component that will use the service which is now update password
-    sendVerifyCode(email:string):Observable<any>{
-        this.ngxSpinner.show();
-        return this.httpClient.post<any>(environment.apiUrl+'/auth/forgetPassword' , {email}).pipe(
+    sendVerifyCode(handle:string):Observable<any>{
+        const url = environment.apiUrl + '/auth/password/forgot_password';
+  console.log("Sending request to:", url); // 👈 ده هيطبع اللينك النهائي
+        return this.httpClient.post<any>(url, {handle}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             })
@@ -43,9 +43,9 @@ export class ForgetPasswordService {
 
 
     // this is the seconde step now , this function will be used in the otp verification , and when clicking send i will send the code and the email to the server , when we use in the compoent , if everything is good , it will take us to update password page else , it will show error message
-
-    verifyResetCode(email: string, code: string): Observable<any> {
-        return this.httpClient.post<any>(environment.apiUrl + "/users/verify-code/", { email, code }).pipe(
+    // we wrote the email here handle as it wrote at the backend
+    verifyResetCode(handle: string, code: string): Observable<any> {
+        return this.httpClient.post<any>(environment.apiUrl + "/auth/password/validate_code", { handle, code }).pipe(
           catchError(err => {
             console.log("verify code error", err);
             return throwError(() => err);
@@ -67,10 +67,10 @@ export class ForgetPasswordService {
 
 
 // Update Password: After verifying OTP, user can update password
-updatePassword(email: string, newPassword: string, code: string) {
+updatePassword(handle: string, code:string, password:string, password_confirmation:string) {
     return this.httpClient.post<any>(
-      `${environment.apiUrl}/users/update-password/`,
-      { email, newPassword, code },
+      `${environment.apiUrl}/auth/password/reset_password`,
+      { handle,  code,password,password_confirmation },
       this.httpOptionAuth
     ).pipe(
       catchError(err => {
@@ -89,16 +89,16 @@ updatePassword(email: string, newPassword: string, code: string) {
 
 
      // Update HTTP options with token if available
-  private updateHttpOptions() {
-    const token =      isPlatformBrowser(this.platformId) ?localStorage.getItem('token') : '';
-    this.accessToken = token;
-    this.httpOptionAuth = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.accessToken}`
-      })
-    };
-  }
+//   private updateHttpOptions() {
+//     const token =      isPlatformBrowser(this.platformId) ?localStorage.getItem('token') : '';
+//     this.accessToken = token;
+//     this.httpOptionAuth = {
+//       headers: new HttpHeaders({
+//         'Content-Type': 'application/json',
+//         Authorization: `Bearer ${this.accessToken}`
+//       })
+//     };
+//   }
 
 
 

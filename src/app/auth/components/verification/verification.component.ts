@@ -14,12 +14,12 @@ export class VerificationComponent {
 
 
     verificationForm=new FormGroup({
-        firstNumber:new FormControl('',Validators.required),
-        secondNumber:new FormControl('',Validators.required),
-        thirdNumber:new FormControl('',Validators.required),
-        fourthNumber:new FormControl('',Validators.required),
-    })
-
+        firstNumber:new FormControl('',[Validators.required,     Validators.pattern('^[0-9]$')]),
+        secondNumber:new FormControl('',[Validators.required,     Validators.pattern('^[0-9]$')]),
+        thirdNumber:new FormControl('',[Validators.required,     Validators.pattern('^[0-9]$')]),
+        fourthNumber:new FormControl('',[Validators.required,     Validators.pattern('^[0-9]$')] ),
+    })                                                  //each input field will accept only one number
+                                                     // picking up the input fields to work on
     get firstNumber(){
         return this.verificationForm.get('firstNumber')
     }
@@ -36,17 +36,24 @@ export class VerificationComponent {
         return this.verificationForm.get('fourthNumber')
     }
 
-    email: string = '';
+
+
+
+
+
+
+
+    handle: string = '';
 
     constructor(private forgetPasswordService:ForgetPasswordService ,
         private router:Router,
         private ngxSpinner:NgxSpinnerService
     ){
-        const storedEmail = localStorage.getItem('resetEmail');
+        const storedEmail = localStorage.getItem('handle');
     if (storedEmail) {
-      this.email = storedEmail;
+      this.handle= storedEmail;
     } else {
-    //   this.router.navigate(['/authentication/forgotpassword']);
+      this.router.navigate(['/authentication/forgotpassword']);
     }
   }
 
@@ -54,7 +61,7 @@ export class VerificationComponent {
 
 
   // Auto-focus to the next field when one is filled
-  onInputChange(event: any, nextInput: HTMLInputElement) {
+   onInputChange(event: any, nextInput: HTMLInputElement) {
     if (event.target.value.length === 1 && nextInput) {
       nextInput.focus();
     }
@@ -82,7 +89,7 @@ export class VerificationComponent {
     this.ngxSpinner.show();
 
     // Call service to verify OTP code
-    this.forgetPasswordService.verifyResetCode(this.email, code).subscribe({
+    this.forgetPasswordService.verifyResetCode(this.handle, code).subscribe({
       next: (res) => {
         this.ngxSpinner.hide();
         Swal.fire({
@@ -91,6 +98,7 @@ export class VerificationComponent {
           text: 'Code is correct. You can now reset your password.'
         });
         this.router.navigateByUrl('/authentication/updatepassword');
+        localStorage.setItem("code",code)
       },
       error: (err) => {
         this.ngxSpinner.hide();

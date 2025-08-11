@@ -1,5 +1,6 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { LoginService } from '../../../auth/services/login.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -51,8 +52,8 @@ scrollTo(sectionId: string) {
 
 //   for authentication
 isLogged: boolean = false;
-constructor(private authService: LoginService) {
-  this.authService.isUserLoggedSubject.subscribe({
+constructor(private loginService: LoginService) {
+  this.loginService.isUserLoggedSubject.subscribe({
     next: (status: boolean) => {
       this.isLogged = status;
     },
@@ -63,8 +64,34 @@ constructor(private authService: LoginService) {
 }
 
 
+
 profileMenuOpen:boolean=false;
 toggleProfileMenuOpen(){
     this.profileMenuOpen=!this.profileMenuOpen;
 }
+
+
+
+logout() {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "Do you want to logout?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, logout!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.loginService.logout();
+      Swal.fire(
+        'Logged out!',
+        'You have been logged out.',
+        'success'
+      );
+    }
+  });
+}
+
+
 }
