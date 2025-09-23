@@ -1,0 +1,11 @@
+.swal2-popup.my-swal-popup {
+  height: 50px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.swal2-popup.my-swal-popup .swal2-title,
+.swal2-popup.my-swal-popup .swal2-html-container {
+  margin: 0 !important;
+  font-size: 14px !important;
+}

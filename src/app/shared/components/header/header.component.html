@@ -59,13 +59,13 @@
             </button>
                 <!-- صورة المستخدم -->
 <div class="relative" (click)="toggleProfileMenuOpen()">
-  <img [hidden]="!isLogged" src="images5.jpeg" alt="User" class="w-10 h-10 rounded-full cursor-pointer" />
+  <img [hidden]="!isLogged" [src]="userImageSrc" alt="User" class="w-12 h-12 rounded-full cursor-pointer" />
 
   <!-- القائمة بتظهر بس لما menuOpen = true -->
   <div *ngIf="profileMenuOpen" class="absolute right-0 z-[255555555558888888888] w-48 h-auto mt-2 text-left  rounded-md shadow-lg bg-green-700 ">
     <ul class="py-2">
-      <li class="px-4 py-2 cursor-pointer hover:bg-gray-100">👤 Your Profile</li>
-      <li class="px-4 py-2 cursor-pointer hover:bg-gray-100">🔒 Change Passwrod</li>
+      <li class="px-4 py-2 cursor-pointer hover:bg-gray-100"  [routerLink]="'/authentication/profile'">👤 Your Profile</li>
+      <li class="px-4 py-2 cursor-pointer hover:bg-gray-100" [routerLink]="'/authentication/changepassword'">🔒 Change Passwrod</li>
       <li class="px-4 py-2 text-red-500 cursor-pointer hover:bg-gray-100" (click)="logout()">🚪 Logout</li>
     </ul>
   </div>

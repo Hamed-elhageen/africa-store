@@ -19,11 +19,11 @@ export class ForgetPasswordService {
   ) { }
 
 
-
-//   this if the function that will send the email to the server , if everything is good at server .. it will return a code of four numbers , if there is an error , it will handeled , all of this in the component that will use the service which is now update password
+//handle is the email sent to the server
+//   this if the function that will send the email to the server , if everything is good at server .. it will return a code of four numbers , if there is an error , it will be handeled , all of this in the component that will use the service which is now update password
     sendVerifyCode(handle:string):Observable<any>{
         const url = environment.apiUrl + '/auth/password/forgot_password';
-  console.log("Sending request to:", url); // 👈 ده هيطبع اللينك النهائي
+        console.log("Sending request to:", url); // 👈 ده هيطبع اللينك النهائي
         return this.httpClient.post<any>(url, {handle}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
@@ -46,12 +46,12 @@ export class ForgetPasswordService {
     // we wrote the email here handle as it wrote at the backend
     verifyResetCode(handle: string, code: string): Observable<any> {
         return this.httpClient.post<any>(environment.apiUrl + "/auth/password/validate_code", { handle, code }).pipe(
-          catchError(err => {
+            catchError(err => {
             console.log("verify code error", err);
             return throwError(() => err);
-          })
+        })
         );
-      }
+    }
 
 
 
@@ -65,43 +65,18 @@ export class ForgetPasswordService {
 
 
 
-
+//take caaaaaaare  to pass the values to the server as the back end want , with the same names or it will give you error 422 (data not like the server want )
 // Update Password: After verifying OTP, user can update password
 updatePassword(handle: string, code:string, password:string, password_confirmation:string) {
     return this.httpClient.post<any>(
-      `${environment.apiUrl}/auth/password/reset_password`,
-      { handle,  code,password,password_confirmation },
-      this.httpOptionAuth
+        `${environment.apiUrl}/auth/password/reset_password`,
+        { handle,  code,password,password_confirmation },
+        this.httpOptionAuth
     ).pipe(
-      catchError(err => {
+        catchError(err => {
         console.error("updatePassword error", err);
         return throwError(() => err);
-      })
+    })
     );
-  }
-
-
-
-
-
-
-
-
-
-     // Update HTTP options with token if available
-//   private updateHttpOptions() {
-//     const token =      isPlatformBrowser(this.platformId) ?localStorage.getItem('token') : '';
-//     this.accessToken = token;
-//     this.httpOptionAuth = {
-//       headers: new HttpHeaders({
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${this.accessToken}`
-//       })
-//     };
-//   }
-
-
-
-
-
+}
 }

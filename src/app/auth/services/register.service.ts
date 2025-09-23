@@ -20,14 +20,12 @@ export class RegisterService {
 
 
 
-
   constructor(private httpClient:HttpClient,                                                                                                                               //this is our constructor where to inject the services like http client which is responsible for sending http requests and router which responsibel for navigation and platform id which is resposible for checking if the place where running the project in a browser to safely use local storage
     private router:Router,
     @Inject(PLATFORM_ID) private platformId: Object) {                                                                                                           //inside the constructor you initialize the properties
     this.isUserLoggedSubject=new BehaviorSubject<boolean>(this.isUserLoggedIn);                                                            //the initial value of isUserLoggedSubject will be the value of isUserLogged which is true if the token of the user in the local storage and false if it is not in the local storage
     this.updateHttpOptions();
     }
-
 
 
 
@@ -50,10 +48,20 @@ export class RegisterService {
 
 
 
+     get isUserLoggedIn():boolean{                                                                                      // i use the varaible isUserLoggedIn to give it as initial value to the isUserLogged Subject by checking the local storage , if the local storage have the token so isUserLogged in will be true and isUserLoggedSubject its value will be true and it will be published in the components that the user is logged in
+        if(isPlatformBrowser(this.platformId)){
+            return localStorage.getItem('token')?true:false;
+        }
+        return false
+    }
 
 
+
+
+
+    //when you send the verfiy code , you send the email with it (handle) , looook , here we didnt do form data , we send the email and code individuallly
     verifyUser( handle:string ,code:string) : Observable<any>{                                                                                                          //handle here is the email that will be sent with the request, and we send it with this name to be like the data the backend waiting for
-       return  this.httpClient.post<any>(environment.apiUrl+"/auth/verify_user",{handle,code}).pipe(
+        return  this.httpClient.post<any>(environment.apiUrl+"/auth/verify_user",{handle,code}).pipe(
             catchError(err=>{
                 console.log("Verification error: ", err);
         return throwError(() => err);
@@ -62,6 +70,8 @@ export class RegisterService {
     }
 
 
+
+    //this will be at verify register component
     // handleRegisterSuccess(token:string){                                                                                        //this function we will use in the verifyregister component after he writes the code sent to him and then the token is back and we will save it in the local storage (if the back end did that after verification it sends a token and by this he logins) but here no , here after you write the verification code and everything is good , it takes you to the login page to login
     //     if(isPlatformBrowser(this.platformId)){
     //         localStorage.setItem('token',token)
@@ -69,8 +79,6 @@ export class RegisterService {
     //     this.isUserLoggedSubject.next(true);                                                                                    //and update isUserLoggeSubject to be true to be updated in the components using it
     //     this.refreshToken();
     // }
-
-
 
 
 
@@ -85,26 +93,6 @@ export class RegisterService {
         this.router.navigateByUrl('/auth/login');                                                                        //and when he did the logout it navigates to the login page
     }
     //you can use this logout function or which is in the login
-
-
-
-
-
-
-
-
-
-
-
-
-    get isUserLoggedIn():boolean{                                                                                      // i use the varaible isUserLoggedIn to give it as initial value to the isUserLogged Subject by checking the local storage , if the local storage have the token so isUserLogged in will be true and isUserLoggedSubject its value will be true and it will be published in the components that the user is logged in
-        if(isPlatformBrowser(this.platformId)){
-            return localStorage.getItem('token')?true:false;
-        }
-        return false
-    }
-
-
 
 
 

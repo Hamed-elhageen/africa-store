@@ -12,6 +12,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { VerifyregisterComponent } from './components/verifyregister/verifyregister.component';
 import { NotfoundComponent } from '../shared/components/notfound/notfound.component';
+import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 
@@ -53,9 +55,16 @@ const routes: Routes = [
     path: 'success',
     component:SuccessComponent ,
   },
+    {
+    path:'changepassword',component:ChangepasswordComponent,
+  },
+   {
+    path:'profile',component:ProfileComponent,
+  },
   {
     path:'**',component:NotfoundComponent
   }
+
 ];
 @NgModule({
   declarations: [
@@ -66,6 +75,8 @@ const routes: Routes = [
     VerificationComponent,
     SuccessComponent,
     VerifyregisterComponent,
+    ChangepasswordComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

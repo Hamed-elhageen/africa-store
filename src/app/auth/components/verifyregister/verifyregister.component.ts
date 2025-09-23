@@ -21,15 +21,12 @@ verificationForm=new FormGroup({
     get firstNumber(){
         return this.verificationForm.get('firstNumber')
     }
-
     get secondNumber(){
         return this.verificationForm.get('secondNumber')
     }
-
     get thirdNumber(){
         return this.verificationForm.get('thirdNumber')
     }
-
     get fourthNumber(){
         return this.verificationForm.get('fourthNumber')
     }
@@ -37,36 +34,26 @@ verificationForm=new FormGroup({
 
 
 
-
+// take care of very important thing , you are sending the email ( handle ) with the code and the email i stored in local storage when registering
     handle: string = '';
-    constructor(private registerService:RegisterService ,
-        private router:Router,
-        private ngxSpinner:NgxSpinnerService
-    ){
+    constructor(private registerService:RegisterService ,private router:Router,private ngxSpinner:NgxSpinnerService)
+    {
         const storedEmail = localStorage.getItem('handle');
     if (storedEmail) {
-      this.handle = storedEmail;
+        this.handle = storedEmail;
     } else {
-      this.router.navigate(['/authentication/register']);
+        this.router.navigate(['/authentication/register']);
     }
-  }
-
+    }
 
 
 
   // Auto-focus to the next field when one is filled
-  onInputChange(event: any, nextInput: HTMLInputElement) {
+    onInputChange(event: any, nextInput: HTMLInputElement) {
     if (event.target.value.length === 1 && nextInput) {
-      nextInput.focus();
+        nextInput.focus();
     }
-  }
-
-
-
-
-
-
-
+    }
 
 
 
@@ -75,55 +62,35 @@ verificationForm=new FormGroup({
 
 
      // Handle form submission
-  onSubmit() {
-    if (this.verificationForm.invalid) return;
-
+ onSubmit() {
+    if (this.verificationForm.invalid) return;                                                                                                    //first check the form if all its field are good
     const code = `${this.verificationForm.value.firstNumber}${this.verificationForm.value.secondNumber}${this.verificationForm.value.thirdNumber}${this.verificationForm.value.fourthNumber}`;
-
     this.ngxSpinner.show();
-
     // Call service to verify OTP code
     this.registerService.verifyUser(this.handle, code).subscribe({
-      next: (res) => {
-        this.ngxSpinner.hide();
-        Swal.fire({
-          icon: 'success',
-          title: 'Verified',
-          text: 'تم تسجيل بياناتك بنجاح .. سجل الدخول الان'
+        next: (res) => {
+            this.ngxSpinner.hide();
+            Swal.fire({
+                icon: 'success',
+                title: 'Verified',
+                text:   `تم تسجيل بياناتك بنجاح , سجل دخولك الان`
         });
         this.router.navigateByUrl('/authentication/login');
         localStorage.removeItem('handle');                              //after verification delete the register email from the local storage
-      },
-      error: (err) => {
-        this.ngxSpinner.hide();
-        Swal.fire({
-          icon: 'error',
-          title: 'Invalid Code',
-          text: err?.error?.message || 'The code is incorrect. Please try again.'
-        });
-      }
+        },
+        error: (err) => {
+            this.ngxSpinner.hide();
+            Swal.fire({
+  icon: 'error',
+  title: 'Invalid Code',
+  text: 'الكود الذى ادخلته غير صحيح',
+  width: '550px',
+  padding: '1.5em',
+  customClass: {
+    popup: 'my-swal-popup'
+  },
+});
+        }
     });
-  }
-
-
-
-
-
-
-
-
-
-
-
-//   handleSuccess(response:any){
-//     this.ngxSpinner.hide()
-//     const token = response.token;
-// this.registerService.handleRegisterSuccess(token)
-
-// Swal.fire({
-//     icon: 'success',
-//     title: 'تم التسجيل بنجاح'
-//   });
-// }
-
+}
 }

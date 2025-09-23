@@ -4,7 +4,16 @@ import { ForgetPasswordService } from '../../services/forget-password.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
-
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    customClass: {
+  popup: 'my-toast-style'
+    },
+    showConfirmButton: false,
+    timer: 4000,
+    timerProgressBar: false,
+  });
 @Component({
   selector: 'app-forgotpassword',
   templateUrl: './forgotpassword.component.html',
@@ -12,13 +21,11 @@ import { Router } from '@angular/router';
 })
 export class ForgotpasswordComponent {
 email:string=""
-
 // for authentication **********************************************************************
+            constructor(private forgetPasswordService:ForgetPasswordService,public ngxSpinner :NgxSpinnerService,public router: Router)
+            {
 
-            constructor(private forgetPasswordService:ForgetPasswordService,
-                public ngxSpinner :NgxSpinnerService,
-                public router: Router
-            ){}
+            }
 
 forgetPassword=new FormGroup({                                                                                                                                                            //for picking up the form and its input fields
         emailInput:new FormControl('',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
@@ -31,9 +38,6 @@ forgetPassword=new FormGroup({                                                  
 
 
 
-
-
-
     onSubmit(){
         if (this.forgetPassword.invalid) return;
         const handle=this.emailInput?.value ?? '';
@@ -41,27 +45,44 @@ forgetPassword=new FormGroup({                                                  
         this.forgetPasswordService.sendVerifyCode(handle).subscribe({
             next: () => {
                 this.ngxSpinner.hide();
-              Swal.fire({
-                icon: 'success',
-                title: 'تم إرسال الكود',
-                text: 'تم إرسال كود التحقق إلى بريدك الإلكتروني.',
-              });
-                      // Store the email temporarily (maybe in localStorage or a shared service)
+                Toast.fire({
+                    icon: 'success',
+                    title: 'تم إرسال الكود',
+                    text: 'تم إرسال كود التحقق إلى بريدك الإلكتروني.',
+                });
+                      // Store the email the user entered in the local storage since we will send it again with the new password and password confirmation
                 localStorage.setItem('handle',handle);
-                this.router.navigateByUrl("/authentication/verification")
+                this.router.navigateByUrl("/authentication/verification")                                               //go to the OTP  verification page
             },
+
             error: (err) => {
                 this.ngxSpinner.hide();
                 console.log("the error is :" +err)
-              Swal.fire({
-                icon: 'error',
-                title: 'خطأ',
-                text:  'حدث خطأ ما. حاول مرة أخرى.',
-              });
-            }
-          });
+                this.handleError(err)
         }
+    })
+}
 
+    private handleError(error: any) {
+        let message = 'حدث خطأ غير متوقع، حاول مرة أخرى لاحقًا';
+    if (error.status === 0) {
+        message = 'لا يوجد اتصال بالسيرفر، تحقق من الإنترنت';
+    } else if (error.status === 400) {
+        message = 'البريد الإلكتروني غير صحيح';
+    } else if (error.status === 404 || error.status==422) {
+        message = 'البريد الإلكتروني غير مسجل';
+    }
+    else if (error.status === 500) {
+        message = 'مشكلة في السيرفر، حاول لاحقًا';
+    }
+
+    Toast.fire({
+    icon: 'error',
+    title: 'فشل الإرسال',
+    text: message,
+    confirmButtonText: 'حسناً'
+ });
+}
     }
 
 

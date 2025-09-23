@@ -1,13 +1,15 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { LoginService } from '../../../auth/services/login.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { ProfileService } from '../../../auth/services/profile.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent  implements OnInit{
     // for opeining the menue in mobile
     isMenuOpen = false;
     // for making position stiky after scrlling
@@ -23,6 +25,10 @@ export class HeaderComponent {
   closeMenu(): void {
     this.isMenuOpen = false;
   }
+
+
+
+
 
 
 //   function to make the sticky header with another styles  when scrolling a part  of pixels
@@ -52,7 +58,7 @@ scrollTo(sectionId: string) {
 
 //   for authentication
 isLogged: boolean = false;
-constructor(private loginService: LoginService) {
+constructor(private loginService: LoginService , private router : Router , private profileservice:ProfileService) {
   this.loginService.isUserLoggedSubject.subscribe({
     next: (status: boolean) => {
       this.isLogged = status;
@@ -62,6 +68,20 @@ constructor(private loginService: LoginService) {
     }
   });
 }
+    ngOnInit(): void {
+this.getUserData()
+    }
+    userImageSrc!:string;
+    getUserData(){
+        return this.profileservice.showProfile().subscribe({
+            next:(response)=>{
+                this.userImageSrc=response.data.avatar;
+            },
+            error:(err)=>{
+                console.log("error now ",err)
+            }
+        })
+    }
 
 
 
@@ -89,9 +109,12 @@ logout() {
         'You have been logged out.',
         'success'
       );
+                  this.router.navigateByUrl('/authentication/login');                                                                                           // and now navigate him to the login page again
+
     }
   });
 }
-
-
 }
+
+
+

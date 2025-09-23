@@ -1,26 +1,22 @@
 <div class="relative h-screen px-8 bg-center bg-cover mybackground">
-  <div class="content absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center w-[350px] md:w-[480px]">
-    <img src="colorful-logo.svg" alt="logo" class="mx-auto ">
-    <h3 class="mb-4">OTP Verification</h3>
-    <p class="mb-8 text-lg text-[#A5A5A5]">We have sent a verification code to your email<button [routerLink]="'/authentication/forgotpassword'" class="text-main_color" >Wrong Email?</button> </p>
-    <form [formGroup]="verificationForm" (ngSubmit)="onSubmit()">
-    <div class="flex w-full gap-6 mb-8">
-      <input formControlName="firstNumber" type="text" name="number" class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[63px] md:w-[102px] h-[54px] text-white text-center text-[20px]"  maxlength="1"
-         (input)="onInputChange($event, secondInput)">
-      <input formControlName="secondNumber" type="text" name="number" class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[63px] md:w-[102px] h-[54px]  text-white text-center text-[20px]"  maxlength="1"
-         (input)="onInputChange($event, thirdInput)" #secondInput>
-      <input formControlName="thirdNumber" type="text" name="number" class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[63px] md:w-[102px] h-[54px]  text-white text-center text-[20px]"  maxlength="1"
-         (input)="onInputChange($event, fourthInput)" #thirdInput>
-      <input formControlName="fourthNumber" type="text" name="number" class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[63px] md:w-[102px] h-[54px]  text-white text-center text-[20px]" maxlength="1" #fourthInput>
-    </div>
-
-
-          <button type="submit"  class="flex items-center justify-center w-full px-6 py-4 mb-8 font-bold text-white rounded-lg bg-main_color">Submit</button>
+    <div class="content absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center w-[350px] md:w-[480px]">
+        <img src="colorful-logo.svg" alt="logo" class="mx-auto ">
+        <h3 class="mb-4">OTP Verification</h3>
+        <p class="mb-8 text-lg text-[#A5A5A5]">We have sent a verification code to your email<button [routerLink]="'/authentication/forgotpassword'" class="text-main_color" >Wrong Email?</button> </p>
+        <form [formGroup]="verificationForm" (ngSubmit)="onSubmit()">
+            <div class="flex w-full gap-6 mb-8">
+                <input autofocus formControlName="firstNumber" type="text" name="number" class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[63px] md:w-[102px] h-[54px] text-white text-center text-[20px]"  maxlength="1"
+                    (input)="onInputChange($event, secondInput)">
+                <input formControlName="secondNumber" type="text" name="number" class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[63px] md:w-[102px] h-[54px]  text-white text-center text-[20px]"  maxlength="1"
+                    (input)="onInputChange($event, thirdInput)" #secondInput>
+                <input formControlName="thirdNumber" type="text" name="number" class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[63px] md:w-[102px] h-[54px]  text-white text-center text-[20px]"  maxlength="1"
+                    (input)="onInputChange($event, fourthInput)" #thirdInput>
+                <input formControlName="fourthNumber" type="text" name="number" class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[63px] md:w-[102px] h-[54px]  text-white text-center text-[20px]" maxlength="1" #fourthInput>
+            </div>
+                    <small *ngIf=" firstNumber?.errors?.['pattern']||secondNumber?.errors?.['pattern'] ||thirdNumber?.errors?.['pattern']||fourthNumber?.errors?.['pattern']" class="block mb-5 text-red-700"><i class="mr-1 fa-solid fa-circle-exclamation"></i>the code should be only Numbers</small>
+            <button type="submit"  class="flex items-center justify-center w-full px-6 py-4 mb-8 font-bold text-white transition-all duration-500 rounded-lg bg-main_color hover:bg-green-700">Submit</button>
         </form>
 
-
-  </div>
-  <p class="text-[#A5A5A5] absolute bottom-6 left-[50%] translate-x-[-50%]  text-sm">© 2024 Africa Store . Alrights reserved. <span class="text-white">Terms & Conditions</span> <span class="text-white">Privacy Policy</span></p>
-
-
-  </div>
+    </div>
+    <p class="text-[#A5A5A5] absolute bottom-6 left-[50%] translate-x-[-50%]  text-sm">© 2024 Africa Store . Alrights reserved. <span class="text-white">Terms & Conditions</span> <span class="text-white">Privacy Policy</span></p>
+</div>

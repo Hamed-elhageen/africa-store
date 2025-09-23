@@ -1,229 +1,113 @@
 <div class="grid h-screen grid-cols-1 md:grid-cols-2">
     <!-- the left side with its background -->
-    <div
-        class="relative items-end hidden h-full px-12 py-20 text-white align-text-bottom md:grid-cols-1 mybackground md:flex bg-[90%_70%]"
-    >
-        <div
-            class="z-3 absolute top-0 left-0 w-full h-full overlay bg-[linear-gradient(to_right,_#1a191904,_#00000045,_#000000ef),_linear-gradient(to_bottom,_#1a191904,_#00000045,_#000000ef)]"
-        ></div>
-        <div class="absolute z-5">
-            <img src="small-logo.svg" alt="small logo" />
-            <h1 class="my-6">Amazing Platform!</h1>
-            <p class="mb-6 text-lg font-normal text-[#F1F2F4]">
-                Africa Store is the best website to get your sports equipment
-            </p>
-            <div class="flex gap-5">
-                <img src="maged-mostafa.png" alt="maged mostafa" />
-                <div>
-                    <h6>Majed Mostafa</h6>
-                    <p class="text-[12px] font-medium">
-                        CEO of Africa Store
-                        <span class="text-[#FFFFFF80]">Digita creator</span>
-                    </p>
+    <div class="relative items-end hidden h-full px-12 py-10 text-white align-text-bottom md:grid-cols-1 mybackground md:flex bg-[90%_70%]">
+        <div class="z-3 absolute top-0 left-0 w-full h-full overlay bg-[linear-gradient(to_right,_#1a191904,_#00000045,_#000000ef),_linear-gradient(to_bottom,_#1a191904,_#00000045,_#000000ef)]"></div>
+            <div class="absolute z-5">
+                <img src="small-logo.svg" alt="small logo" />
+                <h1 class="my-6">Amazing Platform!</h1>
+                <p class="mb-6 text-lg font-normal text-[#F1F2F4]">Africa Store is the best website to get your sports equipment</p>
+                <div class="flex gap-5">
+                    <img src="maged-mostafa.png" alt="maged mostafa" />
+                    <div>
+                        <h6>Majed Mostafa</h6>
+                        <p class="text-[12px] font-medium"> CEO of Africa Store <span class="text-[#FFFFFF80]"> Digita creator</span></p>
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
 
     <!-- right side -->
-    <!-- tow input fields and there labels -->
-    <div class="relative text-white md:grid-cols-1 md:mt-5">
-        <div
-            class="md:w-[480px] w-[400px] mx-auto my-auto absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] px-5 md:px-0"
-        >
-            <img
-                src="small-logo.svg"
-                alt="small logo"
-                class="block mx-auto mt-[100px] mb-3 md:hidden"
-            />
+    <div class="relative text-white md:grid-cols-1 ">
+        <div class="md:w-[63%] w-full mx-auto my-auto absolute md:top-1/2 md:translate-y-[-50%] left-1/2 translate-x-[-50%] px-5 ">
+            <img src="colorful-logo.svg" alt="small logo" class="block mx-auto mt-[3vh] mb-3 md:hidden w-60"/>
+            <!-- <h2>Create your account now </h2> -->
             <!-- <h3 class="mb-3 text-left leading-[125%] md:mt-16 mt-0">
                 Buy shirts for your favourite team easily now!
             </h3>
             <p class="text-lg mb-7">Get started today!</p> -->
 
             <form [formGroup]="registerForm" (ngSubmit)="register()">
-                <label
-                    for="name "
-                    class="flex items-center gap-1 mb-3 text-sm font-semibold"
-                    ><i class="mr-1 text-white fa-solid fa-user"></i>User Name
-                    <span class="text-[#E03137] text-l">*</span></label
-                >
-                <input
-                    formControlName="nameInput"
-                    type="text"
-                    name="name"
-                    id="name"
+
+                <label for="name " class="flex items-center gap-1 mb-3 text-sm font-semibold"><i class="mr-1 text-white fa-solid fa-user"></i>User Name<span class="text-[#E03137] text-l">*</span></label>
+                <input formControlName="nameInput"type="text"name="name"id="name"
                     class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-3 rounded-[10px]"
                     placeholder="Input your  name"
-                    [ngClass]="{
-                        'border-red-700':
-                            nameInput?.touched && nameInput?.invalid
-                    }"
+                    [ngClass]="{'border-red-700':nameInput?.touched && nameInput?.invalid}"
                 />
                 <small  *ngIf="nameInput?.touched && nameInput?.errors?.['required']"class="mb-5 text-red-700">
                     <i class="mr-1 fa-solid fa-circle-exclamation"></i>sorry,you must add your name to register
                 </small>
+                <small  *ngIf="nameInput?.touched && nameInput?.errors?.['pattern']"class="mb-5 text-red-700">
+                    <i class="mr-1 fa-solid fa-circle-exclamation"></i>User name must be only letters
+                </small>
+
+
 
                 <label for="email "class="flex items-center gap-1 mt-5 mb-3 text-sm font-semibold"><i class="mr-1 text-white fa-solid fa-envelope"></i> Email address <span class="text-[#E03137] text-l">*</span></label>
-                <input
-                    formControlName="emailInput"
-                    type="email"
-                    name="email"
-                    id="email"
-                    class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-3 rounded-[10px]"
+                <input formControlName="emailInput" type="email"  name="email"  id="email"
+                    class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-2 md:mb-3 rounded-[10px]"
                     placeholder="Input your registered email"
-                    [ngClass]="{
-                        'border-red-700':
-                            emailInput?.touched && emailInput?.invalid
-                    }"
+                    [ngClass]="{'border-red-700': emailInput?.touched && emailInput?.invalid}"
                 />
-                <small
-                    *ngIf="emailInput?.touched && emailInput?.errors?.['required']"
-                    class="mb-5 text-red-700"
-                >
-                    <i class="mr-1 fa-solid fa-circle-exclamation"></i>sorry,
-                    you must add your email to register
+                <small *ngIf="emailInput?.touched && emailInput?.errors?.['required']" class="mb-5 text-red-700">
+                    <i class="mr-1 fa-solid fa-circle-exclamation"></i>Sorry, you must add your email to register
                 </small>
-
-                <small
-                    *ngIf="emailInput?.touched && emailInput?.errors?.['pattern']"
-                    class="text-red-700"
-                >
-                    <i class="mb-5 mr-1 fa-solid fa-circle-exclamation"></i
-                    >Please enter a valid email address.
+                <small *ngIf="emailInput?.touched && emailInput?.errors?.['pattern']"class="text-red-700">
+                    <i class="mb-5 mr-1 fa-solid fa-circle-exclamation"></i>Please enter a valid email address.
                 </small>
 
 
 
-                <label for="password"class="flex items-center gap-1 mt-5 mb-3 text-sm font-semibold">
-                    <i class="mr-1 text-white fa-solid fa-key"></i>Password
-                    <span class="text-[#E03137] text-l">*</span></label
-                >
+                <label for="password"class="flex items-center gap-1 mt-5 mb-3 text-sm font-semibold"> <i class="mr-1 text-white fa-solid fa-key"></i>Password<span class="text-[#E03137] text-l">*</span></label>
                 <div class="relative flex justify-between">
                     <input formControlName="passwordInput" [type]="passwordVisibility ? 'text' : 'password'" name="password" id="password"
-                        class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-6 rounded-[10px]"
+                        class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-2 md:mb-3 rounded-[10px]"
                         placeholder="Input your password account" />
-                    <i
-                        class="absolute cursor-pointer fa-solid fa-eye-slash top-5 right-5"
-                        (click)="togglePasswordVisibility()"
-                        [hidden]="!passwordVisibility"
-                    ></i>
-                    <i
-                        class="absolute cursor-pointer fa-solid fa-eye top-5 right-5"
-                        (click)="togglePasswordVisibility()"
-                        [hidden]="passwordVisibility"
-                    ></i>
+                        <i  class="absolute cursor-pointer fa-solid fa-eye-slash top-5 right-5"  (click)="togglePasswordVisibility()" [hidden]="!passwordVisibility"></i>
+                        <i class="absolute cursor-pointer fa-solid fa-eye top-5 right-5" (click)="togglePasswordVisibility()"[hidden]="passwordVisibility"></i>
                 </div>
-                <small
-                    *ngIf="passwordInput?.touched && passwordInput?.errors?.['required']"
-                    class="mb-5 text-red-700"
-                >
-                    <i class="mr-1 fa-solid fa-circle-exclamation"></i>you must
-                    enter a password to register
+                <small *ngIf="passwordInput?.touched && passwordInput?.errors?.['required']"class="mb-5 text-red-700">
+                    <i class="mr-1 fa-solid fa-circle-exclamation"></i>you must enter a password to register
                 </small>
 
-                <small
-                    *ngIf="passwordInput?.touched && passwordInput?.errors?.['pattern']"
-                    class="mb-5 mr-6 text-red-700"
-                >
-                    <i class="mr-1 fa-solid fa-circle-exclamation"></i>password
-                    should be at least 8 letters and contain at least one capital and small letters
+                <small *ngIf="passwordInput?.touched && passwordInput?.errors?.['pattern']"class="mb-5 mr-6 text-red-700">
+                    <i class="mr-1 fa-solid fa-circle-exclamation"></i>password should be at least 8 letters and contain at least one capital and small letters
                 </small>
 
 
 
 
-
-
-<label for="confirmpassword"class="flex items-center gap-1 mt-5 mb-3 text-sm font-semibold">
-                    <i class="mr-1 text-white fa-solid fa-key"></i>Confirm Password
-                    <span class="text-[#E03137] text-l">*</span></label
-                >
+                <label for="confirmpassword"class="flex items-center gap-1 mt-5 mb-3 text-sm font-semibold"><i class="mr-1 text-white fa-solid fa-key"></i>Confirm Password<span class="text-[#E03137] text-l">*</span></label>
                 <div class="relative flex justify-between">
                     <input formControlName="confirmPasswordInput" [type]="passwordVisibility ? 'text' : 'password'" name="password" id="confirmpassword"
                         class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-6 rounded-[10px]"
                         placeholder="Input your password again" />
-                    <i
-                        class="absolute cursor-pointer fa-solid fa-eye-slash top-5 right-5"
-                        (click)="togglePasswordVisibility()"
-                        [hidden]="!passwordVisibility"
-                    ></i>
-                    <i
-                        class="absolute cursor-pointer fa-solid fa-eye top-5 right-5"
-                        (click)="togglePasswordVisibility()"
-                        [hidden]="passwordVisibility"
-                    ></i>
+                    <i class="absolute cursor-pointer fa-solid fa-eye-slash top-5 right-5"(click)="togglePasswordVisibility()" [hidden]="!passwordVisibility"></i>
+                    <i class="absolute cursor-pointer fa-solid fa-eye top-5 right-5"(click)="togglePasswordVisibility()"[hidden]="passwordVisibility"></i>
                 </div>
-                <small
-                    *ngIf="passwordInput?.touched && passwordInput?.errors?.['required']"
-                    class="mb-5 text-red-700"
-                >
-                    <i class="mr-1 fa-solid fa-circle-exclamation"></i>you must
-                    enter your password again to confirm registeration
+                <small *ngIf="passwordInput?.touched && passwordInput?.errors?.['required']"class="mb-5 text-red-700">
+                    <i class="mr-1 fa-solid fa-circle-exclamation"></i>you must enter your password again to confirm registeration
                 </small>
 
-                <small
-                    *ngIf="confirmPasswordInput?.touched && registerForm?.errors?.['passwordsMismatch']"
-                    class="mb-5 mr-6 text-red-700"
-                >
+                <small *ngIf="confirmPasswordInput?.touched && registerForm?.errors?.['passwordsMismatch']"class="mb-5 mr-6 text-red-700">
                     <i class="mr-1 fa-solid fa-circle-exclamation"></i>Password didn't match
                 </small>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
                 <!-- remember me and forgot password -->
                 <div class="flex items-center justify-between mb-8">
                     <label class="inline-flex items-center">
-                        <input
-                            type="checkbox"
-                            class="w-5 h-5 text-green-600 bg-gray-500 border-gray-300 rounded-lg focus:ring-green-500"
-                        />
+                        <input  type="checkbox"class="w-5 h-5 text-green-600 bg-gray-500 border-gray-300 rounded-lg focus:ring-green-500"/>
                         <span class="ml-2 text-[#A5A5A5]">Remember Me</span>
                     </label>
-                    <button
-                        [routerLink]="'/authentication/forgotpassword'"
-                        class="text-sm font-medium text-main_color"
-                    >
+                    <button [routerLink]="'/authentication/forgotpassword'"class="text-sm font-bold text-main_color">
                         Forgot Password?
                     </button>
                 </div>
                 <!-- login button -->
-                <button
-                    type="submit"
-                    class="flex items-center justify-center w-full px-6 py-4 mb-8 font-bold text-white rounded-lg bg-main_color"
-
-                >
+                <button type="submit"
+                    class="flex items-center justify-center w-full px-6 py-4 mb-8 font-bold text-white transition-all duration-500 rounded-lg bg-main_color hover:bg-green-700 ">
                     Create account
                 </button>
             </form>
@@ -248,18 +132,13 @@
                 </button>
             </div> -->
 
-            <p class="w-full text-center">
-                Already have an account ?
-                <button
-                    [routerLink]="'/authentication/login'"
-                    class="text-main_color"
-                >
+            <p class="w-full text-center text-[14px] md:text-[16px] font-semibold">Already have an account ?
+                <button [routerLink]="'/authentication/login'" class="font-bold text-main_color">
                     Login here
                 </button>
             </p>
-
-            <p class="text-[#A5A5A5] relative top-16 text-sm">
-                © 2024 Africa Store . Alrights reserved.
+            <p class="text-[#A5A5A5] relative top-[3vh] md:top-[7vh] text-center   text-sm">
+                © 2025 Africa Store . Alrights reserved.
                 <span class="text-white">Terms & Conditions</span>
                 <span class="text-white">Privacy Policy</span>
             </p>
