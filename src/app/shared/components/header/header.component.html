@@ -62,11 +62,11 @@
   <img [hidden]="!isLogged" [src]="userImageSrc" alt="User" class="w-12 h-12 rounded-full cursor-pointer" />
 
   <!-- القائمة بتظهر بس لما menuOpen = true -->
-  <div *ngIf="profileMenuOpen" class="absolute right-0 z-[255555555558888888888] w-48 h-auto mt-2 text-left  rounded-md shadow-lg bg-green-700 ">
+  <div *ngIf="profileMenuOpen" class="absolute right-0 z-[255555555558888888888] w-56 h-auto mt-2 text-left  rounded-md shadow-lg bg-main_color duration-300" @dropdownAnimation>
     <ul class="py-2">
-      <li class="px-4 py-2 cursor-pointer hover:bg-gray-100"  [routerLink]="'/authentication/profile'">👤 Your Profile</li>
-      <li class="px-4 py-2 cursor-pointer hover:bg-gray-100" [routerLink]="'/authentication/changepassword'">🔒 Change Passwrod</li>
-      <li class="px-4 py-2 text-red-500 cursor-pointer hover:bg-gray-100" (click)="logout()">🚪 Logout</li>
+      <li class="px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110 "  [routerLink]="'/authentication/profile'">👤 Your Profile</li>
+      <li class="w-full px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110" [routerLink]="'/authentication/changepassword'">🔒 Change Passwrod</li>
+      <li class="px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110" (click)="logout()">🚪 Logout</li>
     </ul>
   </div>
 </div>

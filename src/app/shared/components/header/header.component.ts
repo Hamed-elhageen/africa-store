@@ -3,11 +3,24 @@ import { LoginService } from '../../../auth/services/login.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ProfileService } from '../../../auth/services/profile.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
+animations: [
+  trigger('dropdownAnimation', [
+    transition(':enter', [
+      style({ opacity: 0, transform: 'translateY(20px)' }), // تبدأ تحت وبـ opacity 0
+      animate('250ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })) // تطلع لفوق وتبان
+    ]),
+    transition(':leave', [
+      animate('200ms ease-in', style({ opacity: 0, transform: 'translateY(20px)' })) // ترجع لتحت وتختفي
+    ])
+  ])
+]
+
 })
 export class HeaderComponent  implements OnInit{
     // for opeining the menue in mobile
