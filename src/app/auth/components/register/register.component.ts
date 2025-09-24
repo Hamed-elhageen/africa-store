@@ -48,8 +48,6 @@ export class RegisterComponent implements OnInit{
 );
     }
 
-
-
     //custom validator for password matching
 passwordsMatchValidator(): ValidatorFn {
   return (group: AbstractControl): { [key: string]: any } | null => {
@@ -75,10 +73,6 @@ passwordsMatchValidator(): ValidatorFn {
     get confirmPasswordInput() {
         return this.registerForm.get('confirmPasswordInput');
     }
-
-
-
-
 
 
 
@@ -127,8 +121,6 @@ passwordsMatchValidator(): ValidatorFn {
 
 
 
-
-
 createFormData(){                                                                                         //this is the function to create the data writen in the form by the user as object and will be passed in the post reqeust
     const formData=new FormData;
     formData.append('name',this.nameInput?.value || '')
@@ -141,22 +133,6 @@ createFormData(){                                                               
 
 
 
-
-
-
-
-
-
-// handleSuccess(response:any){
-//     this.ngxSpinner.hide()
-//     const token = response.access;
-// this.registerService.handleRegisterSuccess(token);
-
-// Toast.fire({
-//     icon: 'success',
-//     title: 'تم التسجيل بنجاح'
-//   });
-// }
 
 
 
@@ -192,13 +168,6 @@ handleError(error: any) {
 
   Toast.fire({ icon: 'error', title: this.errorMessage });
 }
-
-
-
-
-
-
-
 
 
 

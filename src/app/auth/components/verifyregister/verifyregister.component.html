@@ -1,7 +1,7 @@
 <div class="relative h-screen px-8 bg-center bg-cover mybackground">
     <div class="content absolute top-[40%] md:top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center w-[90%] md:w-[30%]">
         <img src="colorful-logo.svg" alt="logo" class="mx-auto ">
-        <h3 class="text-white my-7">OTP Verification</h3>
+        <h3 class="text-white my-7 verify">OTP Verification </h3>
         <p class="mb-12 text-lg text-[#A5A5A5]">We have sent a verification code to your email <button [routerLink]="'/authentication/forgotpassword'" class="font-bold text-main_color" > , Wrong Email?</button> </p>
     <form [formGroup]="verificationForm" (ngSubmit)="onSubmit()" >
     <div class="flex justify-center w-full gap-6 mb-12">
@@ -19,5 +19,5 @@
         <button type="submit"  class="flex items-center justify-center w-full px-6 py-4 mb-8 font-bold text-white transition-all duration-500 rounded-lg bg-main_color hover:bg-green-700">Submit</button>
     </form>
 </div>
-    <p class="text-[#A5A5A5] absolute bottom-14 w-full  md:bottom-6 text-center left-[50%] translate-x-[-50%]  text-sm">© 2025 Africa Store . Alrights reserved. <span class="text-white">Terms & Conditions</span> <span class="text-white">Privacy Policy</span></p>
+    <p class="text-[#A5A5A5] absolute bottom-5 w-full  md:bottom-6 text-center left-[50%] translate-x-[-50%]  text-sm">© 2025 Africa Store . Alrights reserved. <span class="text-white">Terms & Conditions</span> <span class="text-white">Privacy Policy</span></p>
 </div>

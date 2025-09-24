@@ -50,6 +50,7 @@ get email(){
 get password(){
     return this.loginForm.get('password')
 }
+//now you can use those fields directly
 
 
 
@@ -60,7 +61,7 @@ get password(){
     }
 
 
-                                                                                                                                         //as i said to you in the service , first you will send the request with the login function and after that you handle the error function of success fucntion , and here you need create from data funciton to send the input fields values as form data with the login request
+                                                                                                                                         //as i said to you in the service , first you will send the request with the login function and after that you handle the error function and success fucntion , and here you need create from data funciton to send the input fields values as form data with the login request
 
     login(){                                                                                                                          //this is the login function which i will use when clicking on login button and it will use the service and the fucntions inside it to handle the login request process and sending the token to the local storage after it using handle success function , but first , i check on the form , if theere are no errors an all its input fields are valid , execute what iside it
         if(this.loginForm.valid){                                                                                            //cecking of the form is valid , means checking that all its input fields are valid

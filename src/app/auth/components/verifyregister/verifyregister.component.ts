@@ -4,7 +4,16 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { RegisterService } from '../../services/register.service';
-
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    customClass: {
+  popup: 'my-toast-style'
+    },
+    showConfirmButton: false,
+    timer: 4000,
+    timerProgressBar: false,
+  });
 @Component({
   selector: 'app-verifyregister',
   templateUrl: './verifyregister.component.html',
@@ -70,9 +79,8 @@ verificationForm=new FormGroup({
     this.registerService.verifyUser(this.handle, code).subscribe({
         next: (res) => {
             this.ngxSpinner.hide();
-            Swal.fire({
+            Toast.fire({
                 icon: 'success',
-                title: 'Verified',
                 text:   `تم تسجيل بياناتك بنجاح , سجل دخولك الان`
         });
         this.router.navigateByUrl('/authentication/login');
@@ -80,15 +88,10 @@ verificationForm=new FormGroup({
         },
         error: (err) => {
             this.ngxSpinner.hide();
-            Swal.fire({
+            Toast.fire({
   icon: 'error',
-  title: 'Invalid Code',
   text: 'الكود الذى ادخلته غير صحيح',
-  width: '550px',
-  padding: '1.5em',
-  customClass: {
-    popup: 'my-swal-popup'
-  },
+
 });
         }
     });

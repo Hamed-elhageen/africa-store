@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';                                                                //httpClient service for using request methods (get , post , delete , patch , update) , httpHeaders we use it to be sent with each request to the server and it contains the token that tell the server that this user who is doing the aciton
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';                                                                  //for using injection
 import { Router } from '@angular/router';                                                                                                      //for using navigate and go to pages after specific action
-import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';                                                   // we use those from rxjs to deal with things than change and i subscribe on it to see this change
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';                                                   // we use those from rxjs to deal with things that change and i subscribe on it to see this change
 import { environment } from '../../environments/environment';                                                                     //where the api link is found
 import { isPlatformBrowser } from '@angular/common';                                                                             // for checking if you are on browser or server
 
@@ -20,8 +20,8 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
      , private router:Router ,                                                                                                                                //injecting router for using navigate , to navigate to landing page if login succeeded or navigate to the dashboard if he was admin
     @Inject(PLATFORM_ID) private platformId: Object )                                                                                    //i injected this service to use it to check if i am runing the project on the browser or not , because if i wasnt running it on browser it will be an problem with local storage  , so i do this check to safely use local storage.)
     {
-        this.isUserLoggedSubject=new BehaviorSubject<boolean>(this.isUserLoggedIn);                                //•	Initializes isUserLoggedSubject with the current login state (true or false). but we here didnt put it directly true or false , we put it in a varirable "isUserLoggedIn" which its value is determined under based on finding the token in local storage or not
-        this.updateHttpOptions();                                                                                                                         //• Sets up HTTP headers with the current token (if available). this means that you update http options and any request will be send from now , will send with your token , as your are a user now , not needing to do login again, so it sends the token with the http headers and now he updates it with this token
+        this.isUserLoggedSubject=new BehaviorSubject<boolean>(this.isUserLoggedIn);                                //•	Initializes isUserLoggedSubject with the current login state (true or false). but we here didnt put it directly true or false , we put it in a varirable "isUserLoggedIn" which its value is determined under based on finding the token in local storage or not , take care (the behaviour subject should be initialized with initial value)
+        this.updateHttpOptions();                                                                                                                         //• Sets up HTTP headers with the current token (if available). this means that you update http options and any request will be send from now , will send with your token , as your are a user now , not needing to do login again, so it sends the token with the http headers and now he updates it with this token.
     }
 
 
@@ -41,13 +41,13 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
 
 
 
-                                                                                                                                                                        //now you did the login function and handled if there were and error , now handle if the login succeeded , "if you send the post request and the backend checks it and the user data sent are true" and passed to you a token , what i should do after that :
+                                                                                                                                                                        //now you did the login function and handled if there were any error , now handle if the login succeeded , "if you send the post request and the backend checks it and the user data sent are true" and passed to you a token , what i should do after that :
     handleLoginSuccess(token:string){                                                                                                                //this function will be used after  returning the token  ,  after that you pass the token to this funciton as parameter , and it will be added to local storage
         if(isPlatformBrowser(this.platformId)){                                                                                                      // in your login component you will use the login function with its error handling and after it you will use this function to save the toke retured from the back end
             localStorage.setItem('token',token)
         }
         this.isUserLoggedSubject.next(true);                                                                                                        //and now update the value of the isUserLoggedSubject with true after the user had logged /////dont forget that isUserLoggedSubjec is a behaviour subject that can act as observer and send data like now making his value true after logging and savign the token of the user to the local storage
-        this.refreshToken();                                                                                                                                  // Refresh headers with new token
+        this.refreshToken();                                                                                                                                  // Refresh headers with new token as he is a user now
     }
 
 
@@ -67,7 +67,7 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
 
 
 
-    get isUserLoggedIn() :boolean{                                                                                                        //isUserLoggedIn which i used in isUserLoggedSubject wont be true or false by luck , it will be true or false based on finding the token of the user in the local storage
+    get isUserLoggedIn() :boolean{                                                                                                        //isUserLoggedIn which i used in isUserLoggedSubject as initial value wont be true or false by luck , it will be true or false based on finding the token of the user in the local storage
         if(isPlatformBrowser(this.platformId)){
                 return localStorage.getItem('token')? true:false;                                                                  //if the token of the user in the local storage , so isloggedin will be true , and vice verca
     }
@@ -81,8 +81,7 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
 
 isLoggedInObservable(): Observable<boolean> {                                                                              //making isLoggedSubject to act as observable here
     return this.isUserLoggedSubject.asObservable();                                                                          //"by this function isUserloggedSubject will act as observable which i can subscribe on its value if it chaned , and based on its value i can do alot of actions such hiding log in and logout button and so on "
-
-  }
+ }
 
 
 
