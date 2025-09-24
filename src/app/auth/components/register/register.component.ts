@@ -39,8 +39,11 @@ export class RegisterComponent implements OnInit{
     this.registerForm = new FormGroup({
         nameInput: new FormControl('', [Validators.required,Validators.pattern(/^(?![0-9]+$)[a-zA-Z\u0600-\u06FF\s]+$/)]),
         emailInput: new FormControl('', [Validators.required, Validators.pattern( /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),]),
-        passwordInput: new FormControl('', [Validators.required,Validators.pattern( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),]),
-        confirmPasswordInput: new FormControl('', [Validators.required,Validators.pattern( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),]),
+        passwordInput: new FormControl('', [  Validators.required,    Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/),
+]),
+        confirmPasswordInput: new FormControl('', [Validators.required,   Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/),
+
+]),
     },
     {
     validators: this.passwordsMatchValidator(),                                                                        //the validator of the match and mismatch between password input and confirm password input , is put on the form level not on the confirm password validators , because it compare between tow fields and when you put it inside one of this , it wont see the another
@@ -100,14 +103,13 @@ passwordsMatchValidator(): ValidatorFn {
                     localStorage.setItem('handle', this.registerForm.value.emailInput);                                        //now i save the email to the local storage because i will use it in the verify register to send with the code (not needing to put input field and take it from the user again => best user experience)
                     Toast.fire({
                         icon: 'success',
-                        title: ' تم ارسال رمز التاكيد لبريدك الالكترونى'
+                        title: `${response.message}`
                     });
 
 
 
                 },
                 error:(err)=>{
-                    console.log("Registration error details:", err.error);
                     if (err.error?.message === 'validation errors') {
                         console.log("Validation issues:", err.error.data);
                   }
@@ -168,12 +170,6 @@ handleError(error: any) {
 
   Toast.fire({ icon: 'error', title: this.errorMessage });
 }
-
-
-
-
-
-
 
 
 

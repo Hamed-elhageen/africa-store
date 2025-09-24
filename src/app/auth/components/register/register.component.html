@@ -17,9 +17,9 @@
     </div>
 
     <!-- right side -->
-    <div class="relative text-white ">
-        <div class="md:w-[63%] w-full mx-auto my-auto absolute md:top-1/2 md:translate-y-[-50%] left-1/2 translate-x-[-50%] px-5 ">
-            <img src="colorful-logo.svg" alt="small logo" class="block mx-auto mt-[3vh] mb-3 md:hidden w-56"/>
+    <div class="relative min-h-screen text-white ">
+            <div class="md:w-[63%] w-full mx-auto absolute top-1 md:top-10 left-1/2 translate-x-[-50%] px-5 py-6">
+            <img src="colorful-logo.svg" alt="small logo" class="block mx-auto mb-3 md:hidden w-52"/>
             <h3 class="w-full mb-8 text-left createaccount">Create your account now !</h3>
             <!-- <h3 class="mb-3 text-left leading-[125%] md:mt-16 mt-0">
                 Buy shirts for your favourite team easily now!
@@ -28,28 +28,28 @@
 
             <form [formGroup]="registerForm" (ngSubmit)="register()" >
 
-                <label for="name " class="flex items-center gap-1 mb-3 text-sm font-semibold"><i class="mr-1 text-white fa-solid fa-user"></i>User Name<span class="text-[#E03137] text-l">*</span></label>
+                <label for="name " class="flex items-center gap-1 mb-2 text-sm font-semibold"><i class="mr-1 text-white fa-solid fa-user"></i>User Name<span class="text-[#E03137] text-l">*</span></label>
                 <input formControlName="nameInput"type="text"name="name"id="name"
-                    class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-2 md:py-3 mb-3 rounded-[10px]"
+                    class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-3 md:py-4   rounded-[10px]"
                     placeholder="Input your  name"
                     [ngClass]="{'border-red-700':nameInput?.touched && nameInput?.invalid}"
                 />
-                <small  *ngIf="nameInput?.touched && nameInput?.errors?.['required']"class="mb-5 text-red-700">
+                <small  *ngIf="nameInput?.touched && nameInput?.errors?.['required']"class="text-red-700 ">
                     <i class="mr-1 fa-solid fa-circle-exclamation"></i>sorry,you must add your name to register
                 </small>
-                <small  *ngIf="nameInput?.touched && nameInput?.errors?.['pattern']"class="mb-5 text-red-700">
+                <small  *ngIf="nameInput?.touched && nameInput?.errors?.['pattern']"class="text-red-700 ">
                     <i class="mr-1 fa-solid fa-circle-exclamation"></i>User name must be only letters
                 </small>
 
 
 
-                <label for="email "class="flex items-center gap-1 mt-5 mb-3 text-sm font-semibold"><i class="mr-1 text-white fa-solid fa-envelope"></i> Email address <span class="text-[#E03137] text-l">*</span></label>
+                <label for="email "class="flex items-center gap-1 mt-3 mb-2 text-sm font-semibold md:mt-6 "><i class="mr-1 text-white fa-solid fa-envelope"></i> Email address <span class="text-[#E03137] text-l">*</span></label>
                 <input formControlName="emailInput" type="email"  name="email"  id="email"
-                    class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-2 md:py-3  mb-2 md:mb-3 rounded-[10px]"
+                    class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-3 md:py-4   rounded-[10px]"
                     placeholder="Input your registered email"
                     [ngClass]="{'border-red-700': emailInput?.touched && emailInput?.invalid}"
                 />
-                <small *ngIf="emailInput?.touched && emailInput?.errors?.['required']" class="mb-5 text-red-700">
+                <small *ngIf="emailInput?.touched && emailInput?.errors?.['required']" class="text-red-700 ">
                     <i class="mr-1 fa-solid fa-circle-exclamation"></i>Sorry, you must add your email to register
                 </small>
                 <small *ngIf="emailInput?.touched && emailInput?.errors?.['pattern']"class="text-red-700">
@@ -58,34 +58,39 @@
 
 
 
-                <label for="password"class="flex items-center gap-1 mt-5 mb-3 text-sm font-semibold"> <i class="mr-1 text-white fa-solid fa-key"></i>Password<span class="text-[#E03137] text-l">*</span></label>
+                <label for="password"class="flex items-center gap-1 mt-3 mb-2 text-sm font-semibold md:mt-6"> <i class="mr-1 text-white fa-solid fa-key"></i>Password<span class="text-[#E03137] text-l">*</span></label>
                 <div class="relative flex justify-between">
                     <input formControlName="passwordInput" [type]="passwordVisibility ? 'text' : 'password'" name="password" id="password"
-                        class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-2 md:py-3 mb-2 md:mb-3 rounded-[10px]"
-                        placeholder="Input your password account" />
+                        class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-3 md:py-4  rounded-[10px]"
+                        placeholder="Input your password account"
+                        [ngClass]="{'border-red-700': passwordInput?.touched && passwordInput?.invalid}"
+                        />
+
                         <i  class="absolute cursor-pointer fa-solid fa-eye-slash top-1/2 translate-y-[-50%] right-5"  (click)="togglePasswordVisibility()" [hidden]="!passwordVisibility"></i>
                         <i class="absolute cursor-pointer fa-solid fa-eye top-1/2 translate-y-[-50%] right-5" (click)="togglePasswordVisibility()"[hidden]="passwordVisibility"></i>
                 </div>
-                <small *ngIf="passwordInput?.touched && passwordInput?.errors?.['required']"class="mb-5 text-red-700">
+                <small *ngIf="passwordInput?.touched && passwordInput?.errors?.['required']"class="text-red-700 ">
                     <i class="mr-1 fa-solid fa-circle-exclamation"></i>You must enter a password to register.
                 </small>
 
-                <small *ngIf="passwordInput?.touched && passwordInput?.errors?.['pattern']"class="mb-5 mr-6 text-red-700">
+                <small *ngIf="passwordInput?.touched && passwordInput?.errors?.['pattern']"class="text-red-700 ">
                     <i class="mr-1 fa-solid fa-circle-exclamation"></i>Password should be at least 8 letters and contain at least one capital and small letters.
                 </small>
 
 
 
 
-                <label for="confirmpassword"class="flex items-center gap-1 mt-5 mb-3 text-sm font-semibold"><i class="mr-1 text-white fa-solid fa-key"></i>Confirm Password<span class="text-[#E03137] text-l">*</span></label>
+                <label for="confirmpassword"class="flex items-center gap-1 mt-3 mb-2 text-sm font-semibold md:mt-6"><i class="mr-1 text-white fa-solid fa-key"></i>Confirm Password<span class="text-[#E03137] text-l">*</span></label>
                 <div class="relative flex justify-between">
                     <input formControlName="confirmPasswordInput" [type]="passwordVisibility ? 'text' : 'password'" name="password" id="confirmpassword"
-                        class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-2 md:py-3  mb-2 md:mb-3 rounded-[10px]"
-                        placeholder="Input your password again" />
+                        class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-3 md:py-4   rounded-[10px]"
+                        placeholder="Input your password again"
+                        [ngClass]="{'border-red-700': confirmPasswordInput?.touched && confirmPasswordInput?.invalid}"
+                        />
                     <i class="absolute cursor-pointer fa-solid fa-eye-slash top-5 right-5"(click)="togglePasswordVisibility()" [hidden]="!passwordVisibility"></i>
                     <i class="absolute cursor-pointer fa-solid fa-eye top-5 right-5"(click)="togglePasswordVisibility()"[hidden]="passwordVisibility"></i>
                 </div>
-                <small *ngIf="passwordInput?.touched && passwordInput?.errors?.['required']"class="mb-5 text-red-700">
+                <small *ngIf="confirmPasswordInput?.touched && confirmPasswordInput?.errors?.['required']"class="text-red-700 ">
                     <i class="mr-1 fa-solid fa-circle-exclamation"></i>You must enter your password again to confirm registeration
                 </small>
 
@@ -96,7 +101,7 @@
 
 
                 <!-- remember me and forgot password -->
-                <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center justify-between mt-5 mb-8 md:mt-8">
                     <label class="inline-flex items-center">
                         <input  type="checkbox"class="w-5 h-5 text-green-600 bg-gray-500 border-gray-300 rounded-lg focus:ring-green-500"/>
                         <span class="ml-2 text-[#A5A5A5]">Remember Me</span>
