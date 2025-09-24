@@ -26,7 +26,7 @@
             </h3>
             <p class="text-lg mb-7">Get started today!</p> -->
 
-            <form [formGroup]="registerForm" (ngSubmit)="register()">
+            <form [formGroup]="registerForm" (ngSubmit)="register()" >
 
                 <label for="name " class="flex items-center gap-1 mb-3 text-sm font-semibold"><i class="mr-1 text-white fa-solid fa-user"></i>User Name<span class="text-[#E03137] text-l">*</span></label>
                 <input formControlName="nameInput"type="text"name="name"id="name"
@@ -63,8 +63,8 @@
                     <input formControlName="passwordInput" [type]="passwordVisibility ? 'text' : 'password'" name="password" id="password"
                         class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-2 md:py-3 mb-2 md:mb-3 rounded-[10px]"
                         placeholder="Input your password account" />
-                        <i  class="absolute cursor-pointer fa-solid fa-eye-slash top-5 right-5"  (click)="togglePasswordVisibility()" [hidden]="!passwordVisibility"></i>
-                        <i class="absolute cursor-pointer fa-solid fa-eye top-5 right-5" (click)="togglePasswordVisibility()"[hidden]="passwordVisibility"></i>
+                        <i  class="absolute cursor-pointer fa-solid fa-eye-slash top-1/2 translate-y-[-50%] right-5"  (click)="togglePasswordVisibility()" [hidden]="!passwordVisibility"></i>
+                        <i class="absolute cursor-pointer fa-solid fa-eye top-1/2 translate-y-[-50%] right-5" (click)="togglePasswordVisibility()"[hidden]="passwordVisibility"></i>
                 </div>
                 <small *ngIf="passwordInput?.touched && passwordInput?.errors?.['required']"class="mb-5 text-red-700">
                     <i class="mr-1 fa-solid fa-circle-exclamation"></i>You must enter a password to register.
