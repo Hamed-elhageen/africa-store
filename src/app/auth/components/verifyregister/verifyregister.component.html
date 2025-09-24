@@ -5,15 +5,23 @@
         <p class="mb-12 text-lg text-[#A5A5A5]">We have sent a verification code to your email <button [routerLink]="'/authentication/forgotpassword'" class="font-bold text-main_color" > , Wrong Email?</button> </p>
     <form [formGroup]="verificationForm" (ngSubmit)="onSubmit()" >
     <div class="flex justify-center w-full gap-6 mb-12">
-        <input autofocus formControlName="firstNumber" type="text" name="number" class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[15%] h-[54px] text-white text-center text-[20px]"  maxlength="1"
-            (input)="onInputChange($event, secondInput)">
-            <!-- here when the user enters any value in the input field , the function of onInputChange will be executed , and i give it the event and the name of the next input field which is declared with the template varaible  -->
-        <input formControlName="secondNumber" type="text" name="number" class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[15%] h-[54px]  text-white text-center text-[20px]"  maxlength="1"
-            (input)="onInputChange($event, thirdInput)" #secondInput>
-        <input formControlName="thirdNumber" type="text" name="number" class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[15%] h-[54px]  text-white text-center text-[20px]"  maxlength="1"
-            (input)="onInputChange($event, fourthInput)" #thirdInput>
-        <input formControlName="fourthNumber" type="text" name="number" class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[15%] h-[54px]  text-white text-center text-[20px]" maxlength="1" #fourthInput>
-    </div>
+  <input autofocus formControlName="firstNumber" type="text" maxlength="1"
+    class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[15%] h-[54px] text-white text-center text-[20px]"
+    (input)="onInputChange($event, secondInput, null)" #firstInput>
+
+  <input formControlName="secondNumber" type="text" maxlength="1"
+    class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[15%] h-[54px] text-white text-center text-[20px]"
+    (input)="onInputChange($event, thirdInput, firstInput)" #secondInput>
+
+  <input formControlName="thirdNumber" type="text" maxlength="1"
+    class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[15%] h-[54px] text-white text-center text-[20px]"
+    (input)="onInputChange($event, fourthInput, secondInput)" #thirdInput>
+
+  <input formControlName="fourthNumber" type="text" maxlength="1"
+    class="bg-transparent rounded-[10px] border-[#FFFFFF] border w-[15%] h-[54px] text-white text-center text-[20px]"
+    (input)="onInputChange($event, null, thirdInput)" #fourthInput>
+</div>
+
         <small *ngIf=" firstNumber?.errors?.['pattern']||secondNumber?.errors?.['pattern'] ||thirdNumber?.errors?.['pattern']||fourthNumber?.errors?.['pattern']" class="block mb-5 text-red-700"><i class="mr-1 fa-solid fa-circle-exclamation"></i>the code should be only Numbers</small>
 
         <button type="submit"  class="flex items-center justify-center w-full px-6 py-4 mb-8 font-bold text-white transition-all duration-500 rounded-lg bg-main_color hover:bg-green-700">Submit</button>

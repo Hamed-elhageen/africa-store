@@ -98,11 +98,14 @@ get password(){
         this.spinner.hide();
         const token =response.data.token;                                                                              //now you picked up the token back from the backend
         this.loginService.handleLoginSuccess(token);                                                      //this function was taking the token and save it to the local storage
-        this.router.navigate(['/']); // Go to homepage
         Toast.fire({
             icon: 'success',
-            title: 'تم تسجيل الدخول بنجااااااح'
+            title: `${response.message}`
         });
+
+setTimeout(() => {
+        this.router.navigate(['/']); // Go to homepage
+      }, 1000);
     }
 
 
@@ -116,9 +119,9 @@ get password(){
         this.spinner.hide();
         if (error instanceof HttpErrorResponse) {                                                                                                         //here iam checking if the error comes from the server when response
             if (error.status === 401) {
-            this.errorMessage = 'يوجد خطأ فى اسم المستخدم او كلمه السر';
+            this.errorMessage = `${error?.error?.message}`||'يوجد خطأ فى اسم المستخدم او كلمه السر';
             } else if (error.status === 500) {
-            this.errorMessage = 'حدث خطأ في الخادم';
+            this.errorMessage =`${error?.error?.message}`|| 'حدث خطأ في الخادم';
             } else if (error.status === 0) {
             this.errorMessage = 'حدث خطأ في الانترنت';
             } else {

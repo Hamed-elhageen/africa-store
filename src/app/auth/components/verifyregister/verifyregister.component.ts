@@ -58,11 +58,25 @@ verificationForm=new FormGroup({
 
 
   // Auto-focus to the next field when one is filled
-    onInputChange(event: any, nextInput: HTMLInputElement) {
-    if (event.target.value.length === 1 && nextInput) {
-        nextInput.focus();
-    }
-    }
+    // Auto-focus to the next or previous field
+onInputChange(
+  event: any,
+  nextInput?: HTMLInputElement | null,
+  prevInput?: HTMLInputElement | null
+) {
+  const input = event.target as HTMLInputElement;
+
+  // لو كتب رقم → يروح للبعده
+  if (input.value.length === 1 && nextInput) {
+    nextInput.focus();
+  }
+
+  // لو مسح (Backspace) → يرجع للقبله
+  if (input.value.length === 0 && prevInput) {
+    prevInput.focus();
+  }
+}
+
 
 
 
@@ -81,7 +95,7 @@ verificationForm=new FormGroup({
             this.ngxSpinner.hide();
             Toast.fire({
                 icon: 'success',
-                text:   `تم تسجيل بياناتك بنجاح , سجل دخولك الان`
+                text:   `${res.message}`
         });
         this.router.navigateByUrl('/authentication/login');
         localStorage.removeItem('handle');                              //after verification delete the register email from the local storage
@@ -90,7 +104,7 @@ verificationForm=new FormGroup({
             this.ngxSpinner.hide();
             Toast.fire({
   icon: 'error',
-  text: 'الكود الذى ادخلته غير صحيح',
+  text: `${err?.error?.data?.code}`,
 
 });
         }
