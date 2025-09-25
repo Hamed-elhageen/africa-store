@@ -4,7 +4,13 @@ import { ChangepasswordService } from '../../services/changepassword.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
-
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 6000,
+    timerProgressBar: false,
+  });
 @Component({
   selector: 'app-changepassword',
   templateUrl: './changepassword.component.html',
@@ -114,21 +120,20 @@ constructor(private changePasswordService:ChangepasswordService,
         this.ngxSpinner.show();
 
         this.changePasswordService.changePassword(old_password, new_password,new_password_confirmation).subscribe({
-          next: () => {
+          next: (resonse) => {
             this.ngxSpinner.hide();
-            Swal.fire({
+            Toast.fire({
               icon: 'success',
-              title: 'Password changed',
-              text: 'Your password has been successfully changed.'
+              title: `${resonse.message}`,
             });
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/authentication/login');
+            localStorage.removeItem("token");
           },
           error: (err) => {
             this.ngxSpinner.hide();
-            Swal.fire({
+            Toast.fire({
               icon: 'error',
-              title: 'Update Failed',
-              text: err?.error?.message || 'There was a problem changing your password.'
+              title: err?.error?.data?.old_password || 'There was a problem changing your password.'
             });
           }
         });

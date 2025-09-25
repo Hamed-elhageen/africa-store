@@ -10,12 +10,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 // Will be used to show login success or error messages.
 const Toast = Swal.mixin({
     toast: true,
-    position: 'top-end',
+    position: 'center',
     customClass: {
   popup: 'my-toast-style'
     },
     showConfirmButton: false,
-    timer: 4000,
+    timer: 3000,
     timerProgressBar: false,
   });
 
@@ -103,9 +103,7 @@ get password(){
             title: `${response.message}`
         });
 
-setTimeout(() => {
         this.router.navigate(['/']); // Go to homepage
-      }, 1000);
     }
 
 

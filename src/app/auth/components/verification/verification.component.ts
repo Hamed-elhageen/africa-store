@@ -58,11 +58,23 @@ export class VerificationComponent {
 
 
   // Auto-focus to the next field when one is filled
-    onInputChange(event: any, nextInput: HTMLInputElement) {
-    if (event.target.value.length === 1 && nextInput) {
-        nextInput.focus();
-    }
-    }
+  onInputChange(
+  event: any,
+  nextInput?: HTMLInputElement | null,
+  prevInput?: HTMLInputElement | null
+) {
+  const input = event.target as HTMLInputElement;
+
+  // لو كتب رقم → يروح للبعده
+  if (input.value.length === 1 && nextInput) {
+    nextInput.focus();
+  }
+
+  // لو مسح (Backspace) → يرجع للقبله
+  if (input.value.length === 0 && prevInput) {
+    prevInput.focus();
+  }
+}
 
 
 
@@ -80,8 +92,7 @@ export class VerificationComponent {
             this.ngxSpinner.hide();
             Toast.fire({
                 icon: 'success',
-                title: 'Verified',
-                text: 'تم تأكيد الكود الخاص بك , يمكنك تغير كلمة المرور الان .'
+                title: `${res.message}`,
         });
         this.router.navigateByUrl('/authentication/updatepassword');
         localStorage.setItem("code",code)                                                                                                          //here we saved the code to be sent with the password and new password
@@ -90,8 +101,7 @@ export class VerificationComponent {
         this.ngxSpinner.hide();
         Toast.fire({
           icon: 'error',
-          title: 'Invalid Code',
-          text:  'الكود الذى ادخلته غير صحيح'
+          title: `${err?.error?.data?.code}`,
         });
       }
     });

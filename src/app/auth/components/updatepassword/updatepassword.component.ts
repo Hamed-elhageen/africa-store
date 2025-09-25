@@ -83,12 +83,11 @@ ngOnInit(): void {
         this.ngxSpinner.show();
 
         this.forgotPasswordService.updatePassword(this.handle, this.code ,password ,password_confirmation).subscribe({                         //in our back end and most of backends you should send the code and email which are stored in local storage from the previos tow stages and after that we will remove them from local storage
-            next: () => {
+            next: (response) => {
                 this.ngxSpinner.hide();
                 Toast.fire({
                     icon: 'success',
-                    title: 'Password Updated',
-                    text: 'تم تغيير كلمة المرور بنجاح , سجل دخولك الان'
+                    title: `${response.message}`,
             });
             this.router.navigateByUrl('/authentication/success');
             localStorage.removeItem("handle")
@@ -98,8 +97,7 @@ ngOnInit(): void {
                 this.ngxSpinner.hide();
             Toast.fire({
                 icon: 'error',
-                title: 'Update Failed',
-                text: err?.error?.message || 'حدث خطأ اثناء تغيير كلمة المرور'
+                title: err?.error?.data?.user || 'حدث خطأ اثناء تغيير كلمة المرور'
             });
             }
         });

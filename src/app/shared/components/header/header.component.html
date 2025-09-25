@@ -108,7 +108,7 @@
               <button  [ngClass]="{'hidden':isLogged}" [routerLink]="'/authentication/register'" class="flex items-center justify-center flex-1 py-2 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">sign up</button>
 
               <button [ngClass]="{'hidden':!isLogged}" [routerLink]="'/authentication/login'" class=" bg-main_color flex items-center justify-center flex-1 py-2 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]" (click)="logout()">logout</button>
-              <button  [ngClass]="{'hidden':!isLogged}" [routerLink]="'/authentication/register'" class="flex items-center justify-center flex-1 py-2 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">Your Profile</button>
+              <button  [ngClass]="{'hidden':!isLogged}" [routerLink]="'/authentication/profile'" class="flex items-center justify-center flex-1 py-2 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">Your Profile</button>
 
             </li>
 

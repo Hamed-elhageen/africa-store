@@ -43,12 +43,11 @@ forgetPassword=new FormGroup({                                                  
         const handle=this.emailInput?.value ?? '';
         this.ngxSpinner.show()
         this.forgetPasswordService.sendVerifyCode(handle).subscribe({
-            next: () => {
+            next: (response) => {
                 this.ngxSpinner.hide();
                 Toast.fire({
                     icon: 'success',
-                    title: 'تم إرسال الكود',
-                    text: 'تم إرسال كود التحقق إلى بريدك الإلكتروني.',
+                    title: `${response.message}`,
                 });
                       // Store the email the user entered in the local storage since we will send it again with the new password and password confirmation
                 localStorage.setItem('handle',handle);
@@ -57,7 +56,6 @@ forgetPassword=new FormGroup({                                                  
 
             error: (err) => {
                 this.ngxSpinner.hide();
-                console.log("the error is :" +err)
                 this.handleError(err)
         }
     })
@@ -66,20 +64,19 @@ forgetPassword=new FormGroup({                                                  
     private handleError(error: any) {
         let message = 'حدث خطأ غير متوقع، حاول مرة أخرى لاحقًا';
     if (error.status === 0) {
-        message = 'لا يوجد اتصال بالسيرفر، تحقق من الإنترنت';
+        message ='لا يوجد اتصال بالسيرفر، تحقق من الإنترنت';
     } else if (error.status === 400) {
-        message = 'البريد الإلكتروني غير صحيح';
+        message = `${error?.error?.data?.user}` ||'البريد الإلكتروني غير صحيح';
     } else if (error.status === 404 || error.status==422) {
-        message = 'البريد الإلكتروني غير مسجل';
+        message = `${error?.error?.data?.user}` ||'البريد الإلكتروني غير مسجل';
     }
     else if (error.status === 500) {
-        message = 'مشكلة في السيرفر، حاول لاحقًا';
+        message =`${error?.error?.data?.user}` || 'مشكلة في السيرفر، حاول لاحقًا';
     }
 
     Toast.fire({
     icon: 'error',
-    title: 'فشل الإرسال',
-    text: message,
+    title: message,
     confirmButtonText: 'حسناً'
  });
 }
