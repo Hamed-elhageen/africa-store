@@ -73,7 +73,7 @@ export class ProfileComponent implements OnInit {
       this.profileservice.changeUserDetails(formData).subscribe({
         next: (response) => {
           this.spinner.hide();
-          Toast.fire({ icon: 'success', title: 'تم تحديث بياناتك بنجاح' });
+          Toast.fire({ icon: 'success', title: `${response.message}` });
           this.router.navigate(['/']);
         },
         error: (err) => {
@@ -99,7 +99,7 @@ export class ProfileComponent implements OnInit {
 
 
 
-  //for handling the image and to appear in the circle when choose it 
+  //for handling the image and to appear in the circle when choose it
   // صورة الـ Preview
   onFileSelected(event: any) {
     if (event.target.files && event.target.files.length > 0) {

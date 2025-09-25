@@ -15,7 +15,11 @@ li {
 }
 
 .myshadow{
-    box-shadow: 0px 5px 15px 1px rgb(5, 52, 5)
+    box-shadow: 0px 2px 15px 1px rgb(5, 52, 5)
+}
+.standingshadow{
+        box-shadow: 0px 2px 9px 0px rgb(86, 86, 86)
+
 }
 
 /* Add this if you want smooth animations */
@@ -38,7 +42,9 @@ li {
 
 
 
-
+.swal2-container {
+  z-index: 2147483647 !important; /* أعلى قيمة مسموح بيها */
+}
 
 
 

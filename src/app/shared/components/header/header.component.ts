@@ -84,7 +84,7 @@ constructor(private loginService: LoginService , private router : Router , priva
     ngOnInit(): void {
 this.getUserData()
     }
-    userImageSrc!:string;
+    userImageSrc!:string;                                                    //which i will put in the html
     getUserData(){
         return this.profileservice.showProfile().subscribe({
             next:(response)=>{
@@ -112,7 +112,7 @@ logout() {
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
+    cancelButtonColor: '#1C6F37',
     confirmButtonText: 'Yes, logout!'
   }).then((result) => {
     if (result.isConfirmed) {

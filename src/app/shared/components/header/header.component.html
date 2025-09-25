@@ -22,7 +22,11 @@
                     alt="Menu"
                     class="w-12 transition-transform duration-300 ease-in-out"
                     [ngClass]="{'rotate-45': isMenuOpen}"
+                    [hidden]="isLogged"
                 >
+                <img [hidden]="!isLogged" [src]="userImageSrc" alt="User" class="w-12 h-12 rounded-full cursor-pointer" />
+
+
         </button>
         </div>
 
@@ -71,15 +75,14 @@
   </div>
 </div>
 
-        </div>
+    </div>
 
         <!-- صورة المستخدم -->
 
 
         <!-- Mobile menu with animation -->
         <div
-            class="w-full overflow-hidden mobile-menu-animation-wrapper md:hidden"
-            [class.max-h-0]="!isMenuOpen"
+            class="w-full overflow-hidden mobile-menu-animation-wrapper md:hidden absolute top-[100%] left-[50%] translate-x-[-50%] standingshadow" [ngClass]="{ 'bg-black': !isScrolled, 'bg-gray-950': isScrolled, 'myshadow': isScrolled }"             [class.max-h-0]="!isMenuOpen"
             [class.max-h-[500px]]="isMenuOpen"
         >
             <div
@@ -107,10 +110,11 @@
               <button [ngClass]="{'hidden':isLogged}" [routerLink]="'/authentication/login'" class=" bg-main_color flex items-center justify-center flex-1 py-2 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">login</button>
               <button  [ngClass]="{'hidden':isLogged}" [routerLink]="'/authentication/register'" class="flex items-center justify-center flex-1 py-2 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">sign up</button>
 
-              <button [ngClass]="{'hidden':!isLogged}" [routerLink]="'/authentication/login'" class=" bg-main_color flex items-center justify-center flex-1 py-2 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]" (click)="logout()">logout</button>
+              <button [ngClass]="{'hidden':!isLogged}"  class=" bg-main_color flex items-center justify-center flex-1 py-2 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]" (click)="logout()">logout</button>
               <button  [ngClass]="{'hidden':!isLogged}" [routerLink]="'/authentication/profile'" class="flex items-center justify-center flex-1 py-2 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">Your Profile</button>
 
-            </li>
+        </li>
+            <button  [ngClass]="{'hidden':!isLogged}" [routerLink]="'/authentication/changepassword'" class=" block   py-2 text-white transition-all duration-300  bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03] w-[88%] relative left-1/2 translate-x-[-50%] text-center mb-3">Change Password</button>
 
           </ul>
         </div>
