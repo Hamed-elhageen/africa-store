@@ -1,6 +1,6 @@
 @tailwind components;
 li {
-  @apply flex items-center justify-between h-full px-6 py-4 font-bold transition-all duration-200;
+  @apply flex items-center justify-between h-full px-4 py-4 font-bold transition-all duration-200;
 }
 @layer components {
   .active {
@@ -29,8 +29,12 @@ li {
   display: block;
 }
 
-.scrolled{
-    background-color: black;
-    box-shadow: 0px 2px 18px 2px rgb(20, 20, 20);
 
+
+/////////////////////////////////////////*****************************************************************
+.myshadow{
+    box-shadow: 0px 2px 15px 1px rgb(5, 52, 5)
+}
+.standingshadow{
+        box-shadow: 0px 2px 9px 0px rgb(86, 86, 86)
 }

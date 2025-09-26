@@ -1,5 +1,5 @@
 <!-- full width black header -->
-<nav class="sticky top-0 left-0 mb-10 z-[1000000000] bg-black transition-all duration-300	shadow-green-400 "  [ngClass]="{ 'transparent': !isScrolled, 'bg-gray-950': isScrolled, 'myshadow': isScrolled }"  >
+<nav class="sticky top-0 left-0 mb-10 z-[20] bg-black transition-all duration-300	shadow-green-400 "  [ngClass]="{ 'transparent': !isScrolled, 'bg-gray-950': isScrolled, 'myshadow': isScrolled }"  >
     <!-- the header with the container -->
     <div class="container flex flex-wrap items-center justify-between p-4 mx-auto text-white">
         <!-- logo -->
@@ -66,7 +66,7 @@
   <img [hidden]="!isLogged" [src]="userImageSrc" alt="User" class="w-12 h-12 rounded-full cursor-pointer" />
 
   <!-- القائمة بتظهر بس لما menuOpen = true -->
-  <div *ngIf="profileMenuOpen" class="absolute right-0 z-[255555555558888888888] w-56 h-auto mt-2 text-left  rounded-md shadow-lg bg-main_color duration-300" @dropdownAnimation>
+  <div *ngIf="profileMenuOpen" class="absolute right-0 z-[40] w-56 h-auto mt-2 text-left  rounded-md shadow-lg bg-main_color duration-300" @dropdownAnimation>
     <ul class="py-2">
       <li class="px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110 "  [routerLink]="'/authentication/profile'">👤 Your Profile</li>
       <li class="w-full px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110" [routerLink]="'/authentication/changepassword'">🔒 Change Passwrod</li>
@@ -82,7 +82,8 @@
 
         <!-- Mobile menu with animation -->
         <div
-            class="w-full overflow-hidden mobile-menu-animation-wrapper md:hidden absolute top-[100%] left-[50%] translate-x-[-50%] standingshadow" [ngClass]="{ 'bg-black': !isScrolled, 'bg-gray-950': isScrolled, 'myshadow': isScrolled }"             [class.max-h-0]="!isMenuOpen"
+            class="w-full overflow-hidden mobile-menu-animation-wrapper md:hidden absolute top-[100%] left-[50%] translate-x-[-50%] standingshadow z-[30]" [ngClass]="{ 'bg-black': !isScrolled, 'bg-gray-950': isScrolled, 'myshadow': isScrolled }"
+            [class.max-h-0]="!isMenuOpen"
             [class.max-h-[500px]]="isMenuOpen"
         >
             <div

@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 // Will be used to show login success or error messages.
 const Toast = Swal.mixin({
     toast: true,
-    position: 'center',
+    position: 'top-end',
     customClass: {
   popup: 'my-toast-style'
     },
