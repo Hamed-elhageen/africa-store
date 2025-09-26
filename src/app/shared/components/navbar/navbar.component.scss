@@ -6,9 +6,7 @@ li {
   .active {
     @apply border-b border-main_color text-main_color;
   }
-  li:hover {
-    @apply active; /* Apply active styles on hover */
-  }
+
 }
 
 

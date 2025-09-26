@@ -42,7 +42,19 @@
                 Sign Up
             </button>
 
-            <img  [ngClass]="{ 'hidden': !isLogged }" [src]="userImgae" alt="profile" class="w-[52px] h-[52px] rounded-full">
+<!-- the user image -->
+ <div class="relative left-5" (click)="toggleProfileMenuOpen()">
+  <img [hidden]="!isLogged" [src]="userImage" alt="User" class="rounded-full cursor-pointer w-14" />
+
+  <!-- القائمة بتظهر بس لما menuOpen = true -->
+  <div *ngIf="profileMenuOpen" class="absolute text-white -right-5 z-[40] w-56 h-auto mt-2 text-left  rounded-md shadow-lg bg-main_color duration-300" @dropdownAnimation>
+    <ul class="py-2">
+      <li class="px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110 "  [routerLink]="'/authentication/profile'">👤 Your Profile</li>
+      <li class="w-full px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110" [routerLink]="'/authentication/changepassword'">🔒 Change Passwrod</li>
+      <li class="px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110" (click)="logout()">🚪 Logout</li>
+    </ul>
+  </div>
+</div>
         </div>
 
 
@@ -58,7 +70,7 @@
                 <!-- the logo and x  -->
                 <div class="flex items-center justify-between px-2 mb-7">
                             <img src="header-logo.svg" alt="Logo" />
-                            <img  [routerLink]="'/authentication/profile'"  [ngClass]="{ 'hidden': !isLogged }" [src]="userImgae" alt="profile" class="w-[52px] h-[52px] rounded-full">
+                            <img  [routerLink]="'/authentication/profile'"  [ngClass]="{ 'hidden': !isLogged }" [src]="userImage" alt="profile" class="w-[52px] h-[52px] rounded-full">
                             <img src="imageshamooda.png" alt="quit" class="w-6 rounded-full" (click)="closeMenu()" [ngClass]="{ 'hidden': isLogged }">
                 </div>
                 <!-- search in mobile menue -->
@@ -72,7 +84,7 @@
                 <ul class="flex flex-col py-4 font-bold text-white">
                     @for (item of allcategories; track $index) {
                         <li>
-                            <a href="#" aria-current="page">{{item.categoryName}}</a>
+                            <a href="#" aria-current="page"                 (click)="scrollTo(item.categoryName)" (click)="closeMenu()"             routerLink="/home/mainhome">{{item.categoryName}}</a>
                         </li>
                     }
                         <li class="flex items-center justify-between mt-auto md:hidden relative translate-y-[300%]" [ngClass]="{'gap-4':!isLogged}">
