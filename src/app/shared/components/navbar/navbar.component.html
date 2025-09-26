@@ -59,7 +59,7 @@
                 <div class="flex items-center justify-between px-2 mb-7">
                             <img src="header-logo.svg" alt="Logo" />
                             <img  [routerLink]="'/authentication/profile'"  [ngClass]="{ 'hidden': !isLogged }" [src]="userImgae" alt="profile" class="w-[52px] h-[52px] rounded-full">
-                            <img src="imageshamooda.png" alt="quit" class="w-6 rounded-full" (click)="closeMenu()" [ngClass]="{ 'hidden': isLogged }">      
+                            <img src="imageshamooda.png" alt="quit" class="w-6 rounded-full" (click)="closeMenu()" [ngClass]="{ 'hidden': isLogged }">
                 </div>
                 <!-- search in mobile menue -->
                 <div class=" px-4 py-2 bg-white md:flex md:order-1 rounded-[100px] w-[95%] items-center justify-between hover:scale-[1.02] transition-transform duration-300 ease-in-out" id="desktop-nav">
@@ -97,7 +97,8 @@
             </a>
         @for (item of allcategories; track $index) {
             <a
-                routerLink="/allcategories/maincategories"
+            routerLink="/home/mainhome"
+                (click)="scrollTo(item.categoryName)"
                 class="relative py-2 transition-all duration-300 hover:scale-105 hover:opacity-90 ">
                 {{item.categoryName}}
             </a>
