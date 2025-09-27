@@ -1,10 +1,23 @@
 <nav class="sticky top-0 left-0  z-[20] bg-black transition-all duration-300	shadow-green-400 "  [ngClass]="{ 'transparent': !isScrolled, 'bg-gray-950': isScrolled, 'myshadow': isScrolled }"  >
     <div class="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto text-white md:p-2">
+        <!-- logo in both -->
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="header-logo.svg" alt="Logo" />
         </a>
+            <!-- cart and favorites in mobile -->
+        <div class="flex items-center gap-1 md:order-2 md:hidden">
+        <button [routerLink]="'/cart/maincart'" class="flex items-center justify-center p-1   w-[45px] h-[45px] relative hover:scale-105 active:scale-95 transition-transform duration-200 ease-in-out">
+                <i class="text-[28px] text-white transition-transform duration-200 fa-solid fa-cart-arrow-down hover:scale-110" ></i>
+                <span [ngClass]="{'hidden':!isLogged}"  class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[15px] h-[15px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">0</span>
+            </button>
 
-    <!-- Mobile menu button (hidden on md and up) -->
+            <button [routerLink]="'/favorites/mainfavorites'" class="flex items-center justify-center p-1  rounded-full w-[45px] h-[45px] relative hover:scale-105 active:scale-95 transition-transform duration-200 ease-in-out">
+                <i class="w-8 text-3xl text-white transition-transform duration-200 fa-solid fa-heart hover:scale-110"></i>
+                <span [ngClass]="{'hidden':!isLogged}" class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[15px] h-[15px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">0</span>
+            </button>
+        </div>
+
+    <!-- Mobile button (hidden on md and up) -->
         <div class="flex md:order-2 md:hidden">
             <button (click)="toggleMenu()" type="button"
                 class="inline-flex items-center justify-center p-2 text-sm text-gray-500 rounded-lg focus:outline-none"
@@ -14,14 +27,14 @@
                 <img  src="for-nav.svg" alt="Menu" class="w-12 transition-transform duration-300 ease-in-out" [class.rotate-45]="isMenuOpen">
             </button>
         </div>
-        <!-- until here the navigation of the mobile of is ended and contained logo and button to open the menu , no lets go to the desktop -->
+        <!-- until here the navigation of the mobile of is ended and contained logo and (cart+favorites) and button to open the menu , no lets go to the desktop -->
         <!-- above we put the logo , now its time to the links in the navigation in desktop (cart , favorites , user) -->
 
-        <!-- Desktop navigation (always visible on md and up)    search first -->
+        <!-- Desktop navigation (always visible on md and up)
+        search first -->
         <div class="hidden px-6 py-3 bg-white md:flex md:order-1 rounded-[100px] w-[35%] items-center justify-between hover:scale-[1.02] transition-transform duration-300 ease-in-out" id="desktop-nav">
             <input  type="text" name="search" placeholder="What you are looking for"
-                class="text-gray-600 transition-all duration-300 focus:border-0 focus:outline-0 focus:placeholder:opacity-0"
-            >
+                class="text-gray-600 transition-all duration-300 focus:border-0 focus:outline-0 focus:placeholder:opacity-0">
             <i class="text-gray-600 transition-transform duration-300 fa-solid fa-magnifying-glass hover:scale-110"></i>
         </div>
 
@@ -29,12 +42,12 @@
         <div class="hidden gap-3 md:flex md:order-3">
             <button [routerLink]="'/cart/maincart'" class="flex items-center justify-center p-3 bg-white rounded-full w-[52px] h-[52px] relative hover:scale-105 active:scale-95 transition-transform duration-200 ease-in-out">
                 <i class="text-lg text-black transition-transform duration-200 fa-solid fa-cart-arrow-down hover:scale-110"></i>
-                <span class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[20px] h-[20px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">5</span>
+                <span class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[20px] h-[20px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">0</span>
             </button>
 
             <button [routerLink]="'/favorites/mainfavorites'" class="flex items-center justify-center p-3 bg-white rounded-full w-[52px] h-[52px] relative hover:scale-105 active:scale-95 transition-transform duration-200 ease-in-out">
                 <i class="text-lg text-black transition-transform duration-200 fa-regular fa-heart hover:scale-110"></i>
-                <span class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[20px] h-[20px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">5</span>
+                <span class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[20px] h-[20px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">0</span>
             </button>
 
             <button [ngClass]="{ 'hidden': isLogged }" [routerLink]="'/authentication/register'" type="button" class="bg-main_color text-white rounded-[100px] py-3 px-6 w-[170px] font-bold  flex justify-between items-center transition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">
@@ -42,19 +55,19 @@
                 Sign Up
             </button>
 
-<!-- the user image -->
- <div class="relative left-5" (click)="toggleProfileMenuOpen()">
-  <img [hidden]="!isLogged" [src]="userImage" alt="User" class="rounded-full cursor-pointer w-14" />
+        <!-- the user image -->
+        <div class="relative left-5" (click)="toggleProfileMenuOpen()">
+            <img [hidden]="!isLogged" [src]="userImage" alt="User" class="rounded-full cursor-pointer w-14" />
 
-  <!-- القائمة بتظهر بس لما menuOpen = true -->
-  <div *ngIf="profileMenuOpen" class="absolute text-white -right-5 z-[40] w-56 h-auto mt-2 text-left  rounded-md shadow-lg bg-main_color duration-300" @dropdownAnimation>
-    <ul class="py-2">
-      <li class="px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110 "  [routerLink]="'/authentication/profile'">👤 Your Profile</li>
-      <li class="w-full px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110" [routerLink]="'/authentication/changepassword'">🔒 Change Passwrod</li>
-      <li class="px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110" (click)="logout()">🚪 Logout</li>
-    </ul>
-  </div>
-</div>
+        <!-- القائمة بتظهر بس لما menuOpen = true -->
+            <div *ngIf="profileMenuOpen" class="absolute text-white -right-5 z-[40] w-56 h-auto mt-2 text-left  rounded-md shadow-lg bg-main_color duration-300" @dropdownAnimation>
+                <ul class="py-2">
+                    <li class="px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110 "  [routerLink]="'/authentication/profile'">👤 Your Profile</li>
+                    <li class="w-full px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110" [routerLink]="'/authentication/changepassword'">🔒 Change Passwrod</li>
+                    <li class="px-4 py-2 transition-transform duration-300 cursor-pointer hover:scale-110" (click)="logout()">🚪 Logout</li>
+                </ul>
+            </div>
+        </div>
         </div>
 
 
@@ -67,7 +80,7 @@
         <div class="bg-gray-900 transition-transform duration-300 w-[75%] overflow-y-auto md:hidden fixed top-0 left-0 z-[100]  py-6 flex flex-col h-full"
             [class.-translate-x-full]="!isMenuOpen" [class.translate-x-0]="isMenuOpen">
             <div class="items-center justify-between w-full px-2 py-6">
-                <!-- the logo and x  -->
+                <!-- the logo and user image or  x if not logged in  -->
                 <div class="flex items-center justify-between px-2 mb-7">
                             <img src="header-logo.svg" alt="Logo" />
                             <img  [routerLink]="'/authentication/profile'"  [ngClass]="{ 'hidden': !isLogged }" [src]="userImage" alt="profile" class="w-[52px] h-[52px] rounded-full">
@@ -77,7 +90,7 @@
                 <div class=" px-4 py-2 bg-white md:flex md:order-1 rounded-[100px] w-[95%] items-center justify-between hover:scale-[1.02] transition-transform duration-300 ease-in-out" id="desktop-nav">
                     <input  type="text" name="search" placeholder="What you are looking for"
                         class="pr-4 text-gray-600 transition-all duration-300 focus:border-0 focus:outline-0 focus:placeholder:opacity-0">
-                        <i class="text-gray-600 transition-transform duration-300 fa-solid fa-magnifying-glass hover:scale-110"></i>
+                    <i class="text-gray-600 transition-transform duration-300 fa-solid fa-magnifying-glass hover:scale-110"></i>
                 </div>
 
                 <!-- list items -->
@@ -87,9 +100,9 @@
                             <a href="#" aria-current="page"                 (click)="scrollTo(item.categoryName)" (click)="closeMenu()"             routerLink="/home/mainhome">{{item.categoryName}}</a>
                         </li>
                     }
-
                 </ul>
             </div>
+            <!-- buttons in the bottom of the list -->
             <div class="flex items-center justify-between px-4 mt-auto mb-10" [ngClass]="{'gap-4':!isLogged}">
                             <!-- the 2 buttons in case of you are not logged in -->
                             <button [ngClass]="{'hidden':isLogged}" [routerLink]="'/authentication/login'" class=" bg-main_color flex items-center justify-center flex-1 py-2 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">login</button>
@@ -101,6 +114,7 @@
         </div>
 
     </div>
+
     <!-- the yellow bar with categories -->
     <div class="h-[44px] bg-secondary_color text-white items-center hidden md:flex">
         <div class="container flex items-center gap-10">
@@ -118,6 +132,4 @@
         }
         </div>
     </div>
-
-
 </nav>
