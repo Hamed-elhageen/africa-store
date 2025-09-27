@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotfoundComponent } from './shared/components/notfound/notfound.component';
+import { ifloginGuard } from './auth/guards/iflogin.guard';
 
 const routes: Routes = [
   {
@@ -25,11 +26,14 @@ const routes: Routes = [
   },
   {
     path: 'cart',
+    canActivate:[ifloginGuard],
+    // the guard to check if the user is loggen in or not , if the user wasnt logged , it wont open to him the cart
     loadChildren: () =>
       import('../app/cart/cart.module').then((m) => m.CartModule),
   },
   {
     path: 'favorites',
+    canActivate:[ifloginGuard],
     loadChildren: () =>
       import('../app/favorites/favorites.module').then((m) => m.FavoritesModule),
   },

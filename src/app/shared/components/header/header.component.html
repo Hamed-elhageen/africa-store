@@ -93,7 +93,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="flex items-center justify-between px-4 mt-auto mb-10" [ngClass]="{'gap-4':!isLogged}">
+            <div class="flex items-center justify-between px-4 mt-auto mb-3" [ngClass]="{'gap-4':!isLogged}">
                 <!-- the 2 buttons in case of you are not logged in -->
                 <button [ngClass]="{'hidden':isLogged}" [routerLink]="'/authentication/login'" class=" bg-main_color flex items-center justify-center flex-1 py-2 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">login</button>
                 <button  [ngClass]="{'hidden':isLogged}" [routerLink]="'/authentication/register'" class="flex items-center justify-center flex-1 py-2 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">sign up</button>
