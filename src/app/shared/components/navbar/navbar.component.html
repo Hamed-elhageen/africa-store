@@ -64,7 +64,7 @@
 
 
         <!-- Mobile menu (hidden by default, shown when toggled) -->
-        <div class="bg-gray-900 transition-transform duration-300 w-[75%] overflow-y-auto md:hidden fixed top-0 left-0 z-[100] h-screen py-6"
+        <div class="bg-gray-900 transition-transform duration-300 w-[75%] overflow-y-auto md:hidden fixed top-0 left-0 z-[100]  py-6 flex flex-col h-full"
             [class.-translate-x-full]="!isMenuOpen" [class.translate-x-0]="isMenuOpen">
             <div class="items-center justify-between w-full px-2 py-6">
                 <!-- the logo and x  -->
@@ -87,16 +87,17 @@
                             <a href="#" aria-current="page"                 (click)="scrollTo(item.categoryName)" (click)="closeMenu()"             routerLink="/home/mainhome">{{item.categoryName}}</a>
                         </li>
                     }
-                        <li class="flex items-center justify-between mt-auto md:hidden relative translate-y-[300%]" [ngClass]="{'gap-4':!isLogged}">
+
+                </ul>
+            </div>
+            <div class="flex items-center justify-between px-4 mt-auto mb-10" [ngClass]="{'gap-4':!isLogged}">
                             <!-- the 2 buttons in case of you are not logged in -->
                             <button [ngClass]="{'hidden':isLogged}" [routerLink]="'/authentication/login'" class=" bg-main_color flex items-center justify-center flex-1 py-2 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">login</button>
                             <button  [ngClass]="{'hidden':isLogged}" [routerLink]="'/authentication/register'" class="flex items-center justify-center flex-1 py-2 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">sign up</button>
                             <!-- the 2 buttons in case of you are logged in -->
                             <button [ngClass]="{'hidden':!isLogged}"  class=" bg-main_color flex items-center justify-center  py-2 px-3 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]" (click)="logout()" >logout</button>
                             <button  [ngClass]="{'hidden':!isLogged}"[routerLink]="'/authentication/changepassword'" class="flex items-center justify-center  py-2 px-3 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">Change Password</button>
-                        </li>
-                </ul>
-            </div>
+                        </div>
         </div>
 
     </div>
@@ -117,4 +118,6 @@
         }
         </div>
     </div>
+
+
 </nav>
