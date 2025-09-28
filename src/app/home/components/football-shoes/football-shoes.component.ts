@@ -1,60 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-football-shoes',
   templateUrl: './football-shoes.component.html',
   styleUrl: './football-shoes.component.scss'
 })
-export class FootballShoesComponent {
-  products:any=[
-    {
-      productImage:"/cr7-shoes.png",
-      title:"CR7 shoes",
-      discription:"cristiano ronaldo original shoes",
-      price:"450 LE",
-      priceBeforediscount:"520 LE"
-    },
-    {
-      productImage:"/cr7-shoes.png",
-      title:"CR7 shoes",
-      discription:"cristiano ronaldo original shoes",
-      price:"450 LE",
-      priceBeforediscount:"520 LE"
-    },
-    {
-      productImage:"/cr7-shoes.png",
-      title:"CR7 shoes",
-      discription:"cristiano ronaldo original shoes",
-      price:"450 LE",
-      priceBeforediscount:"520 LE"
-    },
-    {
-      productImage:"/cr7-shoes.png",
-      title:"CR7 shoes",
-      discription:"cristiano ronaldo original shoes",
-      price:"450 LE",
-      priceBeforediscount:"520 LE"
-    },
-    {
-      productImage:"/cr7-shoes.png",
-      title:"CR7 shoes",
-      discription:"cristiano ronaldo original shoes",
-      price:"450 LE",
-      priceBeforediscount:"520 LE"
-    },
-    {
-      productImage:"/cr7-shoes.png",
-      title:"CR7 shoes",
-      discription:"cristiano ronaldo original shoes",
-      price:"450 LE",
-      priceBeforediscount:"520 LE"
-    },
-    {
-      productImage:"/cr7-shoes.png",
-      title:"CR7 shoes",
-      discription:"cristiano ronaldo original shoes",
-      price:"450 LE",
-      priceBeforediscount:"520 LE"
-    },
-  ]
+export class FootballShoesComponent implements OnInit {
+    products: any[] = [];
+     categoryId =2;
+
+    constructor(private productsService:ProductsService){
+
+    }
+    ngOnInit(): void {
+    // ناخد الـ categoryId من السيرفس
+
+    // وبعدين نجيب المنتجات بتاعت الكاتيجوري ده
+    this.products = this.productsService.getCategoryProducts(this.categoryId).slice(0,8);
+    }
+
+
 }

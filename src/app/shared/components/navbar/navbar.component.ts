@@ -5,6 +5,7 @@ import { ProfileService } from './../../../auth/services/profile.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { CategoriesService } from '../../../home/services/categories.service';
 
 @Component({
 selector: 'app-navbar',
@@ -22,9 +23,10 @@ animations: [
   ])
 ]
 })
-export class NavbarComponent  {
+export class NavbarComponent implements OnInit  {
     isMenuOpen = false;
     isScrolled = false;
+    allcategories: Category[]=[]
 
   //   function to make the header sticky when scrolling a part  of pixels
     @HostListener('window:scroll', [])
@@ -61,45 +63,12 @@ scrollTo(sectionId: string) {
         this.isMenuOpen = false;
     }
 
-//categoreis which will come from back end , we put it here for test , only , after that we will fetch it here and put it in its variable also or object
-    public allcategories:Category[]=[
-        {
-            categoryName:"Football shirts",
-            categoryid:"1",
-            categoryimage:"/germany.png"
-        },
-        {
-            categoryName:"Sports shirts",
-            categoryid:"2",
-            categoryimage:"/shirts.svg"
-        },
-        {
-            categoryName:"Sports shoes",
-            categoryid:"3",
-            categoryimage:"/shoes.svg"
-        },
-        {
-            categoryName:"Sports bags",
-            categoryid:"4",
-            categoryimage:"/bags.svg"
-        },
-        {
-            categoryName:"Sports accessories",
-            categoryid:"5",
-            categoryimage:"/gloves.svg"
-        },
-        {
-            categoryName:"Football shoes",
-            categoryid:"6",
-            categoryimage:"/stars.svg"
-        },
-    ] ;
 
 
   //for authentication
     isLogged: boolean = false;
     userImage:any;
-constructor(private authService: LoginService , private profileService:ProfileService , private router :Router , private loginService:LoginService) {
+constructor(private authService: LoginService , private profileService:ProfileService , private router :Router , private categoriesService:CategoriesService ) {
       //for checking if you are logged or no
     this.authService.isUserLoggedSubject.subscribe({
     next: (status: boolean) => {
@@ -121,6 +90,11 @@ constructor(private authService: LoginService , private profileService:ProfileSe
     })
 
 }
+    ngOnInit(): void {
+//categoreis which will come from back end , we put it here for test , only , after that we will fetch it here and put it in its variable also or object
+this.allcategories= this.categoriesService.getAllCategories();
+
+    }
 
 
    logout() {
@@ -134,7 +108,7 @@ constructor(private authService: LoginService , private profileService:ProfileSe
        confirmButtonText: 'Yes, logout!'
      }).then((result) => {
        if (result.isConfirmed) {
-         this.loginService.logout();
+         this.authService.logout();
          Swal.fire(
            'Logged out!',
            'You have been logged out.',
@@ -158,4 +132,20 @@ constructor(private authService: LoginService , private profileService:ProfileSe
 toggleProfileMenuOpen(){
     this.profileMenuOpen=!this.profileMenuOpen;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

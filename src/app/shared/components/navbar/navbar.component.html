@@ -56,8 +56,8 @@
             </button>
 
         <!-- the user image -->
-        <div class="relative left-5" (click)="toggleProfileMenuOpen()">
-            <img [hidden]="!isLogged" [src]="userImage" alt="User" class="rounded-full cursor-pointer w-14" />
+        <div class="relative left-2" (click)="toggleProfileMenuOpen()">
+            <img [hidden]="!isLogged" [src]="userImage" alt="User" class="rounded-full cursor-pointer w-14 h-14" />
 
         <!-- القائمة بتظهر بس لما menuOpen = true -->
             <div *ngIf="profileMenuOpen" class="absolute text-white -right-5 z-[40] w-56 h-auto mt-2 text-left  rounded-md shadow-lg bg-main_color duration-300" @dropdownAnimation>
@@ -97,7 +97,7 @@
                 <ul class="flex flex-col py-4 font-bold text-white">
                     @for (item of allcategories; track $index) {
                         <li>
-                            <a href="#" aria-current="page"                 (click)="scrollTo(item.categoryName)" (click)="closeMenu()"             routerLink="/home/mainhome">{{item.categoryName}}</a>
+                            <a             [routerLink]="['/home/categoryproducts',item.categoryid]" aria-current="page"                 (click)="scrollTo(item.categoryName)" (click)="closeMenu()"             routerLink="/home/mainhome">{{item.categoryName}}</a>
                         </li>
                     }
                 </ul>
@@ -124,7 +124,7 @@
             </a>
         @for (item of allcategories; track $index) {
             <a
-            routerLink="/home/mainhome"
+            [routerLink]="['/home/categoryproducts',item.categoryid]"
                 (click)="scrollTo(item.categoryName)"
                 class="relative py-2 transition-all duration-300 hover:scale-105 hover:opacity-90 ">
                 {{item.categoryName}}

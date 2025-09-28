@@ -89,56 +89,56 @@ resetFilters() {
   ]
   products:any=[
     {
-      productImage:"/new bag.png",
+      productImage:"/new-bag.png",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",
       priceBeforediscount:"420 LE"
     },
     {
-      productImage:"/new bag.png",
+      productImage:"/new-bag.png",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",
       priceBeforediscount:"420 LE"
     },
     {
-      productImage:"/new bag.png",
+      productImage:"/new-bag.png",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",
       priceBeforediscount:"420 LE"
     },
     {
-      productImage:"/new bag.png",
+      productImage:"/new-bag.png",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",
       priceBeforediscount:"420 LE"
     },
     {
-      productImage:"/new bag.png",
+      productImage:"/new-bag.png",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",
       priceBeforediscount:"420 LE"
     },
     {
-      productImage:"/new bag.png",
+      productImage:"/new-bag.png",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",
       priceBeforediscount:"420 LE"
     },
     {
-      productImage:"/new bag.png",
+      productImage:"/new-bag.png",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",
       priceBeforediscount:"420 LE"
     },
     {
-      productImage:"/new bag.png",
+      productImage:"/new-bag.png",
       title:"bracelona bag",
       discription:"original cotton braca bag",
       price:"350 LE",

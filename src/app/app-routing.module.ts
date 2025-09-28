@@ -58,7 +58,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes ,{
+      scrollPositionRestoration: 'enabled' // <-- يجيبك فوق الصفحة
+    })],           // the second param with routes , means if you were in the bottom of a page and clicks on a link to another page , if this wasnt added , the new page will be opened in the bottom in the place you were in , but by this after each going to new page it goes to above
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -1,12 +1,16 @@
 .neymar{
-  background-image: url("/neymar.svg");
+  background-image: url("/fantasy46.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  height: calc(100vh - 130px);
+  height: calc(100vh - 100px);
 }
+
 @media(max-width:768px){
   .neymar{
-    background-position-x: 74%;
+  background-image: url("/fantasy100.jpg");
+  background-position: center;
+
+    // background-position-x: 74%;
     height: calc(100vh - 88px);
 
   }

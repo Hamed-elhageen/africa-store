@@ -13,6 +13,7 @@ import { SportsTshirtsComponent } from './components/sports-tshirts/sports-tshir
 import { SportsAccessoriesComponent } from './components/sports-accessories/sports-accessories.component';
 import { SportsBagsComponent } from './components/sports-bags/sports-bags.component';
 import { CardComponent } from '../shared/components/card/card.component';
+import { CategoryProductsComponent } from './components/category-products/category-products.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
         path: 'mainhome',
         component: MainhomeComponent,
       },
+      {
+        path: 'categoryproducts/:categoryid',
+        component:CategoryProductsComponent,
+      },
     ],
   },
 ];
@@ -42,6 +47,7 @@ const routes: Routes = [
     SportsTshirtsComponent,
     SportsAccessoriesComponent,
     SportsBagsComponent,
+    CategoryProductsComponent,
   ],
   imports: [
     CommonModule,RouterModule.forChild(routes),

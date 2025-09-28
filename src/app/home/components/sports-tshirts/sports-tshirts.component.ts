@@ -1,76 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-sports-tshirts',
   templateUrl: './sports-tshirts.component.html',
   styleUrl: './sports-tshirts.component.scss'
 })
-export class SportsTshirtsComponent {
-  products:any=[
-    {
-      productImage:"/arsenal-shirt.svg",
-      title:"Arsenal shirt",
-      discription:" original arsenal tshirt ...",
-      price:"290 LE",
-      priceBeforediscount:"320 LE"
-    },
-    {
-      productImage:"/arsenal-shirt.svg",
-      title:"Arsenal shirt",
-      discription:" original arsenal tshirt ...",
-      price:"290 LE",
-      priceBeforediscount:"320 LE"
-    },
-    {
-      productImage:"/arsenal-shirt.svg",
-      title:"Arsenal shirt",
-      discription:" original arsenal tshirt ...",
-      price:"290 LE",
-      priceBeforediscount:"320 LE"
-    },
-    {
-      productImage:"/arsenal-shirt.svg",
-      title:"Arsenal shirt",
-      discription:" original arsenal tshirt ...",
-      price:"290 LE",
-      priceBeforediscount:"320 LE"
-    },
-    {
-      productImage:"/arsenal-shirt.svg",
-      title:"Arsenal shirt",
-      discription:" original arsenal tshirt ...",
-      price:"290 LE",
-      priceBeforediscount:"320 LE"
-    },
-    {
-      productImage:"/arsenal-shirt.svg",
-      title:"Arsenal shirt",
-      discription:" original arsenal tshirt ...",
-      price:"290 LE",
-      priceBeforediscount:"320 LE"
-    },
-    {
-      productImage:"/arsenal-shirt.svg",
-      title:"Arsenal shirt",
-      discription:" original arsenal tshirt ...",
-      price:"290 LE",
-      priceBeforediscount:"320 LE"
-    },
-    {
-      productImage:"/arsenal-shirt.svg",
-      title:"Arsenal shirt",
-      discription:" original arsenal tshirt ...",
-      price:"290 LE",
-      priceBeforediscount:"320 LE"
-    },
-    {
-      productImage:"/arsenal-shirt.svg",
-      title:"Arsenal shirt",
-      discription:" original arsenal tshirt ...",
-      price:"290 LE",
-      priceBeforediscount:"320 LE"
-    },
+export class SportsTshirtsComponent implements OnInit {
+    products: any[] = [];
+    categoryId =3;
 
+        constructor(private productsService:ProductsService){
 
-  ]
+        }
+        ngOnInit(): void {
+        // ناخد الـ categoryId من السيرفس
+
+        // وبعدين نجيب المنتجات بتاعت الكاتيجوري ده
+        this.products = this.productsService.getCategoryProducts(this.categoryId).slice(0,8);
+        }
 }
