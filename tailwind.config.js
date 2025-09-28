@@ -32,6 +32,10 @@ module.exports = {
         danger_color: "#F55157",
         success_color: "#00AF6C",
       },
+      spacing: {
+        "section-margin": "40px", // اسم مخصص
+        "section-padding": "3rem",
+      },
     },
   },
   plugins: [],

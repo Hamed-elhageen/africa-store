@@ -1,11 +1,11 @@
 <footer class="container py-10 text-white">
-    <div class="w-full h-[2px] bg-white mb-12 hidden md:block"></div>
+    <div class="w-full h-[2px] bg-white mb-6 hidden md:block"></div>
     <!-- two Sections "products and branches"-->
     <div class="grid w-full grid-cols-1 gap-6 md:grid-cols-4">
         <!-- Products -->
         <div>
             <button (click)="showProducts = !showProducts"
-                class="flex justify-between w-full text-lg font-semibold">
+                class="flex justify-between w-full mb-4 text-lg font-semibold">
                 Products
                 <span [ngClass]="{'rotate-180':showProducts}"  class="transition-transform duration-300 md:hidden">
                     <img src="arrow-bottom.svg" alt="">
@@ -47,7 +47,7 @@
                         }
                     </ul>
                 </div>
-
+<!-- banha column -->
                 <div>
                     <ul class="mt-2 space-y-2">
                         @for (item of branches.slice(9,18); track $index) {
@@ -55,7 +55,7 @@
                     }
                 </ul>
                 </div>
-
+<!-- mansour column -->
                 <div>
                 <ul class="mt-2 space-y-2">
                     @for (item of branches.slice(18); track $index) {
@@ -68,29 +68,29 @@
         </div>
     </div>
 
-    <div class="w-full h-[2px] bg-white mt-12 mb-12 hidden md:block"></div>
+    <!-- <div class="w-full h-[2px] bg-white mt-6 mb-8 hidden md:block"></div> -->
 
     <!-- Social Media & Logo -->
-    <div class="flex flex-col items-center justify-between w-full mt-6 md:flex-row">
+    <div class="flex flex-col items-center justify-between w-full md:mt-6 md:flex-row">
         <!-- Social Icons -->
         <div class="text-left">
-            <h6 class="my-5">connect with us</h6>
+            <h6 class="my-4 text-center">connect with us</h6>
         <div class="flex gap-4">
-            <img src="tlegram.png" alt="Telegram" />
-            <img src="instgram.png" alt="Instagram" />
-            <img src="facebook.png" alt="Facebook" />
-            <img src="tiktok.png" alt="TikTok" />
+            <a href ="https://t.me/africastore?utm_source=chatgpt.com" target="_blank"><img src="tlegram.png" alt="Telegram" /></a>
+            <a href="https://www.instagram.com/afrestore_/?utm_source=chatgpt.com"><img src="instgram.png" alt="Instagram" /></a>
+            <a href="https://www.facebook.com/hamed.ragabelhageen.9" target="_blank"><img src="facebook.png" alt="Facebook" /></a>
+            <a href="tel:+201026502449" target="_blank"><img src="tiktok.png" alt="call" /></a>
         </div>
     </div>
 
         <!-- Africa Logo -->
-        <div class="mt-4 md:mt-0">
-            <img src="footer-logo.svg" alt="Africa Logo" />
+        <div class="hidden mt-4 md:mt-0 md:block">
+            <img src="footer-logo.svg" alt="Africa Logo" class="w-60 md:w-auto" />
         </div>
     </div>
 
     <!-- Copyright -->
     <div class="mt-3 text-sm text-center text-gray-400 md:text-left">
-        © 2024 Africa Store, Inc. All rights reserved
+        © 2025 Africa Store, Inc. All rights reserved
     </div>
 </footer>
