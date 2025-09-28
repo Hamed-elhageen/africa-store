@@ -33,7 +33,7 @@ module.exports = {
         success_color: "#00AF6C",
       },
       spacing: {
-        "section-margin": "40px", // اسم مخصص
+        "section-margin": "80px", // اسم مخصص
         "section-padding": "3rem",
       },
     },

@@ -1,13 +1,13 @@
-<div class="container mb-[100px] text-center ">
-<h4 class="pb-3 text-secondary_color">Our product</h4>
-<h2 class="pb-10 text-white">what we seeling</h2>
-<div class="grid w-full text-white grid-cols-[repeat(auto-fill,_minmax(350px,_1fr))] gap-10 ">
+<div class="container text-center mb-section-margin ">
+    <h4 class="pb-3 text-secondary_color">Our product</h4>
+    <h2 class="pb-10 text-white">what we seeling</h2>
+    <div class="grid w-full text-white grid-cols-[repeat(auto-fill,_minmax(350px,_1fr))] gap-10 ">
 
-@for (item of allcategories; track $index) {
-    <div class="overflow-hidden transition-all duration-300 card-style hover:scale-[1.03] " >
-        <h5>{{item.categoryName}}</h5>
-      <a><img [src]="item.categoryimage" alt="category photo" class="category-photo"></a>
-        <button class="category-button hover:scale-[1.02] hover:bg-main_color hover:text-white transition-all duration-500 ">
+    @for (item of allcategories; track $index) {
+        <div class="overflow-hidden transition-all duration-300 card-style hover:scale-[1.03]  text-center" >
+            <h5>{{item.categoryName}}</h5>
+            <img [src]="item.categoryimage" alt="category photo" class="category-photo absolute bottom-0 left-1/2 translate-x-[-50%]">
+            <button class="category-button hover:scale-[1.02] hover:bg-main_color hover:text-white transition-all duration-500 ">
             Explore more <img src="arrow-up-right.svg" alt="arow" >
         </button>
     </div>
