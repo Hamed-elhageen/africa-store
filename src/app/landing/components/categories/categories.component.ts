@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Category } from '../../../shared/modles/category';
+import { CategoriesService } from '../../../home/services/categories.service';
 
 @Component({
   selector: 'app-categories',
@@ -7,36 +8,8 @@ import { Category } from '../../../shared/modles/category';
   styleUrl: './categories.component.scss'
 })
 export class CategoriesComponent {
-public allcategories:Category[]=[
-    {
-        categoryName:"Football shirts",
-        categoryid:"1",
-        categoryimage:"/germany.png"
-    },
-    {
-        categoryName:"Sports shirts",
-        categoryid:"2",
-        categoryimage:"/shirts.svg"
-    },
-    {
-        categoryName:"Sports shoes",
-        categoryid:"3",
-        categoryimage:"/shoes.svg"
-    },
-    {
-        categoryName:"Sports bags",
-        categoryid:"4",
-        categoryimage:"/bags.svg"
-    },
-    {
-        categoryName:"Sports accessories",
-        categoryid:"5",
-        categoryimage:"/gloves.svg"
-    },
-    {
-        categoryName:"Football shoes",
-        categoryid:"6",
-        categoryimage:"/stars.svg"
-    },
-] ;
+ allcategories:Category[]=[]
+    constructor(private categoriesService:CategoriesService){
+        this.allcategories=this.categoriesService.getAllCategories();
+    }
 }

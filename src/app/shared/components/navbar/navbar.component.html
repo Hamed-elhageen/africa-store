@@ -95,6 +95,12 @@
 
                 <!-- list items -->
                 <ul class="flex flex-col py-4 font-bold text-white">
+                    <li>
+                        <a routerLink="/allcategories/maincategories"
+                        class="relative py-2 transition-all duration-300 hover:scale-105 hover:opacity-90 ">
+                        All categories
+            </a>
+                    </li>
                     @for (item of allcategories; track $index) {
                         <li>
                             <a             [routerLink]="['/home/categoryproducts',item.categoryid]" aria-current="page"                 (click)="scrollTo(item.categoryName)" (click)="closeMenu()"             routerLink="/home/mainhome">{{item.categoryName}}</a>
