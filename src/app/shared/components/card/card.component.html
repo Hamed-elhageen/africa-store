@@ -3,7 +3,8 @@
     <div class="p-4 content">
         <div class="flex items-center justify-between mb-2 gap-x-5">
                 <h6 class="font-semibold text-secondary_color">{{title}}</h6>
-                <i class="text-2xl text-green-700 fa-regular fa-heart"></i>
+                <i class="text-2xl text-green-700 fa-regular fa-heart"  [ngClass]="{'hidden':choosed}"  (click)="toggleFavIcon()"></i>
+                <i class="fa-solid fa-heart text-2xl" style="color: #1C6F37;" [ngClass]="{'hidden':!choosed}" (click)="toggleFavIcon()"></i>
         </div>
         <h6 class="mb-2 font-normal ">{{discription}}</h6>
         <div class="flex items-center gap-6 ">

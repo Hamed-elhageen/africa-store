@@ -12,4 +12,9 @@ export class CardComponent {
   @Input() discription="";
   @Input() price="";
   @Input() priceBeforediscount="";
+
+  choosed:boolean=false;
+  toggleFavIcon(){
+    this.choosed=!this.choosed;
+  }
 }
