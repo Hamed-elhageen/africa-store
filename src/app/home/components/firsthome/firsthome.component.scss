@@ -2,7 +2,7 @@
   background-image: url("/fantasy46.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  height: calc(100vh - 100px);
+  height: calc(100dvh - 88px);
 }
 
 @media(max-width:768px){
@@ -11,7 +11,7 @@
   background-position: center;
 
     // background-position-x: 74%;
-    height: calc(100vh - 88px);
+    // height: calc(100vh - 88px);
 
   }
 }
