@@ -1,6 +1,6 @@
 @if (cartProducts.length>0)
 {
-<div class="container grid grid-cols-1 lg:grid-cols-3 gap-5 text-[#FFFFFF] px-4 sm:px-0 mt-8">
+<div class="container grid grid-cols-1 lg:grid-cols-3 gap-20 text-[#FFFFFF] px-4 sm:px-0 mt-8">
 
   <!-- Shopping Cart Column -->
   <div class="py-6 lg:col-span-2 lg:py-10">
@@ -37,7 +37,7 @@
   </div>
 
   <!-- Order Summary Column -->
-  <div class="bg-[#333333] rounded-xl lg:rounded-[20px] px-4 lg:px-5 py-6 lg:py-10 h-fit lg:sticky lg:top-[120px] mb-8 lg:mb-0">
+  <div class="bg-[#333333] rounded-xl lg:rounded-[20px] px-4 lg:px-5 py-6 h-fit lg:sticky lg:top-[120px] mb-8 lg:mb-0">
     <h4 class="text-lg lg:text-xl">Order Summary</h4>
     <div class="bg-[#FFFFFF] h-[1px] w-full my-4 lg:my-5"></div>
 
@@ -45,7 +45,7 @@
       <!-- Shipping Address -->
       <div class="flex justify-between">
         <div>
-          <p class="text-base lg:text-[18px] font-medium lg:font-normal mb-2 lg:mb-4">Hamed Elhageen</p>
+          <p class="text-base lg:text-[18px] font-medium lg:font-normal mb-2 lg:mb-2">Hamed Elhageen</p>
           <p class="text-[#D6D6D6] text-sm lg:text-base mb-1">Beheira</p>
           <p class="text-[#D6D6D6] text-sm lg:text-base">Damanhour, alfawaa street</p>
         </div>
@@ -55,7 +55,7 @@
       <!-- Payment Method -->
       <div class="flex justify-between">
         <div>
-          <p class="text-base lg:text-[18px] font-medium lg:font-normal mb-2 lg:mb-4">Payments method</p>
+          <p class="text-base lg:text-[18px] font-medium lg:font-normal mb-2 lg:mb-2">Payments method</p>
           <p class="text-[#D6D6D6] text-sm lg:text-base mb-1">Credit Card</p>
           <p class="text-[#D6D6D6] text-sm lg:text-base flex gap-2 items-center">
             •••• •••• •••• 5050
@@ -67,10 +67,10 @@
 
       <!-- Promo Code -->
       <div>
-        <p class="mb-4 lg:mb-6 text-base lg:text-[18px]">Do you have promo code?</p>
-        <div class="flex gap-2 mb-8 lg:gap-3 lg:mb-12">
+        <p class="mb-4 lg:mb-2 text-base lg:text-[18px]">Do you have promo code?</p>
+        <div class="flex gap-2 mb-8 lg:gap-3 lg:mb-8">
           <input type="text" name="promocode"
-                 class="border border-[#666666] bg-transparent py-2 rounded-lg lg:rounded-[10px] flex-1 px-3 lg:px-4
+                 class="border border-[#666666] bg-transparent py-2 rounded-lg lg:rounded-[10px] w-[75%] px-3 lg:px-4
                         placeholder:text-[#D6D6D6] text-sm lg:text-base"
                  placeholder="Promo code">
           <button class="bg-[#666666] px-3 lg:px-4 py-2 rounded-lg lg:rounded-[10px] text-sm lg:text-base">
@@ -80,7 +80,7 @@
       </div>
 
       <!-- Price Breakdown -->
-      <div class="space-y-3 lg:space-y-4">
+      <div class="space-y-3 ">
         <div class="flex justify-between">
           <p class="text-sm lg:text-[18px]">Sub total (3 items)</p>
           <h5 class="text-base lg:text-lg">8520 EGP</h5>
@@ -104,7 +104,7 @@
 
       <!-- Checkout Button -->
       <button [routerLink]="'/home/mainhome'"
-              class="flex items-center justify-center w-full px-4 py-3 text-sm font-medium rounded-lg lg:px-6 lg:py-4 bg-main_color lg:text-base">
+              class="flex items-center justify-center w-full px-4 py-3 text-sm font-medium rounded-lg lg:px-6 bg-main_color lg:text-base">
         Proceed to Checkout
       </button>
     </div>
