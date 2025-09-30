@@ -16,7 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule,HttpClientModule ,NgxSpinnerModule,BrowserAnimationsModule],
-providers: [provideClientHydration()],
+  providers: [provideClientHydration()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

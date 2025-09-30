@@ -1,84 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductsService } from '../../../home/services/products.service';
+import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
   selector: 'app-mainfavorites',
   templateUrl: './mainfavorites.component.html',
   styleUrl: './mainfavorites.component.scss'
 })
-export class MainfavoritesComponent {
-  favoriteProducts:any=
-  [
-  {
-        productImage:"/cr7-shoes.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE",
-        size:"M",
-        quantity:'1'
-      },
-      {
-        productImage:"/cr7-shoes.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE",
-        size:"M",
-        quantity:'1'
-      },
-      {
-        productImage:"/cr7-shoes.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE",
-        size:"M",
-        quantity:'1'
-      },
-      {
-        productImage:"/cr7-shoes.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE",
-        size:"M",
-        quantity:'1'
-      },
-      {
-        productImage:"/cr7 shoes.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE",
-        size:"M",
-        quantity:'1'
-      },
-      {
-        productImage:"/cr7-shoes.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE",
-        size:"M",
-        quantity:'1'
-      },
-      {
-        productImage:"/cr7-shoes.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE",
-        size:"M",
-        quantity:'1'
-      },
-      {
-        productImage:"/cr7-shoes.png",
-        title:"bracelona bag",
-        discription:"original cotton braca bag",
-        price:"350 LE",
-        priceBeforediscount:"420 LE",
-        size:"M",
-        quantity:'1'
-      },
-    ]
-}
+export class MainfavoritesComponent implements OnInit{
+        favoriteProducts:any;
+    constructor(private favoritesService:FavoritesService){
+
+    }
+    ngOnInit(): void {
+        this.favoriteProducts=this.favoritesService.getAllFavorites();
+    }
+    }
+
+

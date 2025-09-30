@@ -11,5 +11,6 @@ export class CartitemComponent {
   @Input() price:string=""
   @Input() size:string=""
   @Input() quantity:string=""
-  
+  @Input() overAllPrice!:number
+
 }

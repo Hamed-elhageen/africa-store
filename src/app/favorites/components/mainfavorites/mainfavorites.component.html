@@ -1,6 +1,6 @@
 <div class="container mt-8 text-white">
   <div class="flex items-center justify-between mb-4 lg:mb-6">
-    <h4 class="text-lg lg:text-xl">Shopping Cart</h4>
+    <h4 class="text-lg lg:text-xl">My favorites</h4>
     <p class="text-sm lg:text-base">({{favoriteProducts.length}}) Items</p>
   </div>
   <div class="bg-white w-full h-[1px] mb-6 lg:mb-8"></div>
@@ -79,6 +79,7 @@
       <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(275px,1fr))] justify-between gap-x-5 gap-y-8">
         @for (item of favoriteProducts; track $index) {
           <app-card
+          [id]="item.productId"
           [productImage]="item.productImage"
           [title]="item.title"
           [discription]="item.discription"

@@ -21,6 +21,7 @@
     <div class="space-y-4 lg:space-y-5">
       @for (item of cartProducts; track $index) {
         <app-cartitem
+        [overAllPrice]="item.overAllPrice"
         [title]="item.title"
         [productImage]="item.productImage"
         [price]="item.price"
@@ -36,7 +37,7 @@
   </div>
 
   <!-- Order Summary Column -->
-  <div class="bg-[#333333] rounded-xl lg:rounded-[20px] px-4 lg:px-5 py-6 lg:py-10 h-fit lg:sticky lg:top-5 mb-8 lg:mb-0">
+  <div class="bg-[#333333] rounded-xl lg:rounded-[20px] px-4 lg:px-5 py-6 lg:py-10 h-fit lg:sticky lg:top-[120px] mb-8 lg:mb-0">
     <h4 class="text-lg lg:text-xl">Order Summary</h4>
     <div class="bg-[#FFFFFF] h-[1px] w-full my-4 lg:my-5"></div>
 

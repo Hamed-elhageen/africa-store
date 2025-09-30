@@ -1,20 +1,32 @@
-<div class="flex items-center justify-between my-5 cartitem">
-    <div class="flex gap-5">
-        <img [src]="productImage" class="w-[142px] h-[140px] rounded-[20px]" />
+<div class="flex flex-col justify-between my-5 md:items-center md:flex-row cartitem">
+    <div class="flex gap-5 mb-4 md:mb-0 ">
+        <img [src]="productImage" class=" h-[140px] rounded-[20px]" />
         <div class="">
             <p class="mb-3">{{ title }}</p>
             <p class="mb-3">
-                <span class="text-[#757474]">price</span> : {{ price }}
+                <span class="text-[#757474]">price</span> : {{ price }} EGP
             </p>
-            <p><span class="text-[#757474]">size</span> : {{ size }}</p>
+            <p class="mb-3"><span class="text-[#757474]">size</span> : {{ size }}</p>
+            <div class="flex items-center gap-2 mb-3 md:mb-0 md:hidden">
+        <div
+            class="h-auto px-0 md:px-5 py-1 bg-[#333333] rounded-[10px] flex flex-row items-center md:ms-0 "
+        >
+            <span class="px-5 text-2xl">-</span> {{quantity}}
+            <span class="px-5 text-2xl">+</span>
+        </div>
+        <div class="px-5 py-2 bg-[#333333] rounded-[10px] md:mx-2 mx-3">
+            <i class="fa-solid fa-trash-can text-[#F55157]"></i>
         </div>
     </div>
+        </div>
 
-    <div class="flex items-center gap-2">
+    </div>
+
+    <div class="items-center hidden gap-2 mb-3 md:flex md:mb-0 ">
         <div
-            class="h-auto px-0 md:px-5 py-1 bg-[#333333] rounded-[10px] flex flex-col md:flex-row items-center md:ms-0 ms-2"
+            class="h-auto px-0 md:px-5 py-1 bg-[#333333] rounded-[10px] flex flex-row items-center md:ms-0 "
         >
-            <span class="px-5 text-2xl">-</span> 2
+            <span class="px-5 text-2xl">-</span> {{quantity}}
             <span class="px-5 text-2xl">+</span>
         </div>
         <div class="px-5 py-2 bg-[#333333] rounded-[10px] md:mx-2 mx-3">
@@ -22,5 +34,5 @@
         </div>
     </div>
 
-    <div><h5>560 EGP</h5></div>
+    <div class="text-white ps-2"><h5 class="inline-block md:hidden">Overall price : </h5><h5 class="inline-block text-secondary_color">{{overAllPrice}} EGP</h5> </div>
 </div>
