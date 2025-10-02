@@ -1,1 +1,33 @@
-<p class="text-white">dashboardheader works!</p>
+<div class="bg-gray-900 ">
+<header class="container flex items-center justify-between w-full px-6 py-4 text-white shadow-md ">
+    <!-- Left: Sidebar toggle (mobile only) + Logo -->
+    <div class="flex items-center gap-4">
+        <button class="text-2xl md:hidden" (click)="onToggleSidebar()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="flex items-center w-full md:w-[400px] max-w-md px-3 py-3 text-black bg-white rounded-3xl">
+            <i class="mr-2 text-gray-500 fa-solid fa-search"></i>
+                <input type="text" placeholder="Search products, categories, users..." class="flex-1 text-sm bg-transparent outline-none"/>
+        </div>
+    </div>
+
+    <!-- Right: Actions -->
+    <div class="flex items-center gap-6">
+        <!-- Notifications -->
+        <button class="relative text-xl hover:text-gray-300">
+            <i class="fa-solid fa-bell"></i>
+            <span
+                class="absolute top-0 right-0 w-2 h-2 bg-red-600 rounded-full"></span>
+        </button>
+
+        <!-- Profile -->
+        <div class="relative group">
+            <button class="flex items-center gap-2 hover:text-gray-300">
+                <img src="userphoto.jpg" alt="profile"class="object-cover w-12 h-12 rounded-full">
+            </button>
+
+
+        </div>
+    </div>
+</header>
+</div>

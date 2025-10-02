@@ -1,1 +1,114 @@
-<p class="text-white">sidebar works!</p>
+<div class="flex-col hidden w-full h-screen text-white bg-gray-900 shadow-lg md:flex">
+    <!-- Logo / Title -->
+    <div class="p-6 border-b border-gray-700 cursor-pointer" routerLink="/dashboard">
+        <img src="colorful-logo.svg" alt="logo" class="w-[80%]">
+    </div>
+
+    <!-- Menu -->
+    <nav class="flex-1 p-4">
+        <ul class="space-y-3">
+            <li>
+                <a routerLink="/dashboard/products" routerLinkActive="bg-gray-800"
+                    class="flex items-center gap-3 px-4 py-2 transition rounded-md hover:bg-gray-700">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Products</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/dashboard/categories" routerLinkActive="bg-gray-800"
+                    class="flex items-center gap-3 px-4 py-2 transition rounded-md hover:bg-gray-700">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/dashboard/orders" routerLinkActive="bg-gray-800"
+                    class="flex items-center gap-3 px-4 py-2 transition rounded-md hover:bg-gray-700">
+                    <i class="fa-solid fa-shopping-cart"></i>
+                    <span>Orders</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/dashboard/users" routerLinkActive="bg-gray-800"
+                    class="flex items-center gap-3 px-4 py-2 transition rounded-md hover:bg-gray-700">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Logout -->
+    <div class="p-4 border-t border-gray-700">
+        <button class="flex items-center justify-center w-full gap-3 px-4 py-2 transition bg-red-600 rounded-md hover:bg-red-700">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </button>
+    </div>
+</div>
+
+<!-- Mobile Sidebar -->
+<div class="h-screen md:hidden">
+    <!-- dark overlay appers on the screen when you opens the sidebar , and it takes all the screen and by that if you clicked on anyplace in the screen the side bar will be closed -->
+    <div class="fixed inset-0 z-40 transition-opacity bg-opacity-50 bg-gray-950"
+         *ngIf="isSidebarOpen"
+        (click)="isSidebarOpen = false"></div>
+
+    <div class="fixed top-0 right-0 z-50 w-64 h-full text-white transition-transform duration-300 transform bg-black shadow-lg"
+        [class.translate-x-full]="!isSidebarOpen"
+        [class.translate-x-0]="isSidebarOpen">
+        <!-- Logo -->
+        <div class="flex items-center justify-between p-6 border-b border-gray-700">
+            <img src="colorful-logo.svg" alt="logo" class="w-[80%]">
+            <button (click)="isSidebarOpen = false">
+                <i class="text-xl fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Menu -->
+        <nav class="flex-1 p-4">
+            <ul class="space-y-3">
+                <li>
+                    <a routerLink="/dashboard/products" routerLinkActive="bg-gray-800"
+                        class="flex items-center gap-3 px-4 py-2 transition rounded-md hover:bg-gray-700"
+                        (click)="isSidebarOpen = false">
+                        <i class="fa-solid fa-box"></i>
+                        <span>Products</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard/categories" routerLinkActive="bg-gray-800"
+                        class="flex items-center gap-3 px-4 py-2 transition rounded-md hover:bg-gray-700"
+                        (click)="isSidebarOpen = false">
+                        <i class="fa-solid fa-list"></i>
+                        <span>Categories</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard/orders" routerLinkActive="bg-gray-800"
+                        class="flex items-center gap-3 px-4 py-2 transition rounded-md hover:bg-gray-700"
+                        (click)="isSidebarOpen = false">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                        <span>Orders</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard/users" routerLinkActive="bg-gray-800"
+                        class="flex items-center gap-3 px-4 py-2 transition rounded-md hover:bg-gray-700"
+                        (click)="isSidebarOpen = false">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Logout -->
+        <div class="absolute w-full p-4 border-t border-gray-700 bottom-8">
+            <button class="flex items-center justify-center w-full gap-3 px-4 py-2 transition bg-red-600 rounded-md hover:bg-red-700">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
+</div>

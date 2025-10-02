@@ -1,9 +1,18 @@
 <!-- main-layout.component.html -->
 <div class="flex h-screen">
-    <app-sidebar></app-sidebar>
+    <app-sidebar
+    [isSidebarOpen]="isSidebarOpen"
+    (close)="closeSidebar()"
+
+    >
+
+    </app-sidebar>
 
     <div class="flex flex-col flex-1">
-    <app-dashboardheader></app-dashboardheader>
+    <app-dashboardheader
+    (toggleSidebar)="toggleSidebar()"
+    >
+</app-dashboardheader>
     <!-- Router outlet -->
     <main class="p-4 overflow-y-auto">
         <router-outlet></router-outlet>
