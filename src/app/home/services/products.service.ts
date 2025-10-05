@@ -19,6 +19,8 @@ constructor() { }
     categoryName: "Football shoes",
     isFavorite: true,
     inCart: false,
+    stock:14,
+
   },
   {
     productId: 2,
@@ -31,6 +33,8 @@ constructor() { }
     categoryName: "Football shoes",
     isFavorite: false,
     inCart: true,
+        stock:14,
+
   },
   {
     productId: 3,
@@ -43,6 +47,8 @@ constructor() { }
     categoryName: "Football shoes",
     isFavorite: true,
     inCart: true,
+        stock:14,
+
   },
   {
     productId: 4,
@@ -55,6 +61,8 @@ constructor() { }
     categoryName: "Football shoes",
     isFavorite: false,
     inCart: false,
+        stock:14,
+
   },
   {
     productId: 5,
@@ -67,6 +75,8 @@ constructor() { }
     categoryName: "Football shoes",
     isFavorite: true,
     inCart: false,
+        stock:14,
+
   },
   {
     productId: 6,
@@ -79,6 +89,8 @@ constructor() { }
     categoryName: "Football shoes",
     isFavorite: false,
     inCart: true,
+        stock:14,
+
   },
   {
     productId: 7,
@@ -127,6 +139,8 @@ constructor() { }
     categoryName: "Football shoes",
     isFavorite: false,
     inCart: true,
+        stock:14,
+
   },
 
   // ================= SPORTS ACCESSORIES =================
@@ -165,6 +179,8 @@ constructor() { }
     categoryName: "Sports Accessories",
     isFavorite: true,
     inCart: true,
+        stock:14,
+
   },
   {
     productId: 14,
@@ -189,6 +205,8 @@ constructor() { }
     categoryName: "Sports Accessories",
     isFavorite: true,
     inCart: false,
+        stock:14,
+
   },
 
   // ================= SPORTS SHIRTS =================
@@ -203,6 +221,8 @@ constructor() { }
     categoryName: "Sports Shirts",
     isFavorite: true,
     inCart: true,
+        stock:14,
+
   },
   {
     productId: 17,
@@ -239,6 +259,8 @@ constructor() { }
     categoryName: "Sports Shirts",
     isFavorite: false,
     inCart: false,
+        stock:14,
+
   },
   {
     productId: 20,
@@ -251,6 +273,8 @@ constructor() { }
     categoryName: "Sports Shirts",
     isFavorite: true,
     inCart: true,
+        stock:14,
+
   },
 
   // ================= FOOTBALL SHIRTS =================
@@ -313,6 +337,8 @@ constructor() { }
     categoryName: "Football Shirts",
     isFavorite: true,
     inCart: false,
+        stock:14,
+
   },
 
   // ================= SPORTS BAGS =================
@@ -327,6 +353,8 @@ constructor() { }
     categoryName: "Sports Bags",
     isFavorite: true,
     inCart: false,
+        stock:14,
+
   },
   {
     productId: 27,
@@ -363,6 +391,8 @@ constructor() { }
     categoryName: "Sports Bags",
     isFavorite: false,
     inCart: false,
+        stock:14,
+
   },
   {
     productId: 30,
@@ -414,6 +444,8 @@ constructor() { }
   categoryName: "Sports T-shirts",
   isFavorite: true,
   inCart: true,
+      stock:14,
+
 },
 {
   productId: 38,
@@ -476,6 +508,8 @@ constructor() { }
   categoryName: "Football shoes",
   isFavorite: false,
   inCart: false,
+      stock:14,
+
 },
 
 // Sports Accessories more
@@ -526,6 +560,8 @@ constructor() { }
   categoryName: "Sports Accessories",
   isFavorite: true,
   inCart: true,
+      stock:14,
+
 },
 
 // More T-shirts
@@ -540,6 +576,8 @@ constructor() { }
   categoryName: "Sports T-shirts",
   isFavorite: true,
   inCart: false,
+      stock:14,
+
 },
 {
   productId: 48,
@@ -567,6 +605,8 @@ constructor() { }
   categoryName: "Sports T-shirts",
   isFavorite: true,
   inCart: false,
+      stock:14,
+
 },
 {
   productId: 36,
@@ -603,6 +643,8 @@ constructor() { }
   categoryName: "Sports T-shirts",
   isFavorite: false,
   inCart: false,
+      stock:14,
+
 },
 
 // Football shoes extra
@@ -629,6 +671,8 @@ constructor() { }
   categoryName: "Football shoes",
   isFavorite: false,
   inCart: true,
+      stock:14,
+
 },
 {
   productId: 41,
@@ -691,6 +735,8 @@ constructor() { }
   categoryName: "Sports Accessories",
   isFavorite: false,
   inCart: false,
+      stock:14,
+
 },
 {
   productId: 46,
@@ -703,6 +749,8 @@ constructor() { }
   categoryName: "Sports Accessories",
   isFavorite: true,
   inCart: true,
+      stock:14,
+
 },
 
 // More T-shirts
@@ -796,6 +844,9 @@ constructor() { }
   categoryName: "Football shoes",
   isFavorite: true,
   inCart: false,
+
+      stock:14,
+
 },
 {
   productId: 40,
@@ -820,6 +871,8 @@ constructor() { }
   categoryName: "Football shoes",
   isFavorite: true,
   inCart: true,
+      stock:14,
+
 },
 {
   productId: 42,
@@ -846,6 +899,8 @@ constructor() { }
   categoryName: "Sports Accessories",
   isFavorite: true,
   inCart: false,
+      stock:14,
+
 },
 {
   productId: 44,
@@ -870,6 +925,8 @@ constructor() { }
   categoryName: "Sports Accessories",
   isFavorite: false,
   inCart: false,
+      stock:14,
+
 },
 {
   productId: 46,
@@ -908,6 +965,8 @@ constructor() { }
   categoryName: "Sports T-shirts",
   isFavorite: false,
   inCart: true,
+      stock:14,
+
 },
 
 // Allproducts (part 3: 49 → 68)
@@ -936,6 +995,8 @@ constructor() { }
   categoryName: "Sports T-shirts",
   isFavorite: false,
   inCart: true,
+      stock:14,
+
 },
 {
   productId: 51,
@@ -948,6 +1009,8 @@ constructor() { }
   categoryName: "Sports T-shirts",
   isFavorite: false,
   inCart: false,
+      stock:14,
+
 },
 {
   productId: 52,
@@ -960,6 +1023,8 @@ constructor() { }
   categoryName: "Sports T-shirts",
   isFavorite: true,
   inCart: true,
+      stock:14,
+
 },
 
 // Football shoes extra
@@ -974,6 +1039,8 @@ constructor() { }
   categoryName: "Football shoes",
   isFavorite: true,
   inCart: false,
+      stock:14,
+
 },
 {
   productId: 54,
@@ -986,6 +1053,8 @@ constructor() { }
   categoryName: "Football shoes",
   isFavorite: false,
   inCart: true,
+      stock:14,
+
 },
 {
   productId: 55,
@@ -998,6 +1067,8 @@ constructor() { }
   categoryName: "Football shoes",
   isFavorite: false,
   inCart: false,
+      stock:14,
+
 },
 {
   productId: 56,
@@ -1010,6 +1081,8 @@ constructor() { }
   categoryName: "Football shoes",
   isFavorite: true,
   inCart: true,
+      stock:14,
+
 },
 
 // Sports Accessories continued
@@ -1110,6 +1183,8 @@ constructor() { }
   categoryName: "Sports T-shirts",
   isFavorite: true,
   inCart: true,
+      stock:14,
+
 },
 {
   productId: 65,
@@ -1158,6 +1233,8 @@ constructor() { }
   categoryName: "Sports T-shirts",
   isFavorite: true,
   inCart: true,
+      stock:14,
+
 },
 
 
@@ -1176,6 +1253,12 @@ constructor() { }
             return prd.categoryId===categoryId
         })
     }
+
+    //for use to get the number of products in specific category
+   getCategoryProductsCount(Id: number): number {
+    return this.Allproducts.filter((prd: any) => prd.categoryId === Id).length;
+}
+
 
 
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProductsService } from '../../../home/services/products.service';
 
 @Component({
   selector: 'app-productslist',
@@ -6,90 +7,8 @@ import { Component } from '@angular/core';
   styleUrl: './productslist.component.scss'
 })
 export class ProductslistComponent {
-products = [
-        {
-            name: 'Football Shoes',
-            category: 'Shoes',
-            price: 120,
-            stock: 15,
-            image: 'arsenal-shirt.svg'
-        },
-        {
-            name: 'Sports T-Shirt',
-            category: 'Clothes',
-            price: 45,
-            stock: 30,
-            image: 'arsenal-shirt.svg'
-        },
-        {
-            name: 'Goalkeeper Gloves',
-            category: 'Accessories',
-            price: 60,
-            stock: 10,
-            image: 'arsenal-shirt.svg'
-        },
-         {
-            name: 'Football Shoes',
-            category: 'Shoes',
-            price: 120,
-            stock: 15,
-            image: 'arsenal-shirt.svg'
-        },
-        {
-            name: 'Sports T-Shirt',
-            category: 'Clothes',
-            price: 45,
-            stock: 30,
-            image: 'arsenal-shirt.svg'
-        },
-        {
-            name: 'Goalkeeper Gloves',
-            category: 'Accessories',
-            price: 60,
-            stock: 10,
-            image: 'arsenal-shirt.svg'
-        },
-         {
-            name: 'Football Shoes',
-            category: 'Shoes',
-            price: 120,
-            stock: 15,
-            image: 'arsenal-shirt.svg'
-        },
-        {
-            name: 'Sports T-Shirt',
-            category: 'Clothes',
-            price: 45,
-            stock: 30,
-            image: 'arsenal-shirt.svg'
-        },
-        {
-            name: 'Goalkeeper Gloves',
-            category: 'Accessories',
-            price: 60,
-            stock: 10,
-            image: 'arsenal-shirt.svg'
-        },
-         {
-            name: 'Football Shoes',
-            category: 'Shoes',
-            price: 120,
-            stock: 15,
-            image: 'arsenal-shirt.svg'
-        },
-        {
-            name: 'Sports T-Shirt',
-            category: 'Clothes',
-            price: 45,
-            stock: 30,
-            image: 'arsenal-shirt.svg'
-        },
-        {
-            name: 'Goalkeeper Gloves',
-            category: 'Accessories',
-            price: 60,
-            stock: 10,
-            image: 'arsenal-shirt.svg'
-        },
-    ];
+    products!:any[];
+constructor(private productsService : ProductsService){
+    this.products=this.productsService.getAll();
+}
 }

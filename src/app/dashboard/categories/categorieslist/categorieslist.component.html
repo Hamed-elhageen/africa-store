@@ -17,7 +17,7 @@
 
     <!-- Table for Desktop -->
     <div class="hidden overflow-x-auto rounded-lg shadow md:block">
-        <table class="min-w-full text-sm text-left text-gray-300 border border-gray-700 rounded-md">
+        <table class="min-w-full text-sm text-left text-gray-300 border border-gray-700 rounded-md bg-slate-950">
             <thead class="text-xs text-gray-400 uppercase bg-gray-800">
                 <tr>
                     <th class="px-6 py-3">Image</th>
@@ -30,13 +30,13 @@
             <tbody>
                 <tr *ngFor="let category of categories" class="border-b border-gray-700 hover:bg-gray-800/70">
                     <td class="px-6 py-3">
-                        <img [src]="category.image"
+                        <img [src]="category.categoryimage"
                              alt="{{ category.name }}"
                              class="object-cover w-12 h-12 border border-gray-600 rounded-md">
                     </td>
-                    <td class="px-6 py-3">{{ category.id }}</td>
-                    <td class="px-6 py-3 font-medium">{{ category.name }}</td>
-                    <td class="px-6 py-3">{{ category.productsCount }}</td>
+                    <td class="px-6 py-3">{{ category.categoryid }}</td>
+                    <td class="px-6 py-3 font-medium">{{ category.categoryName }}</td>
+                    <td class="px-6 py-3 text-white">{{ category.productsCount }}</td>
                     <td class="px-6 py-3 text-center">
                         <button routerLink="/dashboard/categories/editcategory" class="px-3 py-1 mr-2 text-sm text-white bg-blue-600 rounded-md hover:bg-blue-700">
                             Edit

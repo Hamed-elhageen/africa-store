@@ -9,32 +9,32 @@ public allCategories:Category[]=
     [
         {
             categoryName:"Football shirts",
-            categoryid:"1",
+            categoryid:1,
             categoryimage:"/germany.png"
         },
         {
             categoryName:"Sports shirts",
-            categoryid:"3",
+            categoryid:3,
             categoryimage:"/shirts.svg"
         },
         {
             categoryName:"Sports shoes",
-            categoryid:"2",
+            categoryid:2,
             categoryimage:"/shoes.svg"
         },
         {
             categoryName:"Sports bags",
-            categoryid:"6",
+            categoryid:6,
             categoryimage:"/bags.svg"
         },
         {
             categoryName:"Sports accessories",
-            categoryid:"5",
+            categoryid:5,
             categoryimage:"/gloves.svg"
         },
         {
             categoryName:"Football shoes",
-            categoryid:"4",
+            categoryid:4,
             categoryimage:"/stars.svg"
         },
     ] ;

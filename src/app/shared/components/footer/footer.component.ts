@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Category } from '../../modles/category';
+import { CategoriesService } from '../../../home/services/categories.service';
 
 @Component({
   selector: 'app-footer',
@@ -15,38 +16,11 @@ export class FooterComponent {
     onResize(event: any) {
     this.isMobile = event.target.innerWidth < 768;                            // here you are lestening on the window resize , if its size became less than 768 , so ismobile will be true
     }
+    allcategories!:any[];
+    constructor(private categoriresService:CategoriesService){
+            this.allcategories= this.categoriresService.getAllCategories()
+    }
 
-    public allcategories:Category[]=[
-        {
-            categoryName:"Football shirts",
-            categoryid:"1",
-            categoryimage:"/germany.png"
-        },
-        {
-            categoryName:"Sports shirts",
-            categoryid:"2",
-            categoryimage:"/shirts.svg"
-        },
-        {
-            categoryName:"Sports shoes",
-            categoryid:"3",
-            categoryimage:"/shoes.svg"
-        },
-        {
-            categoryName:"Sports bags",
-            categoryid:"4",
-            categoryimage:"/bags.svg"
-        },
-        {
-            categoryName:"Sports accessories",
-            categoryid:"5",
-            categoryimage:"/gloves.svg"
-        },
-        {
-            categoryName:"Football shoes",
-            categoryid:"6",
-            categoryimage:"/stars.svg"
-        }, ] ;
 
     branches: string[] = [
     // First Column

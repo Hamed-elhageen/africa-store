@@ -1,4 +1,4 @@
-<div class="p-4 md:p-6">
+<div class="container p-4 md:p-6">
     <!-- Header + Filters -->
     <div class="flex flex-col gap-4 mb-6 sm:flex-row sm:items-center sm:justify-between">
         <!-- Title -->
@@ -29,7 +29,7 @@
 
     <!-- Table for Desktop -->
     <div class="hidden overflow-x-auto rounded-lg shadow md:block">
-        <table class="min-w-full text-sm text-left text-gray-300 bg-black border border-gray-700">
+        <table class="min-w-full text-sm text-left text-gray-300 border border-gray-700 bg-slate-950">
             <thead class="text-gray-400 bg-gray-900">
                 <tr>
                     <th class="px-6 py-3">#</th>
@@ -46,10 +46,10 @@
                     class="border-t border-gray-700 hover:bg-gray-800">
                     <td class="px-6 py-4">{{ i + 1 }}</td>
                     <td class="px-6 py-4">
-                        <img [src]="product.image" alt="product" class="object-cover w-12 h-12 rounded-md" />
+                        <img [src]="product.productImage" alt="product" class="object-cover w-12 h-12 rounded-md" />
                     </td>
-                    <td class="px-6 py-4">{{ product.name }}</td>
-                    <td class="px-6 py-4">{{ product.category }}</td>
+                    <td class="px-6 py-4">{{ product.title}}</td>
+                    <td class="px-6 py-4">{{ product.categoryName }}</td>
                     <td class="px-6 py-4">${{ product.price }}</td>
                     <td class="px-6 py-4">{{ product.stock }}</td>
                     <td class="flex justify-center gap-2 px-6 py-4">
