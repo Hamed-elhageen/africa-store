@@ -10,7 +10,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class CategorieslistComponent implements OnInit {
     allcategories!:any[];
-    productsCountInCategory!:any;
 
 constructor(private categoriesService:CategoriesdashboardService , private spinner:NgxSpinnerService){
 }
@@ -66,11 +65,11 @@ this.categoriesService.getAllCategories().subscribe({
             text: err.message || 'Something went wrong while deleting.',
             icon: 'error'
                 })
+                  this.spinner.hide();
             }
         })
     }
   })
-  this.spinner.hide();
     }
 
 

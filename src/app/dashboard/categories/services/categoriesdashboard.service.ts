@@ -28,7 +28,7 @@ export class CategoriesdashboardService {
         //add category with formData
 headers=new HttpHeaders().set(
                 'Authorization',
-                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZDQ1ZGE2YjE1OGE4Mzg5M2FlODI4OSIsImlhdCI6MTc2MDg3MTY0MSwiZXhwIjoxNzYwOTU4MDQxfQ.C2TwH6jxjFRIzKgU4FQz6l_abg9Hrl0Jx16OCWMiols`
+                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjZjMzJlODU2MDBmMDI5MDAwMTQyOSIsImlhdCI6MTc2MTA0MTc3MSwiZXhwIjoxNzYxMTI4MTcxfQ.btfpFOpuF-JtE7F7CEk45RhMj0E3O8e3ET_5vLfXFSY`
             )
         addCategory(formData:FormData):Observable<any>{
             return this.http.post<any>(environment.api+"/category",formData,{headers:this.headers}).pipe(

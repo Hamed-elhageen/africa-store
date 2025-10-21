@@ -5,90 +5,153 @@
         <!-- Product Name -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Product Name</label>
-            <input type="text" formControlName="name"
+            <input type="text" formControlName="name"   [ngClass]="{ 'border-red-700': name?.invalid && name?.touched }"
                 class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
-        </div>
+                    <small class="text-red-500"
+                        *ngIf="name?.invalid && name?.touched">
+                        <span *ngIf="name?.errors?.['minlength']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product name cant be lass that 3 letters.</span>
+                        <span *ngIf="name?.errors?.['maxlength']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product name cant be more that 30 letter</span>
+                        <span *ngIf="name?.errors?.['required']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product  name cant be empty</span>
+                    </small>
+            </div>
+        <!-- Product Describtion -->
+        <div>
+            <label class="block mb-2 text-sm font-medium text-gray-300">Product Describtion</label>
+            <input type="text" formControlName="description" [ngClass]="{ 'border-red-700': description?.invalid && description?.touched }"
+                class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
+                    <small class="text-red-500"
+                        *ngIf="description?.invalid && description?.touched">
+                        <span *ngIf="description?.errors?.['minlength']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product description cant be lass that 3 letters.</span>
+                        <span *ngIf="description?.errors?.['maxlength']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product description cant be more that 100 letter</span>
+                        <span *ngIf="description?.errors?.['required']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product  description cant be empty</span>
+                    </small>
+            </div>
 
         <!-- Category -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Category</label>
-            <select formControlName="categoryId"
+            <select formControlName="categoryId" (change)="onCategoryChange($event)" [ngClass]="{ 'border-red-700': categoryId?.invalid && categoryId?.touched }"
                     class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
                     <option value="" disabled selected hidden>Select category</option>
-                    <option *ngFor="let category of categories" [value]="category._id">
+                    <option *ngFor="let category of categories" [value]="category._id" >
                     {{ category.name }}
                 </option>
             </select>
+            <small class="text-red-500"
+                        *ngIf="categoryId?.invalid && categoryId?.touched">
+                        <span *ngIf="categoryId?.errors?.['required']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>You must select the product category</span>
+            </small>
         </div>
 
         <!-- Team -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Team</label>
-            <select formControlName="teamId"
+            <select formControlName="club"   [ngClass]="{ 'border-red-700': club?.invalid && club?.touched }"
                     class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
                 <option value="" disabled selected hidden>Select Team</option>
                 <option *ngFor="let team of teams" [value]="team.id">
                     {{ team.name }}
                 </option>
             </select>
+            <small class="text-red-500"
+                        *ngIf="club?.invalid && club?.touched">
+                        <span *ngIf="club?.errors?.['required']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>You must select the product team</span>
+            </small>
+
         </div>
 
+
+        <div class="flex items-center gap-28">
         <!-- Sizes -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Available Sizes</label>
             <div class="flex flex-wrap gap-4">
                 <label *ngFor="let size of allSizes" class="flex items-center gap-2 text-gray-300">
                     <input type="checkbox"
-                    formControlName="size"
                         [value]="size"
+                        (change)="onSizeChange(size, $event)"
                         class="w-4 h-4 text-green-600 bg-gray-800 border-gray-600 rounded focus:ring-green-500">
                     <span>{{ size }}</span>
                 </label>
             </div>
+            <small class="text-danger" *ngIf="productForm.get('sizes')?.invalid && productForm.get('sizes')?.touched">
+                    Please select at least one size
+            </small>
         </div>
+        <!-- stock -->
+        <div class="flex-1">
+                <label class="block mb-2 text-sm font-medium text-gray-300">Available in stock</label>
+                <input type="number" formControlName="stock" [ngClass]="{'border-red-700':stock?.invalid&&stock?.touched}"
+                    class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
+            <small class="text-red-500" *ngIf="stock?.invalid && stock?.touched">
+                        <span *ngIf="stock?.errors?.['required']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>You must add the available quantity</span>
+            </small>
+                </div>
+    </div>
+
+
 
         <!-- Main Product Image -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Main Product Image</label>
-            <div  class="flex items-center gap-10">
-                <input type="file" accept="image/*"  (change)="onMainImageChange($event)"
-                class="w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700">
+            <div  class="flex items-center gap-2">
+                <input type="file" accept="image/*"  (change)="onMainImageChange($event)" formControlName="mainProductImage" [ngClass]="{'border-red-700':mainProductImage?.invalid&&mainProductImage?.touched}"
+                class="text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700">
                 <div *ngIf="mainImagePreview" class="mt-2 text-center">
-                    <img [src]="mainImagePreview" alt="Main preview" class="img-thumbnail" style="max-width: 150px;">
+                    <img [src]="mainImagePreview" alt="Main preview" class="img-thumbnail" style="max-width: 180px;">
                 </div>
             </div>
+            <small class="text-red-500" *ngIf="mainProductImage?.invalid && mainProductImage?.touched">
+                        <span *ngIf="mainProductImage?.errors?.['required']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>You must add the product main image</span>
+            </small>
+
 
         </div>
 
         <!-- Images -->
-        <div class="grid gap-4 md:grid-cols-3">
+        <div >
                 <label class="block mb-2 text-sm font-medium text-gray-300">Choose product images</label>
-                <div class="flex items-center gap-10">
-                    <input type="file" multiple  accept="image/*" (change)="onExtraImageChange($event)"
-                    class="w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700">
-                    <div *ngIf="extraImagesPreview.length > 0" class="flex-wrap gap-2 mt-3 d-flex">
-                       <div *ngFor="let img of extraImagesPreview; let i = index" class="position-relative">
-                            <img [src]="img" alt="Extra preview" class="img-thumbnail" style="max-width: 100px;">
+                <div class="flex items-center gap-2">
+                    <input type="file" multiple  accept="image/*" (change)="onExtraImageChange($event)" formControlName="extraProductImages" [ngClass]="{'border-red-700':extraProductImage?.invalid&&extraProductImage?.touched}"
+                    class="text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700">
+                    <div *ngIf="extraImagesPreview.length > 0" class="flex flex-wrap gap-2 mt-3 d-flex">
+                       <div *ngFor="let img of extraImagesPreview; let i = index" class="flex items-center gap-3 position-relative">
+                            <img [src]="img" alt="Extra preview" class="img-thumbnail" style="max-width: 140px;">
                         </div>
                     </div>
                 </div>
+              <small class="text-red-500" *ngIf="extraProductImage?.invalid && extraProductImage?.touched">
+                        <span *ngIf="extraProductImage?.errors?.['required']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>You must add at least 1 extra image for the product</span>
+            </small>
         </div>
 
         <!-- Pricing -->
         <div class="grid gap-6 md:grid-cols-3">
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-300">Price Before Discount</label>
-                <input type="number" formControlName="priceBeforeDiscount"
+                <input type="number" formControlName="priceBeforeDiscount"       (input)="updateFinalPrice()"
                     class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
-            </div>
+                    <small class="text-red-500"
+                        *ngIf="priceBeforeDiscount?.invalid && priceBeforeDiscount?.touched">
+                        <span *ngIf="priceBeforeDiscount?.errors?.['min']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Price can't be less than 0.</span>
+                        <span *ngIf="priceBeforeDiscount?.errors?.['max']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Price can't be more than 1000000.</span>
+                        <span *ngIf="priceBeforeDiscount?.errors?.['required']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Price can't be empty.</span>
+                    </small>
+                </div>
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-300">Discount (%)</label>
-                <input type="number" formControlName="discount"
+                <input type="number" formControlName="discount"       (input)="updateFinalPrice()"
                     class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
-            </div>
+            <small class="text-red-500"
+                *ngIf="discount?.invalid && discount?.touched">
+                <span *ngIf="discount?.errors?.['min']">Discount can't be less than 0%.</span>
+                <span *ngIf="discount?.errors?.['max']">Discount can't be more than 100%.</span>
+            </small>
+                </div>
+
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-300">Price After Discount</label>
-                <input type="number" formControlName="priceAfterDiscount"
+                <input type="number" formControlName="priceAfterDiscount" readonly
                     class="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-md cursor-not-allowed">
             </div>
         </div>

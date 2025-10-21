@@ -54,12 +54,13 @@
                     <td class="px-6 py-4">{{ product.stock }}</td>
                     <td class="flex justify-center gap-2 px-6 py-4">
                         <button
-                        routerLink="/dashboard/products/editproduct"
+                        [routerLink]="['/dashboard/products/editproduct/',product._id]"
                             class="px-3 py-1 text-sm text-white transition bg-blue-600 rounded hover:bg-blue-700">
 
                             <i class="fa-solid fa-pen"></i>
                         </button>
                         <button
+                        (click)="deleteProduct(product._id)"
                             class="px-3 py-1 text-sm text-white transition bg-red-600 rounded hover:bg-red-700">
                             <i class="fa-solid fa-trash"></i>
                         </button>

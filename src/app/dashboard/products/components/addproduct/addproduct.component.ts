@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {  FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoriesdashboardService } from '../../../categories/services/categoriesdashboard.service';
 import { ProductsdashboardService } from '../../services/productsdashboard.service';
 import Swal from 'sweetalert2';
@@ -15,13 +15,14 @@ const Toast = Swal.mixin({
     timer: 3000,
     timerProgressBar: false,
   });
+
 @Component({
   selector: 'app-addproduct',
   templateUrl: './addproduct.component.html',
   styleUrl: './addproduct.component.scss'
 })
 export class AddproductComponent implements OnInit{
-    categories:any[]=[]
+    categories:any[]=[]                                   //will come from the backend
     teams = [
         { id: 1, name: 'Real Madrid' },
         { id: 2, name: 'Barcelona' },
@@ -36,10 +37,10 @@ export class AddproductComponent implements OnInit{
         { id: 11, name: 'Another' },
     ];
     allSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL','XXXL'];
-    //those are the images which will be sent to the server
+    //those are the images which will be sent with the request
     mainImage!:File | null;
     extraImages!:File[] | null
-    //those are the images which will appear in the page when the admin chosses them : there src with be passed to the src of the img in html
+    //those are the images which will appear in the page when the admin chosses them : there src with be passed to the src of the img in html to appear
     mainImagePreview: string | null = null;
     extraImagesPreview: string[] = [];
 
@@ -57,16 +58,21 @@ export class AddproductComponent implements OnInit{
             }
         })
     }
+
     productForm!: FormGroup;
     ngOnInit(): void {
         //inside oninit , we handle the variables and so on so it can be used in the html when the component is opened
         this.productForm=new FormGroup({
-        name: new FormControl("",[Validators.required, Validators.maxLength(20)]),
-        categoryId: new FormControl("",[Validators.required]),
-        teamId:new FormControl("",[Validators.required]),
-        size:new FormControl("",[Validators.required]),
-        priceBeforeDiscount:new FormControl("",[Validators.required]),
-        discount:new FormControl("",[Validators.required]),
+        name: new FormControl("",[Validators.required, Validators.maxLength(30),Validators.minLength(3)]),
+        description: new FormControl("",[Validators.required, Validators.maxLength(120),Validators.minLength(10)]),
+        club:new FormControl("",[Validators.required]),
+        categoryId:new FormControl("",[Validators.required]),
+        mainProductImage:new FormControl("",[Validators.required]),
+        extraProductImages:new FormControl([],[Validators.required]),
+        sizes:new FormControl([],[Validators.required]),                              //take care that sizes is an array
+        stock:new FormControl("",[Validators.required,Validators.min(0),Validators.max(100000)]),
+        priceBeforeDiscount:new FormControl("",[Validators.required,Validators.min(0),Validators.max(1000000)]),
+        discount:new FormControl("",[Validators.min(0),Validators.max(90)]),
         priceAfterDiscount:new FormControl("",[Validators.required]),
     })
     }
@@ -78,7 +84,7 @@ export class AddproductComponent implements OnInit{
             this.mainImage=event.target.files[0];
 
             if(this.mainImage){
-             this.mainImagePreview = URL.createObjectURL(this.mainImage); // ✅ إنشاء رابط معاينة
+             this.mainImagePreview = URL.createObjectURL(this.mainImage); // ✅ إنشاء رابط معاينة               creating an string url will be put in the mainimagepreview variable and will be passed to the html to make the image appera in front of the admin when he chosses the image
         }
     }
     }
@@ -88,7 +94,7 @@ export class AddproductComponent implements OnInit{
         const files = event.target.files;
         if (files && files.length > 0) {
             this.extraImages = Array.from(files);
-            this.extraImagesPreview = this.extraImages.map(file => URL.createObjectURL(file));
+            this.extraImagesPreview = this.extraImages.map(file => URL.createObjectURL(file));                                                      //here returns and array of the string urls of the images choosen
         } else {
             this.extraImages = null;
             this.extraImagesPreview = [];
@@ -98,23 +104,34 @@ export class AddproductComponent implements OnInit{
 
 
 
-
-
-
-
-
-
-
+//holding each input field here
 
     get name(){
         return this.productForm.get("name")
     }
+    get description(){
+        return this.productForm.get("description")
+    }
+    get sizes(){
+        return this.productForm.get("sizes")
+    }
+    get stock(){
+        return this.productForm.get("stock")
+    }
+    get club(){
+        return this.productForm.get("club")
+    }
     get categoryId(){
         return this.productForm.get("categoryId")
     }
-    get size(){
-        return this.productForm.get("size")
+    //those to handle validations only of the images not to send them
+     get mainProductImage(){
+        return this.productForm.get("mainProductImage")
     }
+     get extraProductImage(){
+        return this.productForm.get("extraProductImage")
+    }
+    //*********************************** */
 
     get priceBeforeDiscount(){
         return this.productForm.get("priceBeforeDiscount")
@@ -131,11 +148,17 @@ export class AddproductComponent implements OnInit{
     createFromData(){
         const formData = new FormData;
         formData.append("name",this.name?.value||"")
-        formData.append("categoryId",this.categoryId?.value||"")
-        formData.append("size",this.size?.value||"")
+        formData.append("description",this.description?.value||"")
+        // formData.append("categoryId",this.categoryId?.value||"")
+        formData.append("stock",this.stock?.value||"")
         formData.append("price",this.priceBeforeDiscount?.value||"")
-        formData.append("discount",this.discount?.value||"")
-        formData.append("finalPrice",this.name?.value||"");
+        // formData.append("discount",this.discount?.value||"")
+        // formData.append("finalPrice",this.priceAfterDiscount?.value||"");
+
+//         const selectedSizes = this.productForm.get('sizes')?.value || [];
+//         selectedSizes.forEach((s: string) => {
+//         formData.append('sizes', s);
+// });
 
         if(this.mainImage){
             formData.append("thumbnail",this.mainImage)
@@ -152,6 +175,35 @@ export class AddproductComponent implements OnInit{
 
 
 
+    //a function for handling sizes and put choosed sizes in array when you choose it and remove size from array when you remove the mark on size:
+    onSizeChange(size: string, event: any) {
+  const selectedSizes = this.sizes?.value || [];
+  if (event.target.checked) {
+    // ✅ لو المستخدم اختار المقاس ده، نضيفه في المصفوفة
+    selectedSizes.push(size);
+  } else {
+    // ❌ لو شال العلامة، نحذفه
+    const index = selectedSizes.indexOf(size);
+    if (index > -1) {
+      selectedSizes.splice(index, 1);
+    }
+  }
+
+  // نحدّث القيمة في الـ form control
+  this.sizes?.setValue(selectedSizes);
+}
+
+
+
+
+
+
+//for getting the category id the admin chossed to be passed to the url as params
+catId: string = '';
+onCategoryChange(event: any) {
+  this.catId = event.target.value;
+}
+//each time you change the value of the category , its value is put in catId ,and put this event on the select
 
 
 
@@ -160,9 +212,9 @@ export class AddproductComponent implements OnInit{
 
     addProduct(){
         if(this.productForm.valid){
-            this.spinner.show();
+        this.spinner.show();
         const formData=this.createFromData();
-        this.productsService.addProduct(formData).subscribe({
+        this.productsService.addProduct(formData,this.catId).subscribe({
             next:(result)=>{
                 Toast.fire({
                     icon:"success",
@@ -172,7 +224,8 @@ export class AddproductComponent implements OnInit{
                     this.productForm.reset();
                     this.mainImage=null;
                     this.extraImages=null;
-                    this.router.navigateByUrl("/dashboard/categories")
+                    this.productForm.get('sizes')?.setValue([]);
+                    this.router.navigateByUrl("/dashboard/products")
             },
             error:(err)=>{
                 Toast.fire({
@@ -190,7 +243,22 @@ export class AddproductComponent implements OnInit{
 
 
 
+//handling the final price :
 
+updateFinalPrice() {
+  const price = this.priceBeforeDiscount?.value || 0;
+  const discount = this.discount?.value || 0;
+
+   if (discount < 0 || discount > 90) {
+    this.priceAfterDiscount?.setValue(''); // امسح القيمة
+    return;
+  }
+
+  const finalPrice = price - (price * discount / 100);
+
+  // ✅ نحدث القيمة جوه الـ FormControl نفسه
+  this.priceAfterDiscount?.setValue(finalPrice.toFixed(2));
+}
 
 
 
