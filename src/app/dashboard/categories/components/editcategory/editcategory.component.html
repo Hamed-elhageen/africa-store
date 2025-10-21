@@ -3,27 +3,21 @@
   <h2 class="mb-6 text-2xl font-bold text-white">Edit Category</h2>
 
   <!-- Form -->
-  <form [formGroup]="editCategoryForm" (ngSubmit)="submit()" class="space-y-6">
+  <form [formGroup]="editCategoryForm" (ngSubmit)="editCategory()" class="space-y-6">
     <!-- Category Name -->
     <div>
       <label class="block mb-2 text-sm font-medium text-gray-300">Category Name</label>
       <input type="text"
+      [value]="selectedCategory?.name"
              formControlName="name"
              placeholder="Enter category name"
              class="w-full px-4 py-2 text-white placeholder-gray-500 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
       <div *ngIf="editCategoryForm.get('name')?.touched && editCategoryForm.get('name')?.invalid" class="mt-1 text-sm text-red-500">
-        Category name is required (min 2 characters).
+        Category name is required (min 2 characters max 20).
       </div>
     </div>
 
-    <!-- Description -->
-    <div>
-      <label class="block mb-2 text-sm font-medium text-gray-300">Description</label>
-      <textarea rows="4"
-                formControlName="description"
-                placeholder="Write a short description..."
-                class="w-full px-4 py-2 text-white placeholder-gray-500 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
-    </div>
+
 
     <!-- Category Image -->
     <div>
@@ -31,10 +25,12 @@
 
       <!-- صورة حالية -->
       <div class="mb-3">
-        <img *ngIf="previewUrl" [src]="previewUrl" alt="Category Preview" class="object-cover w-32 h-32 rounded-md shadow-md">
+        <img    [src]="imagePreview || selectedCategory?.image?.secure_url"   alt="Category Preview" class="object-cover w-32 h-32 rounded-md shadow-md">
       </div>
 
       <input type="file"
+      formControlName="image"
+      [value]="selectedCategory?.image?.secure_url"
              (change)="onFileChange($event)"
              accept="image/*"
              class="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700">

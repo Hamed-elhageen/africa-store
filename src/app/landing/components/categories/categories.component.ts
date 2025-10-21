@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Category } from '../../../shared/modles/category';
-import { CategoriesService } from '../../../home/services/categories.service';
+import { CategoriesService } from '../../../shared/services/categories.service';
 
 @Component({
   selector: 'app-categories',
@@ -8,8 +8,15 @@ import { CategoriesService } from '../../../home/services/categories.service';
   styleUrl: './categories.component.scss'
 })
 export class CategoriesComponent {
- allcategories:Category[]=[]
+ allcategories!:any[];
     constructor(private categoriesService:CategoriesService){
-        this.allcategories=this.categoriesService.getAllCategories();
+        this.categoriesService.getAllCategories().subscribe({
+            next:(result)=>{
+                this.allcategories=result.data;
+            },
+            error:(error)=>{
+                console.log(error.message)
+            }
+        });
     }
 }

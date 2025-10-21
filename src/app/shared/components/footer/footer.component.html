@@ -16,7 +16,7 @@
                 [class.max-h-[500px]]="showProducts && isMobile"
                 class="mt-2 space-y-2 overflow-hidden text-gray-300 transition-all duration-500 ease-in-out md:max-h-full md:block">
                 @for (item of allcategories; track $index) {
-                    <li><a href="#" class="hover:text-white">{{item.categoryName}}</a></li>
+                    <li><a href="#" class="hover:text-white">{{item.name}}</a></li>
             }
             <li><a href="#" class="hover:text-white">Original Club Shirts</a></li>
             <li><a href="#" class="hover:text-white">Sports wear</a></li>

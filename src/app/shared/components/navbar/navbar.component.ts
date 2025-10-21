@@ -5,7 +5,7 @@ import { ProfileService } from './../../../auth/services/profile.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { CategoriesService } from '../../../home/services/categories.service';
+import { CategoriesService } from '../../services/categories.service';
 
 @Component({
 selector: 'app-navbar',
@@ -26,7 +26,7 @@ animations: [
 export class NavbarComponent implements OnInit  {
     isMenuOpen = false;
     isScrolled = false;
-    allcategories: Category[]=[]
+    allcategories!:any[];
 
   //   function to make the header sticky when scrolling a part  of pixels
     @HostListener('window:scroll', [])
@@ -92,7 +92,14 @@ constructor(private authService: LoginService , private profileService:ProfileSe
 }
     ngOnInit(): void {
 //categoreis which will come from back end , we put it here for test , only , after that we will fetch it here and put it in its variable also or object
-this.allcategories= this.categoriesService.getAllCategories();
+this.categoriesService.getAllCategories().subscribe({
+    next:(result)=>{
+        this.allcategories=result.data;
+    },
+    error:(error)=>{
+        console.log(error.message)
+    }
+});
 
     }
 

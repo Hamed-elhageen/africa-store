@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { title } from 'node:process';
-import { ProductsService } from '../../services/products.service';
+import { ProductsService } from '../../../shared/services/products.service';
 
 @Component({
   selector: 'app-sports-bags',

@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Category } from '../../modles/category';
-import { CategoriesService } from '../../../home/services/categories.service';
+import { CategoriesService } from '../../services/categories.service';
 
 @Component({
   selector: 'app-footer',
@@ -18,7 +18,14 @@ export class FooterComponent {
     }
     allcategories!:any[];
     constructor(private categoriresService:CategoriesService){
-            this.allcategories= this.categoriresService.getAllCategories()
+            this.categoriresService.getAllCategories().subscribe({
+                next:(result)=>{
+                    this.allcategories=result.data;
+                },
+                error:(error)=>{
+                    console.log(error.message)
+                }
+            })
     }
 
 

@@ -5,9 +5,9 @@
 
     @for (item of allcategories; track $index) {
         <div class="overflow-hidden transition-all duration-300 card-style hover:scale-[1.03]  text-center" >
-            <h5>{{item.categoryName}}</h5>
-            <img [src]="item.categoryimage" alt="category photo" class="category-photo absolute bottom-0 left-1/2 translate-x-[-50%]">
-            <button [routerLink]="['/home/categoryproducts',item.categoryid]" class="category-button hover:scale-[1.02] hover:bg-main_color hover:text-white transition-all duration-500 " >
+            <h5>{{item.name}}</h5>
+            <img [src]="item.image.secure_url" alt="category photo" class="category-photo absolute bottom-0 left-1/2 translate-x-[-50%] w-[75%]">
+            <button [routerLink]="['/home/categoryproducts',item._id]" class="category-button hover:scale-[1.02] hover:bg-main_color hover:text-white transition-all duration-500 " >
             Explore more <img src="arrow-up-right.svg" alt="arow" >
         </button>
     </div>

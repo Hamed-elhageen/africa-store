@@ -27,7 +27,7 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
 
 
     login(formData:FormData): Observable<any>{                                                                                         // login function which didnt return static data , it returns an observable "promise that i will return data later" or " we are waiting the response" and you subscribe on it to get the data sent from the server
-        return this.httpClient.post<any>(environment.apiUrl+"/auth/login",formData).pipe(
+        return this.httpClient.post<any>(environment.api+"/auth/login",formData).pipe(
             catchError(err=>{                                                                                                                               //handles the error if occured , Catches any error if login fails.
                 console.log("login error ",err);
                 return throwError(()=>err)

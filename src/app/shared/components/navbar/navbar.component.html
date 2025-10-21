@@ -103,7 +103,7 @@
                     </li>
                     @for (item of allcategories; track $index) {
                         <li>
-                            <a             [routerLink]="['/home/categoryproducts',item.categoryid]" aria-current="page"                 (click)="scrollTo(item.categoryName)" (click)="closeMenu()"             routerLink="/home/mainhome">{{item.categoryName}}</a>
+                            <a             [routerLink]="['/home/categoryproducts',item._id]" aria-current="page"                 (click)="scrollTo(item.name)" (click)="closeMenu()"             routerLink="/home/mainhome">{{item.name}}</a>
                         </li>
                     }
                 </ul>
@@ -130,10 +130,10 @@
             </a>
         @for (item of allcategories; track $index) {
             <a
-            [routerLink]="['/home/categoryproducts',item.categoryid]"
-                (click)="scrollTo(item.categoryName)"
+            [routerLink]="['/home/categoryproducts',item._id]"
+                (click)="scrollTo(item.name)"
                 class="relative py-2 transition-all duration-300 hover:scale-105 hover:opacity-90 ">
-                {{item.categoryName}}
+                {{item.name}}
             </a>
         }
         </div>
