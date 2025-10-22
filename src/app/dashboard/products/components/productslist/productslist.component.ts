@@ -15,15 +15,59 @@ export class ProductslistComponent implements OnInit {
 constructor(private productsService:ProductsdashboardService,private categoriesService:CategoriesdashboardService , private spinner:NgxSpinnerService ){
 
 }
-    ngOnInit(): void {
-        this.productsService.getAllProducts().subscribe({
+catId!:string
+//when changing the category the products are changed using param map
+onCategoryChange(event:any){
+this.catId=event.target.value;
+this.spinner.show()
+ this.productsService.getAllProducts(this.catId).subscribe({
         next:(comingProducts)=>{
             this.products=comingProducts.data;
+            this.spinner.hide()
         },
         error:(err)=>{
             console.log(err.message)
         }
     })
+}
+
+searchWord!:string;
+searchTimeOut!:any
+onSearch(event:any){
+    this.searchWord=event.target.value;
+    if (this.searchTimeOut) {
+    clearTimeout(this.searchTimeOut);
+  }
+    this.searchTimeOut=setTimeout(()=>{
+this.spinner.show();
+    this.productsService.getAllProducts(this.catId,this.searchWord).subscribe({
+        next:(comingProducts)=>{
+            this.products=comingProducts.data;
+            this.spinner.hide()
+        },
+        error:(err)=>{
+            console.log(err.message)
+        }
+    })
+    },900)
+
+}
+
+
+
+    ngOnInit(): void {
+        //to get all the products when the page is opened
+this.productsService.getAllProducts().subscribe({
+        next: (comingProducts) => {
+            this.products = comingProducts.data;
+            this.spinner.hide();
+        },
+        error: (err) => {
+            console.log(err.message);
+            this.spinner.hide();
+        }
+    });
+
 
 this.categoriesService.getAllCategories().subscribe({
     next:(result)=>{
@@ -35,6 +79,14 @@ this.categoriesService.getAllCategories().subscribe({
 })
 
     }
+
+
+
+
+
+
+
+
 deleteProduct(id:string){
     Swal.fire({
         title: 'Are you sure?',

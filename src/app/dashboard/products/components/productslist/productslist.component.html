@@ -3,13 +3,18 @@
     <div class="flex flex-col gap-4 mb-6 sm:flex-row sm:items-center sm:justify-between">
         <!-- Title -->
         <h2 class="text-xl font-semibold text-white">Products List</h2>
+        <div class="flex items-center w-full md:w-[400px] max-w-md px-3 py-3 text-black bg-white rounded-3xl">
+            <i class="mr-2 text-gray-500 fa-solid fa-search"></i>
+                <input type="text" (input)="onSearch($event)" placeholder="Search products ..." class="flex-1 text-sm bg-transparent outline-none"/>
+        </div>
 
         <!-- Right Section (Filters + Button) -->
         <div class="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4">
             <!-- Filter Dropdown -->
             <select
+            (change)="onCategoryChange($event)"
                 class="px-4 py-2 text-sm text-white bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600">
-                                <option value="allCategories">All categories</option>
+                <option value="">All categories</option>
                 @for (category of categories; track $index) {
                 <option [value]="category._id">{{category.name}}</option>
                 }

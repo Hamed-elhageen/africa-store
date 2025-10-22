@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { catchError, Observable, throwError } from 'rxjs';
@@ -9,11 +9,19 @@ import { env } from 'process';
     providedIn: 'root'
 })
 export class ProductsdashboardService {
-//this service is for all the operations on the producst by the admin like add update , delete and edit
 constructor(private http : HttpClient){ }
-    getAllProducts():Observable<any>{
-        return this.http.get<any>(environment.api+"/products"+"?[pagination][limit]=15").pipe(
+//query params is passed as an object and behind the scene it is converted to that         /products?category=68ed728b9e7d27851235846a
+    getAllProducts(catId?:string , k?:string):Observable<any>{
+        let params = new HttpParams();
+        if(catId){
+            params=params.set("category",catId)
+        }
+        if(k){
+        params=    params.set("k",k)
+        }
+        return this.http.get<any>(`${environment.api}/products`,{params}).pipe(
             catchError((err)=>{
+                console.log("the error is " + err)
                 return throwError(()=>err)
             })
         )
@@ -68,7 +76,7 @@ headers=new HttpHeaders().set(
 
 
 
-    
+
 
 }
 
