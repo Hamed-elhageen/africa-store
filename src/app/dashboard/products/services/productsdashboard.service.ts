@@ -24,7 +24,7 @@ constructor(private http : HttpClient){ }
 
 headers=new HttpHeaders().set(
                 'Authorization',
-                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjZjMzJlODU2MDBmMDI5MDAwMTQyOSIsImlhdCI6MTc2MTA0MTc3MSwiZXhwIjoxNzYxMTI4MTcxfQ.btfpFOpuF-JtE7F7CEk45RhMj0E3O8e3ET_5vLfXFSY`
+                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjZjMzJlODU2MDBmMDI5MDAwMTQyOSIsImlhdCI6MTc2MTEzMzk3MCwiZXhwIjoxNzYxMjIwMzcwfQ.vycDmOhPnlp36VdoA8cW_6wr80dAtw183mmZVWjjAZo`
             )
     addProduct(formData:FormData,catId:string):Observable<any>{
         return this.http.post<any>(`${environment.api}/products/${catId}`,formData,{headers:this.headers}).pipe(
@@ -47,6 +47,28 @@ headers=new HttpHeaders().set(
     }
 
 
+    updateProduct(formData:FormData,prdId:string):Observable<any>{
+        return this.http.patch<any>(`${environment.api}/products/${prdId}`,formData,{headers:this.headers}).pipe(
+            catchError((err)=>{
+                return throwError(()=>err)
+            })
+        )
+    }
+
+
+        gitSingleProduct(prdId:string):Observable<any>{
+        return this.http.get<any>(`${environment.api}/products/${prdId}`,{headers:this.headers}).pipe(
+            catchError((err)=>{
+                return throwError(()=>err)
+            })
+        )
+    }
+
+
+
+
+
+    
 
 }
 

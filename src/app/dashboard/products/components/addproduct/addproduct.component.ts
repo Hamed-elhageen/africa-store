@@ -5,6 +5,7 @@ import { ProductsdashboardService } from '../../services/productsdashboard.servi
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+//all the explanations are in edit product
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -22,7 +23,18 @@ const Toast = Swal.mixin({
   styleUrl: './addproduct.component.scss'
 })
 export class AddproductComponent implements OnInit{
-    categories:any[]=[]                                   //will come from the backend
+    categories:any[]=[]
+    //those are the images which will be sent with the request
+    mainImage!:File | null;
+    extraImages!:File[] | null
+    //those are the images which will appear in the page when the admin chosses them : there src with be passed to the src of the img in html to appear
+    mainImagePreview: string | null = null;
+    extraImagesPreview: string[] = [];
+    productForm!: FormGroup;
+    catId: string = '';
+
+
+
     teams = [
         { id: 1, name: 'Real Madrid' },
         { id: 2, name: 'Barcelona' },
@@ -37,18 +49,31 @@ export class AddproductComponent implements OnInit{
         { id: 11, name: 'Another' },
     ];
     allSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL','XXXL'];
-    //those are the images which will be sent with the request
-    mainImage!:File | null;
-    extraImages!:File[] | null
-    //those are the images which will appear in the page when the admin chosses them : there src with be passed to the src of the img in html to appear
-    mainImagePreview: string | null = null;
-    extraImagesPreview: string[] = [];
 
 
+    constructor( private categoriesService:CategoriesdashboardService ,
+        private productsService:ProductsdashboardService ,
+        private spinner:NgxSpinnerService,
+        private router:Router ) {}
 
-
-    constructor( private categoriesService:CategoriesdashboardService , private productsService:ProductsdashboardService , private spinner:NgxSpinnerService, private router:Router ) {
-        //getting the cateogires to be as values in the select field when adding product
+    ngOnInit(): void {
+        //inside oninit , we handle everything we want it to be executed when the page is opened like  api calls (getting data from backend) + handling the form + getting the id from the url  and so on so it can be used in the html when the component is opened
+        this.productForm=new FormGroup({
+        name: new FormControl("",[Validators.required, Validators.maxLength(30),Validators.minLength(3)]),
+        description: new FormControl("",[Validators.required, Validators.maxLength(300),Validators.minLength(10)]),
+        club:new FormControl("",[Validators.required]),
+        category:new FormControl("",[Validators.required]),
+        mainProductImage:new FormControl("",[Validators.required]),
+        extraProductImages:new FormControl([],[Validators.required]),
+        sizes:new FormControl([],[Validators.required]),                              //take care that sizes is an array
+        stock:new FormControl("",[Validators.required,Validators.min(0),Validators.max(100000)]),
+        priceBeforeDiscount:new FormControl("",[Validators.required,Validators.min(1),Validators.max(1000000)]),
+        discount:new FormControl("",[Validators.min(0),Validators.max(90)]),
+        priceAfterDiscount:new FormControl("",[Validators.required]),
+    })
+        this.loadCategories();
+    }
+    loadCategories(){
         this.categoriesService.getAllCategories().subscribe({
             next:(comingCategories)=>{
                 this.categories=comingCategories.data;
@@ -59,23 +84,47 @@ export class AddproductComponent implements OnInit{
         })
     }
 
-    productForm!: FormGroup;
-    ngOnInit(): void {
-        //inside oninit , we handle the variables and so on so it can be used in the html when the component is opened
-        this.productForm=new FormGroup({
-        name: new FormControl("",[Validators.required, Validators.maxLength(30),Validators.minLength(3)]),
-        description: new FormControl("",[Validators.required, Validators.maxLength(120),Validators.minLength(10)]),
-        club:new FormControl("",[Validators.required]),
-        categoryId:new FormControl("",[Validators.required]),
-        mainProductImage:new FormControl("",[Validators.required]),
-        extraProductImages:new FormControl([],[Validators.required]),
-        sizes:new FormControl([],[Validators.required]),                              //take care that sizes is an array
-        stock:new FormControl("",[Validators.required,Validators.min(0),Validators.max(100000)]),
-        priceBeforeDiscount:new FormControl("",[Validators.required,Validators.min(0),Validators.max(1000000)]),
-        discount:new FormControl("",[Validators.min(0),Validators.max(90)]),
-        priceAfterDiscount:new FormControl("",[Validators.required]),
-    })
+
+//holding each input field here
+    get name(){
+        return this.productForm.get("name")
     }
+    get description(){
+        return this.productForm.get("description")
+    }
+    get sizes(){
+        return this.productForm.get("sizes")
+    }
+    get stock(){
+        return this.productForm.get("stock")
+    }
+    get club(){
+        return this.productForm.get("club")
+    }
+    get categoryId(){
+        return this.productForm.get("category")
+    }
+    get mainProductImage(){
+        return this.productForm.get("mainProductImage")
+    }
+    get extraProductImage(){
+        return this.productForm.get("extraProductImage")
+    }
+    get priceBeforeDiscount(){
+        return this.productForm.get("priceBeforeDiscount")
+    }
+    get discount(){
+        return this.productForm.get("discount")
+    }
+    get priceAfterDiscount(){
+        return this.productForm.get("priceAfterDiscount")
+    }
+
+
+
+
+
+
 
 
     //handling the images inputs fields :
@@ -103,45 +152,49 @@ export class AddproductComponent implements OnInit{
 
 
 
+    //a function for handling sizes and put choosed sizes in array when you choose it and remove size from array when you remove the mark on size:
+    onSizeChange(size: string, event: any) {
+    let selected: string[] = Array.isArray(this.sizes?.value) ? this.sizes?.value : [];
 
-//holding each input field here
+    if (event.target.checked) {
+        if (!selected.includes(size)) selected.push(size);
+    } else {
+        selected = selected.filter(s => s !== size);
+    }
 
-    get name(){
-        return this.productForm.get("name")
-    }
-    get description(){
-        return this.productForm.get("description")
-    }
-    get sizes(){
-        return this.productForm.get("sizes")
-    }
-    get stock(){
-        return this.productForm.get("stock")
-    }
-    get club(){
-        return this.productForm.get("club")
-    }
-    get categoryId(){
-        return this.productForm.get("categoryId")
-    }
-    //those to handle validations only of the images not to send them
-     get mainProductImage(){
-        return this.productForm.get("mainProductImage")
-    }
-     get extraProductImage(){
-        return this.productForm.get("extraProductImage")
-    }
-    //*********************************** */
+    // Force it to always be an array
+    this.sizes?.setValue(selected.length > 0 ? selected : []);
+    this.sizes?.markAsTouched(); // مهم عشان validation يشتغل
+}
 
-    get priceBeforeDiscount(){
-        return this.productForm.get("priceBeforeDiscount")
+
+
+
+//for getting the category id the admin chossed to be passed to the url as params
+onCategoryChange(event: any) {
+    this.catId = event.target.value;
+}
+//each time you change the value of the category , its value is put in catId ,and put this event on the select field
+
+
+
+
+//handling the final price :
+
+updateFinalPrice() {
+    const price = this.priceBeforeDiscount?.value || 0;
+    const discount = this.discount?.value || 0;
+
+    if (discount < 0 || discount > 90) {
+        this.priceAfterDiscount?.setValue(''); // امسح القيمة
+        return;
     }
-    get discount(){
-        return this.productForm.get("discount")
-    }
-    get priceAfterDiscount(){
-        return this.productForm.get("priceAfterDiscount")
-    }
+
+    const finalPrice = price - (price * discount / 100);
+    this.priceAfterDiscount?.setValue(finalPrice.toFixed(2));
+}
+
+
 
 
     //creating the data that will be sent to the back end in the request
@@ -149,16 +202,21 @@ export class AddproductComponent implements OnInit{
         const formData = new FormData;
         formData.append("name",this.name?.value||"")
         formData.append("description",this.description?.value||"")
-        // formData.append("categoryId",this.categoryId?.value||"")
         formData.append("stock",this.stock?.value||"")
         formData.append("price",this.priceBeforeDiscount?.value||"")
-        // formData.append("discount",this.discount?.value||"")
-        // formData.append("finalPrice",this.priceAfterDiscount?.value||"");
+        formData.append("club",this.club?.value||"")
+        formData.append("discount",this.discount?.value||"")
 
-//         const selectedSizes = this.productForm.get('sizes')?.value || [];
-//         selectedSizes.forEach((s: string) => {
-//         formData.append('sizes', s);
-// });
+        const selectedSizes = this.sizes?.value
+    ? Array.isArray(this.sizes.value)
+        ? this.sizes.value
+        : [this.sizes.value]  // لو واحدة، حولها لمصفوفة
+    : [];
+
+selectedSizes.forEach((size: string) => {
+    formData.append('sizes[]', size);
+});
+
 
         if(this.mainImage){
             formData.append("thumbnail",this.mainImage)
@@ -171,40 +229,6 @@ export class AddproductComponent implements OnInit{
         }
         return formData;
     }
-
-
-
-
-    //a function for handling sizes and put choosed sizes in array when you choose it and remove size from array when you remove the mark on size:
-    onSizeChange(size: string, event: any) {
-  const selectedSizes = this.sizes?.value || [];
-  if (event.target.checked) {
-    // ✅ لو المستخدم اختار المقاس ده، نضيفه في المصفوفة
-    selectedSizes.push(size);
-  } else {
-    // ❌ لو شال العلامة، نحذفه
-    const index = selectedSizes.indexOf(size);
-    if (index > -1) {
-      selectedSizes.splice(index, 1);
-    }
-  }
-
-  // نحدّث القيمة في الـ form control
-  this.sizes?.setValue(selectedSizes);
-}
-
-
-
-
-
-
-//for getting the category id the admin chossed to be passed to the url as params
-catId: string = '';
-onCategoryChange(event: any) {
-  this.catId = event.target.value;
-}
-//each time you change the value of the category , its value is put in catId ,and put this event on the select
-
 
 
 
@@ -224,44 +248,19 @@ onCategoryChange(event: any) {
                     this.productForm.reset();
                     this.mainImage=null;
                     this.extraImages=null;
-                    this.productForm.get('sizes')?.setValue([]);
+                    this.sizes?.setValue([]);
                     this.router.navigateByUrl("/dashboard/products")
             },
             error:(err)=>{
                 Toast.fire({
                     icon:"error",
-                    title:`${err?.message}`
+                    title:`${err?.error?.message}`
                 })
                     this.spinner.hide();
             }
         })
     }
 }
-
-
-
-
-
-
-//handling the final price :
-
-updateFinalPrice() {
-  const price = this.priceBeforeDiscount?.value || 0;
-  const discount = this.discount?.value || 0;
-
-   if (discount < 0 || discount > 90) {
-    this.priceAfterDiscount?.setValue(''); // امسح القيمة
-    return;
-  }
-
-  const finalPrice = price - (price * discount / 100);
-
-  // ✅ نحدث القيمة جوه الـ FormControl نفسه
-  this.priceAfterDiscount?.setValue(finalPrice.toFixed(2));
-}
-
-
-
 
 
 

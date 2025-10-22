@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsdashboardService } from '../../services/productsdashboard.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CategoriesdashboardService } from '../../../categories/services/categoriesdashboard.service';
 
 @Component({
   selector: 'app-productslist',
@@ -10,7 +11,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ProductslistComponent implements OnInit {
     products!:any[];
-constructor(private productsService:ProductsdashboardService , private spinner:NgxSpinnerService ){
+    categories!:any[]
+constructor(private productsService:ProductsdashboardService,private categoriesService:CategoriesdashboardService , private spinner:NgxSpinnerService ){
 
 }
     ngOnInit(): void {
@@ -22,6 +24,16 @@ constructor(private productsService:ProductsdashboardService , private spinner:N
             console.log(err.message)
         }
     })
+
+this.categoriesService.getAllCategories().subscribe({
+    next:(result)=>{
+        this.categories=result.data
+    },
+    error:(err)=>{
+        console.log(err.message)
+    }
+})
+
     }
 deleteProduct(id:string){
     Swal.fire({

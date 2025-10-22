@@ -21,8 +21,8 @@
                 class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
                     <small class="text-red-500"
                         *ngIf="description?.invalid && description?.touched">
-                        <span *ngIf="description?.errors?.['minlength']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product description cant be lass that 3 letters.</span>
-                        <span *ngIf="description?.errors?.['maxlength']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product description cant be more that 100 letter</span>
+                        <span *ngIf="description?.errors?.['minlength']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product description cant be lass that 10 letters.</span>
+                        <span *ngIf="description?.errors?.['maxlength']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product description cant be more that 300 letter</span>
                         <span *ngIf="description?.errors?.['required']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product  description cant be empty</span>
                     </small>
             </div>
@@ -30,7 +30,7 @@
         <!-- Category -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Category</label>
-            <select formControlName="categoryId" (change)="onCategoryChange($event)" [ngClass]="{ 'border-red-700': categoryId?.invalid && categoryId?.touched }"
+            <select formControlName="category" (change)="onCategoryChange($event)" [ngClass]="{ 'border-red-700': categoryId?.invalid && categoryId?.touched }"
                     class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
                     <option value="" disabled selected hidden>Select category</option>
                     <option *ngFor="let category of categories" [value]="category._id" >
@@ -49,7 +49,7 @@
             <select formControlName="club"   [ngClass]="{ 'border-red-700': club?.invalid && club?.touched }"
                     class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
                 <option value="" disabled selected hidden>Select Team</option>
-                <option *ngFor="let team of teams" [value]="team.id">
+                <option *ngFor="let team of teams" [value]="team.name">
                     {{ team.name }}
                 </option>
             </select>
