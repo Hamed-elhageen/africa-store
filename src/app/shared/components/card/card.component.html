@@ -1,15 +1,38 @@
-<div class="card bg-[#333333] w-[95%] mx-auto md:w-[282px] rounded-[20px] text-white">
-    <a [routerLink]="['/details/maindetails',id]">  <img [src]="productImage" alt="arsenal-shirt" class="w-full h-full md:w-auto md:h-auto" ></a>
-    <div class="p-4 content">
-        <div class="flex items-center justify-between mb-2 gap-x-5">
-                <h6 class="font-semibold text-secondary_color">{{title}}</h6>
-                <i class="text-2xl text-green-700 fa-regular fa-heart"  [ngClass]="{'hidden':choosed}"  (click)="toggleFavIcon()"></i>
-                <i class="fa-solid fa-heart text-2xl" style="color: #1C6F37;" [ngClass]="{'hidden':!choosed}" (click)="toggleFavIcon()"></i>
-        </div>
-        <h6 class="mb-2 font-normal ">{{discription}}</h6>
-        <div class="flex items-center gap-6 ">
-            <h5>{{price}}</h5>
-            <del class="text-[16px] font-bold text-[#A5A5A5]">{{priceBeforediscount}}</del>
-        </div>
+<div class="card bg-[#333333] w-[90%] mx-auto md:w-[282px] rounded-[20px] text-white overflow-hidden">
+  <a [routerLink]="['/details/maindetails', id]">
+    <div class="w-full h-64 bg-[#222] flex items-center justify-center overflow-hidden">
+      <img
+        [src]="productImage"
+        alt="arsenal-shirt"
+        class="w-full h-full object-cover rounded-t-[20px]"
+      />
     </div>
+  </a>
+
+  <div class="p-4 content">
+    <div class="flex items-center justify-between mb-2 gap-x-5">
+      <h6 class="font-semibold text-secondary_color">{{ title }}</h6>
+      <i
+        class="text-2xl text-green-700 cursor-pointer fa-regular fa-heart"
+        [ngClass]="{ hidden: choosed }"
+        (click)="toggleFavIcon()"
+      ></i>
+      <i
+        class="text-2xl cursor-pointer fa-solid fa-heart"
+        style="color: #1C6F37;"
+        [ngClass]="{ hidden: !choosed }"
+        (click)="toggleFavIcon()"
+      ></i>
+    </div>
+
+    <h6 class="mb-2 font-normal">{{ discription }}</h6>
+
+    <div class="flex items-center gap-6">
+      <h5>{{ price }} LE</h5>
+      @if (discount) {<del class="text-[16px] font-bold text-[#A5A5A5]" >
+        {{ priceBeforediscount }}LE
+      </del>}
+
+    </div>
+  </div>
 </div>

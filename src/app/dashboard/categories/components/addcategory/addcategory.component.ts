@@ -65,9 +65,9 @@ export class AddcategoryComponent {
 
                 },
                 error:(err)=>{
-Toast.fire({
+            Toast.fire({
                         icon: 'error',
-                        title:`${err?.message}`
+                        title:`${err?.error?.message}`
                     })
                     this.spinner.hide()
                 }

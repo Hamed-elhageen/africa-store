@@ -20,10 +20,6 @@ constructor(private acitvatedRoute:ActivatedRoute, private productsService : Pro
 
 
 
-        this.choosedProduct =this.productsService.getAll().find((prd:any)=>{
-            return prd.productId===this.currentId;
-        })
     }
 
-    // by this when changing the id in the url it will be changed in the currenId , because paramMap is returning observable and iam observing it , when the id changes , change it in the current id
 }

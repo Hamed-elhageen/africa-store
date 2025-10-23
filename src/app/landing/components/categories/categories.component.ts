@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Category } from '../../../shared/modles/category';
 import { CategoriesService } from '../../../shared/services/categories.service';
 
@@ -7,9 +7,10 @@ import { CategoriesService } from '../../../shared/services/categories.service';
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'
 })
-export class CategoriesComponent {
- allcategories!:any[];
-    constructor(private categoriesService:CategoriesService){
+export class CategoriesComponent implements OnInit{
+    allcategories!:any[];
+    constructor(private categoriesService:CategoriesService){}
+    ngOnInit(): void {
         this.categoriesService.getAllCategories().subscribe({
             next:(result)=>{
                 this.allcategories=result.data;
@@ -19,4 +20,5 @@ export class CategoriesComponent {
             }
         });
     }
+
 }

@@ -14,10 +14,6 @@ export class FootballShoesComponent implements OnInit {
 
     }
     ngOnInit(): void {
-    // ناخد الـ categoryId من السيرفس
-
-    // وبعدين نجيب المنتجات بتاعت الكاتيجوري ده
-    this.products = this.productsService.getCategoryProducts(this.categoryId).slice(0,8);
     }
 
 

@@ -103,7 +103,7 @@
                     </li>
                     @for (item of allcategories; track $index) {
                         <li>
-                            <a             [routerLink]="['/home/categoryproducts',item._id]" aria-current="page"                 (click)="scrollTo(item.name)" (click)="closeMenu()"             routerLink="/home/mainhome">{{item.name}}</a>
+                            <a       [routerLink]="['/home/categoryproducts',item._id]" aria-current="page"                 (click)="scrollTo(item.name)" (click)="closeMenu()"             routerLink="/home/mainhome">{{item.name}}</a>
                         </li>
                     }
                 </ul>
