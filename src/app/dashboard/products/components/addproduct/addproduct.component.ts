@@ -59,7 +59,7 @@ export class AddproductComponent implements OnInit{
     ngOnInit(): void {
         //inside oninit , we handle everything we want it to be executed when the page is opened like  api calls (getting data from backend) + handling the form + getting the id from the url  and so on so it can be used in the html when the component is opened
         this.productForm=new FormGroup({
-        name: new FormControl("",[Validators.required, Validators.maxLength(30),Validators.minLength(3)]),
+        name: new FormControl("",[Validators.required, Validators.maxLength(20),Validators.minLength(3)]),
         description: new FormControl("",[Validators.required, Validators.maxLength(300),Validators.minLength(10)]),
         club:new FormControl("",[Validators.required]),
         category:new FormControl("",[Validators.required]),

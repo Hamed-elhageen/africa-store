@@ -1,24 +1,83 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { CategoriesService } from '../../../shared/services/categories.service';
+import { ProductsService } from '../../../shared/services/products.service';
 
 @Component({
   selector: 'app-maincategories',
   templateUrl: './maincategories.component.html',
   styleUrl: './maincategories.component.scss'
 })
-export class MaincategoriesComponent {
-  selectedCategory = 'all';
-showThings:boolean=true;
-showclubs:boolean=true;
+export class MaincategoriesComponent implements OnInit {
+    categories!:any[];
+    products!:any[];
+    showCategories:boolean=true;
+    selectedCategory = '';
+    showclubs:boolean=true;
+    constructor(private categoriesService:CategoriesService , private productsService : ProductsService){}
+    ngOnInit(): void {
+        this.categoriesService.getAllCategories().subscribe({
+            next:(result)=>{
+                this.categories=result.data
+            },
+            error:(err)=>{
+                console.log(err.message)
+            }
+        })
+
+
+        this.productsService.getAllProducts({'[pagination][limit]':1000}).subscribe({
+            next:(result)=>{
+                this.products=result.data
+            },
+            error:(err)=>{
+                console.log(err.message)
+            }
+        })
+    }
+
+    toggleshowing():void{
+        this.showCategories=!this.showCategories;
+    }
+    toggleshowingclubs():void{
+        this.showclubs=!this.showclubs;
+    }
+
+    onCategoryChange(event:any){
+        this.selectedCategory=event.target.value;
+        //make a new fetch after you choose the category to get the product of the choosen category
+
+        //here if the user selected all products which its value if "" , iam saying if there is no category id , get all products without any filteration
+        if(!this.selectedCategory){
+            this.productsService.getAllProducts({'[pagination][limit]':1000 }).subscribe({
+            next:(result)=>{
+                this.products=result.data
+            },
+            error:(err)=>{
+                console.log(err.message)
+            }
+        })
+        }
+        //here do the filteration with category id
+        this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory}).subscribe({
+            next:(result)=>{
+                this.products=result.data
+            },
+            error:(err)=>{
+                console.log(err.message)
+            }
+        })
+    }
+
+
+
+
+
 showprice:boolean=true;
 minPrice: number = 120;
 maxPrice: number = 820;
 
-toggleshowing():void{
-  this.showThings=!this.showThings;
-}
-toggleshowingclubs():void{
-  this.showclubs=!this.showclubs;
-}
+
+
 toggleshowingprice():void{
   this.showprice=!this.showprice;
 }
@@ -72,77 +131,18 @@ resetFilters() {
 
 
 
-  categories = [
-    { id: 'all', name: 'All Categories', count: 300 },
-    { id: 'tshirts', name: 'T-Shirts', count: 50 },
-    { id: 'football', name: 'Football Shoes', count: 50 },
-    { id: 'sports-shoes', name: 'Sports Shoes', count: 50 },
-    { id: 'sports-tshirt', name: 'Sports T-Shirt', count: 50 },
-    { id: 'accessories', name: 'Sports Accessories', count: 50 },
-    { id: 'bags', name: 'Sports Bags', count: 50 }
-  ];
-  clubs:any[]=[{clubId:1 , clubName:"barcelona" , clubLogo:"/Barca.svg"},
-    {clubId:1 , clubName:"Real madrid" , clubLogo:"/madrid.svg"},
-    {clubId:1 , clubName:"Arsenal" , clubLogo:"/Arsenal.svg"},
-    {clubId:1 , clubName:"Al ahly" , clubLogo:"/Barca.svg"},
-    {clubId:1 , clubName:"Zamalek" , clubLogo:"/Barca.svg"},
-  ]
-  products:any=[
-    {
-      productImage:"/new-bag.png",
-      title:"bracelona bag",
-      discription:"original cotton braca bag",
-      price:"350 LE",
-      priceBeforediscount:"420 LE"
-    },
-    {
-      productImage:"/new-bag.png",
-      title:"bracelona bag",
-      discription:"original cotton braca bag",
-      price:"350 LE",
-      priceBeforediscount:"420 LE"
-    },
-    {
-      productImage:"/new-bag.png",
-      title:"bracelona bag",
-      discription:"original cotton braca bag",
-      price:"350 LE",
-      priceBeforediscount:"420 LE"
-    },
-    {
-      productImage:"/new-bag.png",
-      title:"bracelona bag",
-      discription:"original cotton braca bag",
-      price:"350 LE",
-      priceBeforediscount:"420 LE"
-    },
-    {
-      productImage:"/new-bag.png",
-      title:"bracelona bag",
-      discription:"original cotton braca bag",
-      price:"350 LE",
-      priceBeforediscount:"420 LE"
-    },
-    {
-      productImage:"/new-bag.png",
-      title:"bracelona bag",
-      discription:"original cotton braca bag",
-      price:"350 LE",
-      priceBeforediscount:"420 LE"
-    },
-    {
-      productImage:"/new-bag.png",
-      title:"bracelona bag",
-      discription:"original cotton braca bag",
-      price:"350 LE",
-      priceBeforediscount:"420 LE"
-    },
-    {
-      productImage:"/new-bag.png",
-      title:"bracelona bag",
-      discription:"original cotton braca bag",
-      price:"350 LE",
-      priceBeforediscount:"420 LE"
-    },
-  ]
+  teams = [
+    { id: 1, name: 'Real Madrid',logo:"madrid.webp" },
+    { id: 2, name: 'Barcelona',logo:"barca.webp" },
+        { id: 7, name: 'Al ahly',logo:" alahly.webp" },
+    { id: 8, name: 'Zamalek',logo:" zamalek.webp" },
+    { id: 3, name: 'Liverpool',logo:" liverpool.webp" },
+    { id: 4, name: 'Arsenal',logo:" arsenal.webp" },
+    { id: 5, name: 'Chelsea',logo:" chelsea.webp" },
+    { id: 6, name: 'Man city',logo:"city.webp" },
+    { id: 9, name: 'Inter miami',logo:" miami.webp" },
+    { id: 10, name: 'Al nasr',logo:" alnasr.webp" },
+    { id: 11, name: 'Another',logo:" another.webp" },
+    ];
+
 }

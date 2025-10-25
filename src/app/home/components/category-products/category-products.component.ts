@@ -18,7 +18,7 @@ export class CategoryProductsComponent implements OnInit {
         this.route.paramMap.subscribe((params)=>{
             this.categoryId=params.get('catId') || ''
 
-            this.productsService.getAllProducts(this.categoryId,"price","-1").subscribe({
+            this.productsService.getAllProducts({category:this.categoryId}).subscribe({
             next:(result)=>{
                 this.products=result.data;
             },
@@ -55,7 +55,7 @@ sortDir!:any;
     onSortChange(event:any){
         this.sortDir=event.target.value;
         this.spinner.show();
-                this.productsService.getAllProducts(this.categoryId,"price",this.sortDir).subscribe({
+                this.productsService.getAllProducts({category:this.categoryId,'[sort][by]': 'price','[sort][dir]':this.sortDir}).subscribe({
             next:(result)=>{
                 this.products=result.data;
             },

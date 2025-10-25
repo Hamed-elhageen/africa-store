@@ -1,0 +1,27 @@
+<!-- this component will be as template to show the first 8 products with the category name -->
+<div class="container mb-20 text-white" id="Football shoes">
+    <div class="flex items-center justify-between heading">
+        <!-- the category name will come to you from out when you use the component (main home) -->
+        <h3 class="mb-10">{{categoryName}}</h3>
+        <button       [routerLink]="['/home/categoryproducts', categoryId]"
+            class="z-10 flex justify-between px-5 py-2 mb-8 text-white duration-300 bg-transparent border rounded-lg md:bg-main_color hover:bg-green-700 md:px-10 w-fit border-main_color ">
+            Show All <img src="arrow-up-right.svg" alt="arrow image" />
+    </button>
+    </div>  <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(275px,1fr))] justify-between gap-x-5 gap-y-8">
+
+    @for (item of products; track $index) {
+        <app-card
+        [id]="item._id"
+        [productImage]="item.thumbnail.secure_url"
+        [title]="item.name"
+        [discription]="item.description"
+        [discount]="item.discount"
+        [price]="item.finalPrice"
+        [priceBeforediscount]="item.price"
+    ></app-card>
+    }
+
+
+    </div>
+</div>
+

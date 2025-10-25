@@ -5,13 +5,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomemainlayoutComponent } from '../shared/components/homemainlayout/homemainlayout.component';
 import { FirsthomeComponent } from './components/firsthome/firsthome.component';
 import { LandingModule } from '../landing/landing.module';
-import { TshirtsComponent } from './components/tshirts/tshirts.component';
 import { SharedModule } from '../shared/shared.module';
-import { FootballShoesComponent } from './components/football-shoes/football-shoes.component';
-import { SportsShoesComponent } from './components/sports-shoes/sports-shoes.component';
-import { SportsTshirtsComponent } from './components/sports-tshirts/sports-tshirts.component';
-import { SportsAccessoriesComponent } from './components/sports-accessories/sports-accessories.component';
-import { SportsBagsComponent } from './components/sports-bags/sports-bags.component';
+import { FootballShoesComponent } from './components/someProducts/someProducts';
+
 import { CardComponent } from '../shared/components/card/card.component';
 import { CategoryProductsComponent } from './components/category-products/category-products.component';
 
@@ -41,12 +37,8 @@ const routes: Routes = [
   declarations: [
     MainhomeComponent,
     FirsthomeComponent,
-    TshirtsComponent,
     FootballShoesComponent,
-    SportsShoesComponent,
-    SportsTshirtsComponent,
-    SportsAccessoriesComponent,
-    SportsBagsComponent,
+
     CategoryProductsComponent,
   ],
   imports: [

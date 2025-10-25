@@ -20,7 +20,7 @@ catId!:string
 onCategoryChange(event:any){
 this.catId=event.target.value;
 this.spinner.show()
- this.productsService.getAllProducts(this.catId).subscribe({
+ this.productsService.getAllProducts({category:this.catId}).subscribe({
         next:(comingProducts)=>{
             this.products=comingProducts.data;
             this.spinner.hide()
@@ -40,7 +40,7 @@ onSearch(event:any){
   }
     this.searchTimeOut=setTimeout(()=>{
 this.spinner.show();
-    this.productsService.getAllProducts(this.catId,this.searchWord).subscribe({
+    this.productsService.getAllProducts({category:this.catId, k :this.searchWord}).subscribe({
         next:(comingProducts)=>{
             this.products=comingProducts.data;
             this.spinner.hide()

@@ -11,13 +11,14 @@ import { env } from 'process';
 export class ProductsdashboardService {
 constructor(private http : HttpClient){ }
 //query params is passed as an object and behind the scene it is converted to that         /products?category=68ed728b9e7d27851235846a
-    getAllProducts(catId?:string , k?:string ):Observable<any>{
+    getAllProducts(queryParams?:{[key:string]:any} ):Observable<any>{
         let params = new HttpParams();
-        if(catId){
-            params=params.set("category",catId)
-        }
-        if(k){
-        params=    params.set("k",k)
+        if(queryParams){
+            Object.keys(queryParams).forEach((key)=>{
+                if(queryParams[key]!==undefined&&queryParams[key]!==null){
+                    params=params.set(key,queryParams[key])
+                }
+            })
         }
         params=params.set("[pagination][limit]","1000")
         return this.http.get<any>(`${environment.api}/products`,{params}).pipe(

@@ -1,58 +1,99 @@
 <div class="container grid grid-cols-1 gap-5 mt-10 md:grid-cols-4 " >
-  <div class="md:grid-cols-1 filteration border border-[#444444] rounded-[8px] p-5 h-fit pb-10">
-    <div class="space-y-4">
+    <!-- left categoriazation section -->
+    <div class="md:grid-cols-1 filteration border border-[#444444] rounded-[8px] p-5 h-fit pb-10 ">
+        <div class="space-y-4">
+            <!-- Category Section -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-bold text-white ">Category</h2>
+                        <button (click)="toggleshowing()" class="text-gray-400 transition-colors hover:text-white ">
+                            <i class="transition-all fas fa-chevron-down text-main_color " [class.rotate-180]="!showCategories"></i>
+                        </button>
+                    </div>
+               <div class="mb-3 space-y-2" *ngIf="showCategories">
+                                        <div class="flex items-center mb-2 ">
+                                            <input type="radio"     value=""                                  (change)="onCategoryChange($event)"  checked  name="category" id="allCategoires" class="w-4 h-4 transition duration-300 border-2 border-gray-300 rounded-full appearance-none checked:bg-main_color focus:outline-none focus:ring-2 focus:ring-main_color" >
+                                            <label for="allCategoires" class="flex w-full ml-2 text-gray-700 duration-200 hover:text-white">All products
+                                                <span class="text-gray-500 ms-auto">({{products.length}})</span>
+                                            </label>
+                                        </div>
 
-
-      <!-- Category Section -->
-      <div>
-        <div class="flex items-center justify-between mb-8">
-          <h2 class="text-lg font-bold text-white ">Category</h2>
-          <button (click)="toggleshowing()" class="text-gray-400 transition-colors hover:text-white ">
-            <i class="transition-all fas fa-chevron-down text-main_color " [class.rotate-180]="!showThings"></i>
-          </button>        </div>
-        <div class="mb-3 space-y-2" *ngIf="showThings">
-          <div *ngFor="let category of categories" class="flex ">
-            <!-- Custom Radio Button -->
-            <div class="flex items-center mb-4 ">
-              <input
-                type="radio"
-                id="{{category.id}}"
-                name="category"
-                [(ngModel)]="selectedCategory"
-                [value]="category.id"
-                class="w-4 h-4 transition duration-300 border-2 border-gray-300 rounded-full appearance-none checked:bg-main_color checked:border-red-500 focus:outline-none focus:ring-2 focus:ring-main_color"
-              />
-              <div class="absolute w-4 h-4 border-2 border-gray-300 rounded-full pointer-events-none"></div>
+                    <div *ngFor="let category of categories" class="flex items-baseline">
+                        <!-- Custom Radio Button -->
+                        <div class="flex items-center mb-2 ">
+                            <input
+                                type="radio"
+                                (change)="onCategoryChange($event)"
+                                id="{{category._id}}"
+                                name="category"
+                                [value]="category._id"
+                                class="w-4 h-4 transition duration-300 border-2 border-gray-300 rounded-full appearance-none checked:bg-main_color checked:border-red-500 focus:outline-none focus:ring-2 focus:ring-main_color"
+                            />
+                            <div class="absolute w-4 h-4 border-2 border-gray-300 rounded-full pointer-events-none"></div>
+                        </div>
+                        <label for="{{category._id}}" class="flex w-full ml-2 text-gray-700 duration-200 hover:text-white">
+                            {{category.name}} <span class="text-gray-500 ms-auto">({{category.productsCount}})</span>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <label for="{{category.id}}" class="flex w-full ml-2 text-gray-700 duration-200 hover:text-white">
-              {{category.name}} <span class="text-gray-500 ms-auto">({{category.count}})</span>
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="bg-[#666666] w-full h-[2px] mb-5" *ngIf="showThings" ></div>
+      <div class="bg-[#666666] w-full h-[2px] mb-5" *ngIf="showCategories" ></div>
 
 
 
 
 
-      <!-- Club Section -->
-      <div class="flex items-center justify-between mt-4 mb-4">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Club Section -->
+    <div class="flex items-center justify-between mt-4 mb-4">
         <h2 class="text-lg font-bold text-white ">Clubs</h2>
         <button (click)="toggleshowingclubs()" class="text-gray-400 transition-colors hover:text-white">
-          <i class="fas fa-chevron-down text-main_color" [class.rotate-180]="!showclubs"></i>
+            <i class="fas fa-chevron-down text-main_color" [class.rotate-180]="!showclubs"></i>
         </button>        </div>
-<div *ngIf="showclubs">
-        @for (item of clubs; track $index) {
-          <div class="border border-[#444444] w-full flex items-center gap-5 px-5 py-2 rounded-[4px] mb-3">
-            <img [src]="item.clubLogo" alt="photo">
-            <p class="text-[#A5A5A5] text-sm font-normal">{{item.clubName}}</p>
-          </div>
-
+        <div *ngIf="showclubs">
+        @for (item of teams; track $index) {
+            <div class="border border-[#444444] w-full flex items-center gap-5 px-5 py-2 rounded-[4px] mb-3">
+                <img [src]="item.logo" alt="photo" class="w-6">
+                <p class="text-[#A5A5A5] text-sm font-normal">{{item.name}}</p>
+            </div>
         }
-      </div>
+    </div>
       <button class="w-full text-right text-main_color" *ngIf="showclubs">see more</button>
-      <div class="bg-[#666666] w-full h-[2px] mb-5" *ngIf="showThings" ></div>
+      <div class="bg-[#666666] w-full h-[2px] mb-5" *ngIf="showCategories" ></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -142,11 +183,12 @@
     <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(275px,1fr))] justify-between gap-x-5 gap-y-8">
       @for (item of products; track $index) {
         <app-card
-          [productImage]="item.productImage"
-          [title]="item.title"
-          [discription]="item.discription"
-          [price]="item.price"
-          [priceBeforediscount]="item.priceBeforediscount"
+          [productImage]="item.thumbnail.secure_url"
+          [title]="item.name.slice(0,20)"
+          [discription]="item.description"
+          [price]="item.finalPrice"
+          [discount]="item.discount"
+          [priceBeforediscount]="item.price"
         ></app-card>
       }
     </div>
