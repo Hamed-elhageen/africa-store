@@ -11,7 +11,7 @@ import { env } from 'process';
 export class ProductsdashboardService {
 constructor(private http : HttpClient){ }
 //query params is passed as an object and behind the scene it is converted to that         /products?category=68ed728b9e7d27851235846a
-    getAllProducts(catId?:string , k?:string):Observable<any>{
+    getAllProducts(catId?:string , k?:string ):Observable<any>{
         let params = new HttpParams();
         if(catId){
             params=params.set("category",catId)
@@ -19,6 +19,7 @@ constructor(private http : HttpClient){ }
         if(k){
         params=    params.set("k",k)
         }
+        params=params.set("[pagination][limit]","1000")
         return this.http.get<any>(`${environment.api}/products`,{params}).pipe(
             catchError((err)=>{
                 console.log("the error is " + err)
@@ -32,7 +33,7 @@ constructor(private http : HttpClient){ }
 
 headers=new HttpHeaders().set(
                 'Authorization',
-                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjZjMzJlODU2MDBmMDI5MDAwMTQyOSIsImlhdCI6MTc2MTIwNjg0OCwiZXhwIjoxNzYxMjkzMjQ4fQ.rxwtYFq3SXz_SXS2CbvkqusiRcAExc0Kbk_z3J8t22s`
+                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjZjMzJlODU2MDBmMDI5MDAwMTQyOSIsImlhdCI6MTc2MTMyNDc2NywiZXhwIjoxNzYxNDExMTY3fQ.D-p5vz8wrZ0XIkxqUPdmVZ6_ygN9AZNRtxMv9qrbwBc`
             )
     addProduct(formData:FormData,catId:string):Observable<any>{
         return this.http.post<any>(`${environment.api}/products/${catId}`,formData,{headers:this.headers}).pipe(
