@@ -1,6 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CategoriesService } from '../../../shared/services/categories.service';
 import { ProductsService } from '../../../shared/services/products.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import cluster from 'cluster';
 
 @Component({
   selector: 'app-maincategories',
@@ -12,8 +14,11 @@ export class MaincategoriesComponent implements OnInit {
     products!:any[];
     showCategories:boolean=true;
     selectedCategory = '';
+    selectedTeam='';
     showclubs:boolean=true;
-    constructor(private categoriesService:CategoriesService , private productsService : ProductsService){}
+    showprice:boolean=true;
+
+    constructor(private categoriesService:CategoriesService , private productsService : ProductsService , private spinner:NgxSpinnerService){}
     ngOnInit(): void {
         this.categoriesService.getAllCategories().subscribe({
             next:(result)=>{
@@ -23,7 +28,6 @@ export class MaincategoriesComponent implements OnInit {
                 console.log(err.message)
             }
         })
-
 
         this.productsService.getAllProducts({'[pagination][limit]':1000}).subscribe({
             next:(result)=>{
@@ -35,16 +39,24 @@ export class MaincategoriesComponent implements OnInit {
         })
     }
 
+
+
+
+    //for handling design
     toggleshowing():void{
         this.showCategories=!this.showCategories;
     }
     toggleshowingclubs():void{
         this.showclubs=!this.showclubs;
     }
+    toggleshowingprice():void{
+        this.showprice=!this.showprice;
+    }
+    /////////////////////////////////************************************************************************** */
 
     onCategoryChange(event:any){
         this.selectedCategory=event.target.value;
-        //make a new fetch after you choose the category to get the product of the choosen category
+        //make a new fetch after you choose the category to get the products of the choosen category
 
         //here if the user selected all products which its value if "" , iam saying if there is no category id , get all products without any filteration
         if(!this.selectedCategory){
@@ -70,16 +82,74 @@ export class MaincategoriesComponent implements OnInit {
 
 
 
+    onTeamChange(event:any){
+        this.selectedTeam=event.target.value;
+        this.spinner.show();
+        //to hadle if the user choosed all products without choosing any category , wont pass category
+        if(!this.selectedCategory){
+            this.productsService.getAllProducts({'[pagination][limit]':1000 , club:this.selectedTeam }).subscribe({
+            next:(result)=>{
+                this.products=result.data
+                this.spinner.hide()
+            },
+            error:(err)=>{
+                console.log(err.message)
+                                this.spinner.hide()
+            }
+        })
+        }
+
+        //if the user choosed a category.
+        this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam}).subscribe({
+            next:(result)=>{
+                this.products=result.data
+                                this.spinner.hide()
+            },
+            error:(err)=>{
+                console.log(err.message)
+                                this.spinner.hide()
+            }
+        })
+    }
 
 
-showprice:boolean=true;
-minPrice: number = 120;
-maxPrice: number = 820;
 
 
 
-toggleshowingprice():void{
-  this.showprice=!this.showprice;
+
+
+minPrice!: number;
+maxPrice: number = 5000;
+onMinPriceChange(event:any){
+this.minPrice=event.target.value;
+if(!this.selectedCategory){
+            this.spinner.show()
+            this.productsService.getAllProducts({'[pagination][limit]':1000 , club:this.selectedTeam , '[price][min]':this.minPrice  }).subscribe({
+            next:(result)=>{
+                this.products=result.data
+                this.spinner.hide()
+            },
+            error:(err)=>{
+                console.log(err.message)
+                                this.spinner.hide()
+            }
+        })
+        }
+
+        //if the user choosed a category.
+        this.spinner.show()
+        this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam , '[price][min]':this.minPrice}).subscribe({
+
+            next:(result)=>{
+                this.products=result.data
+                                this.spinner.hide()
+            },
+            error:(err)=>{
+                console.log(err.message)
+                                this.spinner.hide()
+            }
+        })
+
 }
 
 
@@ -89,43 +159,94 @@ toggleshowingprice():void{
 
 
 
-maxRange: number = 1000;
-activeDrag: 'min' | 'max' | null = null;
 
-@HostListener('document:mousemove', ['$event'])
-onMouseMove(event: MouseEvent) {
-  if (!this.activeDrag) return;
 
-  const slider = document.querySelector('.relative') as HTMLElement;
-  const rect = slider.getBoundingClientRect();
-  const percentage = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-  const newValue = Math.round(percentage * this.maxRange);
 
-  if (this.activeDrag === 'min') {
-    this.minPrice = Math.min(newValue, this.maxPrice);
-  } else {
-    this.maxPrice = Math.max(newValue, this.minPrice);
-  }
+
+
+
+
+
+
+
+onMaxPriceChange(event:any){
+this.maxPrice=event.target.value;
+if(!this.selectedCategory){
+            this.spinner.show()
+            this.productsService.getAllProducts({'[pagination][limit]':1000 , club:this.selectedTeam , '[price][min]':this.minPrice , '[price][max]':this.maxPrice  }).subscribe({
+            next:(result)=>{
+                this.products=result.data
+                this.spinner.hide()
+            },
+            error:(err)=>{
+                console.log(err.message)
+                                this.spinner.hide()
+            }
+        })
+        }
+
+        //if the user choosed a category.
+        this.spinner.show()
+        this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam ,  '[price][max]':this.maxPrice}).subscribe({
+            next:(result)=>{
+                this.products=result.data
+                                this.spinner.hide()
+            },
+            error:(err)=>{
+                console.log(err.message)
+                                this.spinner.hide()
+            }
+        })
+
 }
 
-@HostListener('document:mouseup')
-onMouseUp() {
-  this.activeDrag = null;
-}
 
-startDrag(event: MouseEvent, type: 'min' | 'max') {
-  event.preventDefault();
-  this.activeDrag = type;
-}
 
-validateRange() {
-  this.minPrice = Math.max(0, Math.min(this.maxPrice, this.minPrice));
-  this.maxPrice = Math.min(this.maxRange, Math.max(this.minPrice, this.maxPrice));
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+categorySelectForReset!:string;
+clubSelectForReset!:string;
+minPriceSelectForReset!:number;
+maxPriceSelectForReset!:number;
+
+
 
 resetFilters() {
-  this.minPrice = 120;
-  this.maxPrice = 820;
+    this.spinner.show()
+    const radios = document.querySelectorAll('input[type="radio"]');
+  radios.forEach(radio => {
+    (radio as HTMLInputElement).checked = false;
+  });
+
+  // 2️⃣ رجّع كل number inputs فاضية أو لصفر
+  const numbers = document.querySelectorAll('input[type="number"]');
+  numbers.forEach(input => {
+    (input as HTMLInputElement).value = '';
+  });
+
+    this.productsService.getAllProducts().subscribe({
+            next:(result)=>{
+                this.products=result.data
+                this.spinner.hide()
+            },
+            error:(err)=>{
+                console.log(err.message)
+                                this.spinner.hide()
+            }
+        })
+    this.spinner.hide()
 }
 
 
@@ -134,7 +255,7 @@ resetFilters() {
   teams = [
     { id: 1, name: 'Real Madrid',logo:"madrid.webp" },
     { id: 2, name: 'Barcelona',logo:"barca.webp" },
-        { id: 7, name: 'Al ahly',logo:" alahly.webp" },
+    { id: 7, name: 'Al ahly',logo:" alahly.webp" },
     { id: 8, name: 'Zamalek',logo:" zamalek.webp" },
     { id: 3, name: 'Liverpool',logo:" liverpool.webp" },
     { id: 4, name: 'Arsenal',logo:" arsenal.webp" },
