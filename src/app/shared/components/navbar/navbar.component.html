@@ -8,7 +8,7 @@
         <div class="flex items-center gap-1 md:order-2 md:hidden">
         <button [routerLink]="'/cart/maincart'" class="flex items-center justify-center p-1   w-[45px] h-[45px] relative hover:scale-105 active:scale-95 transition-transform duration-200 ease-in-out">
                 <i class="text-[28px] text-white transition-transform duration-200 fa-solid fa-cart-arrow-down hover:scale-110" ></i>
-                <span [ngClass]="{'hidden':!isLogged}"  class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[15px] h-[15px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">0</span>
+                <span [ngClass]="{'hidden':!isLogged}"  class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[15px] h-[15px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">{{cartProducts.length}}</span>
             </button>
 
             <button [routerLink]="'/favorites/mainfavorites'" class="flex items-center justify-center p-1  rounded-full w-[45px] h-[45px] relative hover:scale-105 active:scale-95 transition-transform duration-200 ease-in-out">

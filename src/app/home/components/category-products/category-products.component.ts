@@ -17,13 +17,15 @@ export class CategoryProductsComponent implements OnInit {
     ngOnInit(): void {
         this.route.paramMap.subscribe((params)=>{
             this.categoryId=params.get('catId') || ''
-
+            this.spinner.show()
             this.productsService.getAllProducts({category:this.categoryId}).subscribe({
             next:(result)=>{
                 this.products=result.data;
+                this.spinner.hide()
             },
             error:(err)=>{
                 console.log(err)
+                this.spinner.hide()
             }
         })
         })

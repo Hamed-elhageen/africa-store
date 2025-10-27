@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -10,6 +10,10 @@ export class ProductsService {
 
 constructor(private http:HttpClient) { }
     products!: any[];
+    headers=new HttpHeaders().set(
+                    'Authorization',
+                    `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjZjMzJlODU2MDBmMDI5MDAwMTQyOSIsImlhdCI6MTc2MTQ2Mzk4MCwiZXhwIjoxNzYxNTUwMzgwfQ.LWg08kzhozkO7Xg1iRdZhm3AF548bNSiCEO4SfuFoBc`
+                )
 
     //i here get all products with its opetional filteration with query params ,, when you pass a query param in the function (all are optional) the products are filtered based on them
     getAllProducts(queryParams?:{[key:string]:any}):Observable<any>{
@@ -30,6 +34,16 @@ constructor(private http:HttpClient) { }
         )
     }
 
+
+
+
+    getSingleProduct(prdId:string):Observable<any>{
+        return this.http.get(`${environment.api}/products/${prdId}`).pipe(
+            catchError((err)=>{
+                return throwError(()=>err)
+            })
+        )
+    }
 
 
 }

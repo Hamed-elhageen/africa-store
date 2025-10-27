@@ -21,11 +21,11 @@
     <div class="space-y-4 lg:space-y-5">
       @for (item of cartProducts; track $index) {
         <app-cartitem
-        [overAllPrice]="item.overAllPrice"
-        [title]="item.title"
-        [productImage]="item.productImage"
-        [price]="item.price"
-        [size]="item.size"
+        [overAllPrice]="item.quantity*item.finalPrice"
+        [title]="item.name"
+        [productImage]="item.image"
+        [price]="item.finalPrice"
+        [size]="item.sizes"
         [quantity]="item.quantity"
         ></app-cartitem>
         <div class="bg-[#444444] h-[1px] w-full my-5"></div>

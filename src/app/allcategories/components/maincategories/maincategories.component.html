@@ -12,7 +12,7 @@
                     </div>
                <div class="mb-3 space-y-2" *ngIf="showCategories">
                                         <div class="flex items-center mb-2 ">
-                                            <input type="radio"     value=""                                  (change)="onCategoryChange($event)"  checked  name="category" id="allCategoires" class="w-4 h-4 transition duration-300 border-2 border-gray-300 rounded-full appearance-none checked:bg-main_color focus:outline-none focus:ring-2 focus:ring-main_color" >
+                                            <input type="radio"     value=""                                  (change)="onCategoryChange($event)"  checked  name="category" id="allCategoires" class="w-4 h-4 transition duration-300 border-2 border-gray-300 rounded-full appearance-none cursor-pointer checked:bg-main_color focus:outline-none focus:ring-2 focus:ring-main_color" >
                                             <label for="allCategoires" class="flex w-full ml-2 text-gray-700 duration-200 hover:text-white">All products
                                                 <span class="text-gray-500 ms-auto">({{products.length}})</span>
                                             </label>
@@ -27,7 +27,7 @@
                                 id="{{category._id}}"
                                 name="category"
                                 [value]="category._id"
-                                class="w-4 h-4 transition duration-300 border-2 border-gray-300 rounded-full appearance-none checked:bg-main_color checked:border-red-500 focus:outline-none focus:ring-2 focus:ring-main_color"
+                                class="w-4 h-4 transition duration-300 border-2 border-gray-300 rounded-full appearance-none cursor-pointer checked:bg-main_color checked:border-red-500 focus:outline-none focus:ring-2 focus:ring-main_color"
                             />
                             <div class="absolute w-4 h-4 border-2 border-gray-300 rounded-full pointer-events-none"></div>
                         </div>
@@ -65,16 +65,16 @@
 
 
     <!-- Club Section -->
-    <div class="flex items-center justify-between mt-4 mb-4">
+    <div class="flex items-center justify-between ">
         <h2 class="text-lg font-bold text-white ">Clubs</h2>
         <button (click)="toggleshowingclubs()" class="text-gray-400 transition-colors hover:text-white">
             <i class="fas fa-chevron-down text-main_color" [class.rotate-180]="!showclubs"></i>
         </button>        </div>
         <div *ngIf="showclubs">
-        @for (item of teams; track $index) {
-            <div class="flex items-baseline mb-2 ">
+        @for (item of ( showAllTeams?teams:teams.slice(0,4)); track $index) {
+            <div class="flex items-center mb-1">
                     <input (change)="onTeamChange($event)" type="radio"  id="{{item.id}}"name="team"[value]="item.name"
-                        class="w-4 h-4 transition duration-300 border-2 border-gray-300 rounded-full appearance-none checked:bg-main_color focus:outline-none focus:ring-2 focus:ring-main_color"
+                        class="w-4 h-4 transition duration-300 border-2 border-gray-300 rounded-full appearance-none cursor-pointer checked:bg-main_color focus:outline-none focus:ring-2 focus:ring-main_color"
                     />
                     <label for="{{item.id}}" class="flex w-full ml-2 text-gray-700 duration-200 hover:text-white">
                             {{item.name}}
@@ -83,8 +83,9 @@
                 </div>
         }
     </div>
-      <button class="w-full text-right text-main_color" *ngIf="showclubs">see more</button>
-      <div class="bg-[#666666] w-full h-[2px] mb-5" *ngIf="showCategories" ></div>
+      <button class="w-full text-right text-main_color" *ngIf="showclubs" (click)="toggleShowingTeams()">  {{ showAllTeams ? 'See less' : 'See more' }}
+</button>
+      <div class="bg-[#666666] w-full h-[2px] mb-2" *ngIf="showCategories" ></div>
 
 
 
@@ -105,7 +106,7 @@
 
 
     <!-- price part  -->
-    <div class="flex items-center justify-between mt-4 mb-2">
+    <div class="flex items-center justify-between mt-2 ">
         <h2 class="text-lg font-bold text-white ">Price</h2>
         <button (click)="toggleshowingprice()" class="text-gray-400 transition-colors hover:text-white">
             <i class="fas fa-chevron-down text-main_color" [class.rotate-180]="!showprice"></i>
@@ -154,19 +155,34 @@
 
 
 
-  <!-- the products right section -->
-  <div class="md:col-span-3">
+    <!-- the products right section -->
+    <div class="md:col-span-3">
+        @if (products.length>0) {
     <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(275px,1fr))] justify-between gap-x-5 gap-y-8">
-      @for (item of products; track $index) {
+        @for (item of products; track $index) {
         <app-card
-          [productImage]="item.thumbnail.secure_url"
-          [title]="item.name.slice(0,20)"
-          [discription]="item.description"
-          [price]="item.finalPrice"
-          [discount]="item.discount"
-          [priceBeforediscount]="item.price"
+        [id]="item._id"
+            [productImage]="item.thumbnail.secure_url"
+            [title]="item.name.slice(0,20)"
+            [discription]="item.description"
+            [price]="item.finalPrice"
+            [discount]="item.discount"
+            [priceBeforediscount]="item.price"
         ></app-card>
-      }
+        }
+    </div>
+}
+@else{
+<div class="container text-white">
+
+    <div class="flex flex-col items-center justify-center">
+      <img src="empty-cart.svg" alt="empty cart" class="my-10">
+<p class="text-[20px] md:text[25px] mb-5">No orders in this category with this features !</p>
+<p class="text-[18px] mb-5">Place orders now</p>
+<h5 class="mb-16 font-semibold cursor-pointer text-main_color" routerLink="/">Go to Home</h5>
     </div>
   </div>
+
+}
+    </div>
 </div>

@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CategoriesService } from '../../services/categories.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { CartService } from '../../services/cart.service';
 
 @Component({
 selector: 'app-navbar',
@@ -27,6 +29,7 @@ export class NavbarComponent implements OnInit  {
     isMenuOpen = false;
     isScrolled = false;
     allcategories!:any[];
+    cartProducts!:any[]
 
   //   function to make the header sticky when scrolling a part  of pixels
     @HostListener('window:scroll', [])
@@ -68,14 +71,20 @@ scrollTo(sectionId: string) {
   //for authentication
     isLogged: boolean = false;
     userImage:any;
-constructor(private authService: LoginService , private profileService:ProfileService , private router :Router , private categoriesService:CategoriesService ) {
+constructor(private authService: LoginService,private spinner:NgxSpinnerService , private profileService:ProfileService , private router :Router , private categoriesService:CategoriesService , private cartService:CartService ) {
       //for checking if you are logged or no
-    this.authService.isUserLoggedSubject.subscribe({
+
+}
+    ngOnInit(): void {
+        this.spinner.show()
+        this.authService.isUserLoggedSubject.subscribe({
     next: (status: boolean) => {
         this.isLogged = status;
+        this.spinner.hide()
     },
     error: (err) => {
         console.error('Error subscribing to login status:', err);
+        this.spinner.hide()
     }
     });
 
@@ -83,23 +92,37 @@ constructor(private authService: LoginService , private profileService:ProfileSe
     this.profileService.showProfile().subscribe({
         next:(userData)=>{
             this.userImage=userData.data.avatar;
+            this.spinner.hide()
         },
         error:(err)=>{
             console.error(err)
+                        this.spinner.hide()
         }
     })
 
-}
-    ngOnInit(): void {
 //categoreis which will come from back end , we put it here for test , only , after that we will fetch it here and put it in its variable also or object
 this.categoriesService.getAllCategories().subscribe({
     next:(result)=>{
         this.allcategories=result.data;
+                    this.spinner.hide()
     },
     error:(error)=>{
         console.log(error.message)
+                    this.spinner.hide()
     }
 });
+
+
+//to get the number of products in the cart:
+this.cartService.getCartProducts().subscribe({
+    next:(result)=>{
+        this.cartProducts=result.products;
+    },
+    error:(err)=>{
+        console.log(err.message)
+    }
+})
+
 
     }
 

@@ -1,4 +1,4 @@
-<div class="card bg-[#333333] w-[90%] mx-auto md:w-[282px] rounded-[20px] text-white overflow-hidden">
+<div class="card bg-[#333333] w-[90%] mx-auto md:w-[282px] md:h-[420px] rounded-[20px] text-white overflow-hidden relative">
   <a [routerLink]="['/details/maindetails', id]">
     <div class="w-full h-64 bg-[#222] flex items-center justify-center overflow-hidden">
       <img
@@ -25,9 +25,9 @@
       ></i>
     </div>
 
-    <h6 class="mb-2 font-normal">{{ discription.slice(0,50) }}...</h6>
+    <h6 class="mb-2 font-normal">{{ discription.slice(0,45) }}...</h6>
 
-    <div class="flex items-center gap-6">
+    <div class="absolute flex items-center gap-6 bottom-3">
       <h5 class="text-secondary_color">{{ price }} LE</h5>
       @if (discount) {<del class="text-[16px] font-bold text-[#A5A5A5]" >
         {{ priceBeforediscount }}LE

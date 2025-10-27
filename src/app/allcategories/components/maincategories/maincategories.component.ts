@@ -11,30 +11,38 @@ import cluster from 'cluster';
 })
 export class MaincategoriesComponent implements OnInit {
     categories!:any[];
-    products!:any[];
+    products:any[]=[];
     showCategories:boolean=true;
     selectedCategory = '';
     selectedTeam='';
     showclubs:boolean=true;
     showprice:boolean=true;
+    showAllTeams:boolean=false;
 
     constructor(private categoriesService:CategoriesService , private productsService : ProductsService , private spinner:NgxSpinnerService){}
     ngOnInit(): void {
+        this.spinner.show();
         this.categoriesService.getAllCategories().subscribe({
             next:(result)=>{
-                this.categories=result.data
+                this.categories=result.data;
+                this.spinner.hide()
             },
             error:(err)=>{
-                console.log(err.message)
+                console.log(err.message);
+                                this.spinner.hide()
             }
         })
 
         this.productsService.getAllProducts({'[pagination][limit]':1000}).subscribe({
+
             next:(result)=>{
+                this.spinner.show()
                 this.products=result.data
+                this.spinner.hide()
             },
             error:(err)=>{
-                console.log(err.message)
+                console.log(err.message);
+                                this.spinner.hide()
             }
         })
     }
@@ -52,6 +60,9 @@ export class MaincategoriesComponent implements OnInit {
     toggleshowingprice():void{
         this.showprice=!this.showprice;
     }
+    toggleShowingTeams():void{
+        this.showAllTeams=!this.showAllTeams;
+    }
     /////////////////////////////////************************************************************************** */
 
     onCategoryChange(event:any){
@@ -60,7 +71,7 @@ export class MaincategoriesComponent implements OnInit {
 
         //here if the user selected all products which its value if "" , iam saying if there is no category id , get all products without any filteration
         if(!this.selectedCategory){
-            this.productsService.getAllProducts({'[pagination][limit]':1000 }).subscribe({
+            this.productsService.getAllProducts({'[pagination][limit]':1000 , club:this.selectedTeam  }).subscribe({
             next:(result)=>{
                 this.products=result.data
             },
@@ -70,7 +81,7 @@ export class MaincategoriesComponent implements OnInit {
         })
         }
         //here do the filteration with category id
-        this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory}).subscribe({
+        this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam}).subscribe({
             next:(result)=>{
                 this.products=result.data
             },
@@ -91,6 +102,10 @@ export class MaincategoriesComponent implements OnInit {
             next:(result)=>{
                 this.products=result.data
                 this.spinner.hide()
+                window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+    });
             },
             error:(err)=>{
                 console.log(err.message)
@@ -103,7 +118,11 @@ export class MaincategoriesComponent implements OnInit {
         this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam}).subscribe({
             next:(result)=>{
                 this.products=result.data
-                                this.spinner.hide()
+                this.spinner.hide()
+                window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+    });
             },
             error:(err)=>{
                 console.log(err.message)
@@ -128,6 +147,12 @@ if(!this.selectedCategory){
             next:(result)=>{
                 this.products=result.data
                 this.spinner.hide()
+                setTimeout(()=>{
+                    window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                },500)
             },
             error:(err)=>{
                 console.log(err.message)
@@ -143,6 +168,12 @@ if(!this.selectedCategory){
             next:(result)=>{
                 this.products=result.data
                                 this.spinner.hide()
+                                setTimeout(()=>{
+                    window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                },500)
             },
             error:(err)=>{
                 console.log(err.message)
@@ -175,6 +206,12 @@ if(!this.selectedCategory){
             this.spinner.show()
             this.productsService.getAllProducts({'[pagination][limit]':1000 , club:this.selectedTeam , '[price][min]':this.minPrice , '[price][max]':this.maxPrice  }).subscribe({
             next:(result)=>{
+            setTimeout(()=>{
+                    window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                },500)
                 this.products=result.data
                 this.spinner.hide()
             },
@@ -189,6 +226,12 @@ if(!this.selectedCategory){
         this.spinner.show()
         this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam ,  '[price][max]':this.maxPrice}).subscribe({
             next:(result)=>{
+                setTimeout(()=>{
+                    window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                },500)
                 this.products=result.data
                                 this.spinner.hide()
             },
@@ -240,6 +283,10 @@ resetFilters() {
             next:(result)=>{
                 this.products=result.data
                 this.spinner.hide()
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             },
             error:(err)=>{
                 console.log(err.message)

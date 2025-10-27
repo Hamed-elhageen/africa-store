@@ -8,7 +8,7 @@ import { FavoritesService } from '../../../favorites/services/favorites.service'
 })
 export class CardComponent {
     constructor(private favoriteService:FavoritesService){}
-  @Input() id?:number
+  @Input() id?:string
   @Input() productImage:string="";
   @Input() title:string="";
   @Input() discription="";
