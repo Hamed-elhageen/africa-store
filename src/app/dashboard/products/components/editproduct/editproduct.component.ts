@@ -207,7 +207,7 @@ ngOnInit(): void {
     formData.append('category', this.catId || '');
 
     const selectedSizes = this.sizes?.value || [];
-    selectedSizes.forEach((size: string) => formData.append('sizes', size));
+    selectedSizes.forEach((size: string) => formData.append('sizes[]', size));
 
     if (this.mainImage) formData.append('thumbnail', this.mainImage);
 

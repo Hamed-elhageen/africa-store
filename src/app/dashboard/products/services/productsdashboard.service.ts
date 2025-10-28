@@ -34,7 +34,7 @@ constructor(private http : HttpClient){ }
 
 headers=new HttpHeaders().set(
                 'Authorization',
-                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjZjMzJlODU2MDBmMDI5MDAwMTQyOSIsImlhdCI6MTc2MTQ2Mzk4MCwiZXhwIjoxNzYxNTUwMzgwfQ.LWg08kzhozkO7Xg1iRdZhm3AF548bNSiCEO4SfuFoBc`
+                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjZjMzJlODU2MDBmMDI5MDAwMTQyOSIsImlhdCI6MTc2MTU5ODcyOSwiZXhwIjoxNzYxNjg1MTI5fQ.p01GwzhT2w5nD3sA9I7AJXtNAun_qZ8sKTxWGHAZduc`
             )
     addProduct(formData:FormData,catId:string):Observable<any>{
         return this.http.post<any>(`${environment.api}/products/${catId}`,formData,{headers:this.headers}).pipe(

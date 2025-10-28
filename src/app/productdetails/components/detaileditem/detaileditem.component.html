@@ -2,12 +2,12 @@
     <div class="images">
         <img [src]="currentImage" alt="arsenal shirt" class="mb-5 rounded-[20px] w-full h-[465px]  hidden md:block mainImage">
         <div class="flex flex-wrap gap-3 ">
-            <img [src]="choosenProduct?.images[0]?.secure_url" (click)="changeMainImage(choosenProduct?.images[0]?.secure_url)" alt="arsenal shirt" class="w-[160px] md:w-[180px] rounded-[20px] cursor-pointer">
-            @if(choosenProduct?.images[1]){
-            <img [src]="choosenProduct?.images[1]?.secure_url" (click)="changeMainImage(choosenProduct?.images[1]?.secure_url)"  alt="arsenal shirt" class="w-[160px] md:w-[180px] rounded-[20px] cursor-pointer ">
+            <img [src]="choosenProduct.thumbnail.secure_url" (click)="changeMainImage(choosenProduct.thumbnail.secure_url)" alt=" shirt one" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer product-images">
+            @if(choosenProduct?.images[0]){
+            <img [src]="choosenProduct?.images[0]?.secure_url" (click)="changeMainImage(choosenProduct?.images[0]?.secure_url)"  alt="shirt two" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer product-images ">
             }
-            @if(choosenProduct?.images[2]){
-            <img [src]="choosenProduct?.images[2]?.secure_url"   (click)="changeMainImage(choosenProduct?.images[2]?.secure_url)" alt="arsenal shirt" class="w-[160px] md:w-[180px] rounded-[20px] cursor-pointer ">
+            @if(choosenProduct?.images[1]){
+            <img [src]="choosenProduct?.images[1]?.secure_url"   (click)="changeMainImage(choosenProduct?.images[1]?.secure_url)" alt=" shirt three" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer  product-images">
             }
         </div>
     </div>

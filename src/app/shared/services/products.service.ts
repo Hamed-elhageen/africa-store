@@ -12,7 +12,7 @@ constructor(private http:HttpClient) { }
     products!: any[];
     headers=new HttpHeaders().set(
                     'Authorization',
-                    `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjZjMzJlODU2MDBmMDI5MDAwMTQyOSIsImlhdCI6MTc2MTQ2Mzk4MCwiZXhwIjoxNzYxNTUwMzgwfQ.LWg08kzhozkO7Xg1iRdZhm3AF548bNSiCEO4SfuFoBc`
+                    `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjNmNTM3NjIyYTU3OWUwZWI4YTQyMSIsImlhdCI6MTc2MTYwMDcyOCwiZXhwIjoxNzYxNjg3MTI4fQ.2Zz4ESQo8Sgvnnd_JJZswMQFuOBzMNjYu9lRexT2ZO8`
                 )
 
     //i here get all products with its opetional filteration with query params ,, when you pass a query param in the function (all are optional) the products are filtered based on them
@@ -38,7 +38,7 @@ constructor(private http:HttpClient) { }
 
 
     getSingleProduct(prdId:string):Observable<any>{
-        return this.http.get(`${environment.api}/products/${prdId}`).pipe(
+        return this.http.get(`${environment.api}/products/${prdId}`,{headers:this.headers}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             })

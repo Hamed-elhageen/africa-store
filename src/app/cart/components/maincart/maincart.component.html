@@ -21,7 +21,7 @@
     <div class="space-y-4 lg:space-y-5">
       @for (item of cartProducts; track $index) {
         <app-cartitem
-        [overAllPrice]="item.quantity*item.finalPrice"
+        [overAllPrice]="item.subtotal"
         [title]="item.name"
         [productImage]="item.image"
         [price]="item.finalPrice"

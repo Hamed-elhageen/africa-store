@@ -11,7 +11,7 @@ export class CartService {
     constructor(private http : HttpClient) { }
 headers=new HttpHeaders().set(
                 'Authorization',
-                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjNmNTM3NjIyYTU3OWUwZWI4YTQyMSIsImlhdCI6MTc2MTQ3NDE4NiwiZXhwIjoxNzYxNTYwNTg2fQ.Zq97d0hZqYdWT2fIgE1oZ0p-oHr-TU7puLbNev-wFLE`
+                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjNmNTM3NjIyYTU3OWUwZWI4YTQyMSIsImlhdCI6MTc2MTYzNzUxOSwiZXhwIjoxNzYxNzIzOTE5fQ.z6T60ORyjuU0lhwzU400oKoYn3LoOSO5dwwFImpYIXw`
             )
     getCartProducts():Observable<any>{
         return this.http.get<any>(`${environment.api}/cart`,{headers:this.headers}).pipe(
@@ -22,7 +22,7 @@ headers=new HttpHeaders().set(
     }
 
     addToCart(prdId:string):Observable<any>{
-        return this.http.post<any>(`${environment.api}/cart/${prdId}`,{headers:this.headers}).pipe(
+        return this.http.post<any>(`${environment.api}/cart`,prdId,{headers:this.headers}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             })
