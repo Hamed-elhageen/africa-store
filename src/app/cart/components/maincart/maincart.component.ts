@@ -11,13 +11,16 @@ export class MaincartComponent implements OnInit {
     constructor(private cartService:CartService , private spinner:NgxSpinnerService){
 
     }
-        cartProducts!:any[];
+        cartProducts:any[]=[];
+        theLength:any;
 
     ngOnInit(): void {
         this.spinner.show()
         this.cartService.getCartProducts().subscribe({
             next:(result)=>{
-                this.cartProducts=result.products;
+                this.cartProducts=result.data.products;
+                console.log(this.cartProducts)
+                this.theLength=result?.data?.products?.length;
                 this.spinner.hide()
             },
             error:(err)=>{

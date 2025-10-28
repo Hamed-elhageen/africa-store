@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../../shared/services/products.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { stringify } from 'querystring';
@@ -24,7 +24,7 @@ export class DetaileditemComponent implements OnInit{
     currentId!:string|null;
     choosenProduct:any;
     currentImage!:string;
-constructor(private acitvatedRoute:ActivatedRoute, private productsService : ProductsService , private spinner:NgxSpinnerService , private cartService:CartService){}
+constructor(private acitvatedRoute:ActivatedRoute, private productsService : ProductsService , private spinner:NgxSpinnerService , private cartService:CartService , private router:Router){}
     ngOnInit(): void {
         this.acitvatedRoute.paramMap.subscribe((params)=>{
             this.currentId=params.get('prdId');
@@ -74,6 +74,7 @@ constructor(private acitvatedRoute:ActivatedRoute, private productsService : Pro
                         icon:"success"
                     })
                     this.spinner.hide()
+                    this.router.navigateByUrl("/cart/maincart")
                 },
                 error:(err)=>{
                     Toast.fire({

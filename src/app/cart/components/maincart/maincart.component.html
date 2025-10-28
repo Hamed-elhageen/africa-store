@@ -1,4 +1,4 @@
-@if (cartProducts.length>0)
+@if (theLength>0)
 {
 <div class="container grid grid-cols-1 lg:grid-cols-3 gap-20 text-[#FFFFFF] px-4 sm:px-0 mt-8">
 
@@ -6,7 +6,7 @@
   <div class="py-6 lg:col-span-2 lg:py-10">
     <div class="flex items-center justify-between mb-4 lg:mb-6">
       <h4 class="text-lg lg:text-xl">Shopping Cart</h4>
-      <p class="text-sm lg:text-base">{{cartProducts.length}} Items</p>
+      <p class="text-sm lg:text-base">({{theLength}}) Items</p>
     </div>
     <div class="bg-white w-full h-[1px] mb-6 lg:mb-8"></div>
 
@@ -23,7 +23,7 @@
         <app-cartitem
         [overAllPrice]="item.subtotal"
         [title]="item.name"
-        [productImage]="item.image"
+        [productImage]="item.thumbnail"
         [price]="item.finalPrice"
         [size]="item.sizes"
         [quantity]="item.quantity"
@@ -112,10 +112,10 @@
   </div>
 }
 @else {
-  <div class="container text-white">
+  <div class="container mt-8 text-white">
     <div class="flex items-center justify-between mb-4 text lg:mb-6 ">
       <h4 class="text-lg lg:text-xl"> Cart</h4>
-      <p class="text-sm lg:text-base">({{cartProducts.length}}) Items</p>
+      <p class="text-sm lg:text-base">({{theLength}}) Items</p>
 
     </div>
     <div class="bg-white w-full h-[1px] mb-6 lg:mb-8"></div>
