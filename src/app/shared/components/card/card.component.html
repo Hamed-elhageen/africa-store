@@ -15,13 +15,13 @@
       <i
         class="text-2xl text-green-700 cursor-pointer fa-regular fa-heart"
         [ngClass]="{ hidden: choosed }"
-        (click)="toggleFavIcon()"
+        (click)="toggleFavoriteProduct(id)"
       ></i>
       <i
         class="text-2xl cursor-pointer fa-solid fa-heart"
         style="color: #1C6F37;"
         [ngClass]="{ hidden: !choosed }"
-        (click)="toggleFavIcon()"
+        (click)="toggleFavoriteProduct(id)"
       ></i>
     </div>
 

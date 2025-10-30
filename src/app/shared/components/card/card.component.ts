@@ -1,14 +1,24 @@
 import { Component, Input } from '@angular/core';
-import { FavoritesService } from '../../../favorites/services/favorites.service';
-
+import { FavoritesService } from '../../services/favorites.service';
+import Swal from 'sweetalert2';
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    customClass: {
+  popup: 'my-toast-style'
+    },
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: false,
+  });
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
 export class CardComponent {
-    constructor(private favoriteService:FavoritesService){}
-  @Input() id?:string
+    constructor(private favoritesService:FavoritesService){}
+  @Input() id:string=""
   @Input() productImage:string="";
   @Input() title:string="";
   @Input() discription="";
@@ -18,12 +28,26 @@ export class CardComponent {
 
 
   choosed:boolean=false;
-  toggleFavIcon(){
-    this.choosed=!this.choosed;
-  }
 
 
-   addToFavorites(prdId:number){
-    this.favoriteService.favoriteProducts.push()
+
+  toggleFavoriteProduct(prdId:string){
+                    this.choosed=!this.choosed;
+        this.favoritesService.toggleAddition(prdId).subscribe({
+            next:(result)=>{
+                Toast.fire({
+                    title:`   ${result.message}` || "updated successfully",
+                    icon:"success"
+                })
+            },
+            error:(err)=>{
+                Toast.fire({
+                    title:"Failed !!!",
+                    icon:"error"
+                })
+            }
+
+        })
     }
+
 }

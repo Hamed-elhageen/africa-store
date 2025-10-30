@@ -8,6 +8,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { CategoriesService } from '../../services/categories.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CartService } from '../../services/cart.service';
+import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
 selector: 'app-navbar',
@@ -30,7 +31,8 @@ export class NavbarComponent implements OnInit  {
     isScrolled = false;
     allcategories!:any[];
     cartProductsCount!:any[]
-    cartCount:number=0
+    cartCount:number=0;
+    favoritesCount:number=0
 
 
   //   function to make the header sticky when scrolling a part  of pixels
@@ -73,7 +75,7 @@ scrollTo(sectionId: string) {
   //for authentication
     isLogged: boolean = false;
     userImage:any;
-constructor(private authService: LoginService,private spinner:NgxSpinnerService , private profileService:ProfileService , private router :Router , private categoriesService:CategoriesService , private cartService:CartService ) {
+constructor(private authService: LoginService,private spinner:NgxSpinnerService , private profileService:ProfileService , private router :Router , private categoriesService:CategoriesService , private cartService:CartService , private favoritesService:FavoritesService ) {
       //for checking if you are logged or no
 
 }
@@ -97,7 +99,7 @@ constructor(private authService: LoginService,private spinner:NgxSpinnerService 
             this.spinner.hide()
         },
         error:(err)=>{
-            console.error(err)
+            console.log(err)
                         this.spinner.hide()
         }
     })
@@ -106,7 +108,7 @@ constructor(private authService: LoginService,private spinner:NgxSpinnerService 
 this.categoriesService.getAllCategories().subscribe({
     next:(result)=>{
         this.allcategories=result.data;
-                    this.spinner.hide()
+        this.spinner.hide()
     },
     error:(error)=>{
         console.log(error.message)
@@ -116,22 +118,19 @@ this.categoriesService.getAllCategories().subscribe({
 
 
 //to get the number of products in the cart:
-this.cartService.getCartProducts().subscribe({
-    next:(result)=>{
-        this.cartProductsCount=result.data.itemsCount;
-        console.log(this.cartProductsCount)
-    },
-    error:(err)=>{
-        console.log(err.message)
-    }
-})
 
 
 this.cartService.getCartCount().subscribe(count => {
-      this.cartCount = count;
+        this.cartCount = count;
     });
-        this.cartService.getCartProducts().subscribe();
+    this.cartService.getCartProducts().subscribe();
 
+
+
+
+    this.favoritesService.getFavoritesCount().subscribe(favoritesCount=>{
+        this.favoritesCount=favoritesCount
+    })
 
     }
 

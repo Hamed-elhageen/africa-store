@@ -13,7 +13,7 @@
 
             <button [routerLink]="'/favorites/mainfavorites'" class="flex items-center justify-center p-1  rounded-full w-[45px] h-[45px] relative hover:scale-105 active:scale-95 transition-transform duration-200 ease-in-out">
                 <i class="w-8 text-3xl text-white transition-transform duration-200 fa-solid fa-heart hover:scale-110"></i>
-                <span [ngClass]="{'hidden':!isLogged}" class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[15px] h-[15px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">0</span>
+                <span [ngClass]="{'hidden':!isLogged}" class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[15px] h-[15px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">{{favoritesCount}}</span>
             </button>
         </div>
 
@@ -47,7 +47,7 @@
 
             <button [routerLink]="'/favorites/mainfavorites'" class="flex items-center justify-center p-3 bg-white rounded-full w-[52px] h-[52px] relative hover:scale-105 active:scale-95 transition-transform duration-200 ease-in-out">
                 <i class="text-lg text-black transition-transform duration-200 fa-regular fa-heart hover:scale-110"></i>
-                <span [ngClass]="{'hidden':!isLogged}" class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[20px] h-[20px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">0</span>
+                <span [ngClass]="{'hidden':!isLogged}" class="absolute top-1 -right-1 rounded-full number bg-danger_color w-[20px] h-[20px] border border-white flex justify-center items-center hover:scale-110 transition-transform duration-200">{{favoritesCount}}</span>
             </button>
 
             <button [ngClass]="{ 'hidden': isLogged }" [routerLink]="'/authentication/register'" type="button" class="bg-main_color text-white rounded-[100px] py-3 px-6 w-[170px] font-bold  flex justify-between items-center transition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">

@@ -1,6 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FavoritesService } from '../../services/favorites.service';
-
+import { FavoritesService } from '../../../shared/services/favorites.service';
+import Swal from 'sweetalert2';
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    customClass: {
+  popup: 'my-toast-style'
+    },
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: false,
+  });
 @Component({
   selector: 'app-mainfavorites',
   templateUrl: './mainfavorites.component.html',
@@ -12,8 +22,17 @@ export class MainfavoritesComponent implements OnInit{
 
     }
     ngOnInit(): void {
-        this.favoriteProducts=this.favoritesService.getAllFavorites();
+        this.favoritesService.getFavorites().subscribe({
+            next:(result)=>{
+                this.favoriteProducts=result.data;
+            },
+            error:(err)=>{
+                console.log(err.message)
+            }
+        });
     }
+
+    
     }
 
 
