@@ -11,22 +11,25 @@
     <div class="bg-white w-full h-[1px] mb-6 lg:mb-8"></div>
 
     <!-- Product headers - hidden on mobile, shown on md+ -->
-    <div class="justify-between hidden mb-6 md:flex lg:mb-8">
-      <p class="font-bold text-base lg:text-[18px]">Product details</p>
-      <p class="font-bold text-base lg:text-[18px]">Quantity</p>
-      <p class="font-bold text-base lg:text-[18px]">Overall price</p>
+    <div class="hidden mb-6 md:grid-cols-5 md:grid lg:mb-8">
+      <p class="font-bold text-base lg:text-[18px] md:col-span-3">Product details</p>
+      <p class="font-bold text-base lg:text-[18px] md:col-span-1">Quantity</p>
+      <p class="font-bold text-base lg:text-[18px] md:col-span-1 text-end">Overall price</p>
     </div>
 
     <!-- Cart Items -->
     <div class="space-y-4 lg:space-y-5">
       @for (item of cartProducts; track $index) {
         <app-cartitem
-        [overAllPrice]="item.subtotal"
+        [productId]="item.productId"
+        [overAllPrice]="item.subtotal.toFixed(2)"
         [title]="item.name"
         [productImage]="item.thumbnail"
-        [price]="item.finalPrice"
+        [price]="item.price.toFixed()"
         [size]="item.sizes"
         [quantity]="item.quantity"
+        (productDeleted)="removeFromCart($event)"
+        (quantityUpdated)="getCartProducts()"
         ></app-cartitem>
         <div class="bg-[#444444] h-[1px] w-full my-5"></div>
 
@@ -82,23 +85,19 @@
       <!-- Price Breakdown -->
       <div class="space-y-3 ">
         <div class="flex justify-between">
-          <p class="text-sm lg:text-[18px]">Sub total (3 items)</p>
-          <h5 class="text-base lg:text-lg">8520 EGP</h5>
+          <p class="text-sm lg:text-[18px]">Sub Total </p>
+          <h5 class="text-base lg:text-lg">{{total}} EGP</h5>
         </div>
 
-        <div class="flex justify-between">
-          <p class="text-sm lg:text-[18px]">Shipping cost</p>
-          <h5 class="text-base lg:text-lg">120 EGP</h5>
-        </div>
 
         <div class="flex justify-between">
           <p class="text-sm lg:text-[18px]">Discount</p>
-          <h5 class="text-base lg:text-lg">100 EGP</h5>
+          <h5 class="text-base lg:text-lg">0 EGP</h5>
         </div>
 
         <div class="flex justify-between pt-3 lg:pt-4 border-t border-[#444444]">
           <p class="text-base lg:text-[18px] font-medium">Total (Incl VAT)</p>
-          <h5 class="text-lg font-bold lg:text-xl">1780 EGP</h5>
+          <h5 class="text-lg font-bold lg:text-xl text-secondary_color">{{total}} EGP</h5>
         </div>
       </div>
 

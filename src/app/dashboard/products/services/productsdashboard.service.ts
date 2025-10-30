@@ -67,7 +67,7 @@ headers=new HttpHeaders().set(
 
 
         gitSingleProduct(prdId:string):Observable<any>{
-        return this.http.get<any>(`${environment.api}/products/${prdId}`,{headers:this.headers}).pipe(
+        return this.http.get<any>(`${environment.api}/products/${prdId}`).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             })

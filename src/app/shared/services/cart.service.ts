@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -11,13 +11,17 @@ export class CartService {
     constructor(private http : HttpClient) { }
 headers=new HttpHeaders().set(
                 'Authorization',
-                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjNmNTM3NjIyYTU3OWUwZWI4YTQyMSIsImlhdCI6MTc2MTY0MDQ5MSwiZXhwIjoxNzYxNzI2ODkxfQ.Qjgm-o_xyGIPNyB87HSfDMTcI_Qw-aWCyEZjxgx3XVk`
+                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjNmNTM3NjIyYTU3OWUwZWI4YTQyMSIsImlhdCI6MTc2MTgxMjI4OSwiZXhwIjoxNzYxODk4Njg5fQ.pg1JQhsuL5PpVdZPpv_fehCSbsACv6NwJgHDiCbOg9k`
             )
     getCartProducts():Observable<any>{
         return this.http.get<any>(`${environment.api}/cart`,{headers:this.headers}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
-            })
+            }),
+            tap((res) => {
+      const count = res?.data?.products?.length || 0;
+      this.setCartCount(count);
+    })
         )
     }
 
@@ -31,17 +35,47 @@ headers=new HttpHeaders().set(
 
     deleteProduct(prdId:string):Observable<any>{
         return this.http.delete<any>(`${environment.api}/cart/${prdId}`,{headers:this.headers}).pipe(
+            tap(() => {
+                const current = this.cartCount.value;
+                this.setCartCount(current - 1); // 👈 تحديث العدد
+            }),
             catchError((err)=>{
                 return throwError(()=>err)
             })
         )
     }
 
-  deleteAllProducts():Observable<any>{
-        return this.http.delete<any>(`${environment.api}/cart`,{headers:this.headers}).pipe(
+
+    updateProduct(prdId:string, newQuantity:number):Observable<any>{
+        return this.http.patch<any>(`${environment.api}/cart`,{productId:prdId,quantity:newQuantity},{headers:this.headers}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             })
         )
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // here we will make a behaviour subject to handle the cart Products count and subscribe on it in navbar to be updated when it is changed
+    //if you want to pass data from parent to childe : using @INput
+    //if you want to pass data from child to pared : using @Output and eventEmitter
+    //if there is no relation like cart and navbar , you use a centralized service and behaviour subject and subscribe on it in any place you want
+
+    cartCount = new BehaviorSubject<number>(0);
+    getCartCount (){
+        return this.cartCount.asObservable();
+    }
+    setCartCount(count:number){
+        this.cartCount.next(count)
     }
 }

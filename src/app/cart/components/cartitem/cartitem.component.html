@@ -1,6 +1,6 @@
-<div class="flex flex-col justify-between my-5 md:items-center md:flex-row cartitem">
-    <div class="flex gap-5 mb-4 md:mb-0 ">
-        <img [src]="productImage" class=" h-[140px] w-[140px] rounded-[20px] cartImage" />
+<div class="flex flex-col justify-between my-5 md:grid-cols-6 md:grid md:items-center cartitem">
+    <div class="flex gap-5 mb-4 md:mb-0 md:col-span-3">
+        <a  [routerLink]="['/details/maindetails',productId]">    <img [src]="productImage" class=" h-[140px] w-[140px] rounded-[20px] cartImage" /> </a>
         <div class="">
             <p class="mb-3">{{ title }}</p>
             <p class="mb-3">
@@ -11,8 +11,8 @@
         <div
             class="h-auto px-0 md:px-5 py-1 bg-[#333333] rounded-[10px] flex flex-row items-center md:ms-0 "
         >
-            <span class="px-5 text-2xl">-</span> {{quantity}}
-            <span class="px-5 text-2xl">+</span>
+            <span class="px-5 text-2xl cursor-pointer">-</span> {{quantity}}
+            <span class="px-5 cursor-pointer text-2x">+</span>
         </div>
         <div class="px-5 py-2 bg-[#333333] rounded-[10px] md:mx-2 mx-3">
             <i class="fa-solid fa-trash-can text-[#F55157]"></i>
@@ -22,17 +22,17 @@
 
     </div>
 
-    <div class="items-center hidden gap-2 mb-3 md:flex md:mb-0 ">
+    <div class="items-center hidden gap-2 mb-3 md:flex md:mb-0 md:col-span-2 ">
         <div
             class="h-auto px-0 md:px-5 py-1 bg-[#333333] rounded-[10px] flex flex-row items-center md:ms-0 "
         >
-            <span class="px-5 text-2xl">-</span> {{quantity}}
-            <span class="px-5 text-2xl">+</span>
+            <span class="px-5 text-2xl cursor-pointer" (click)="decreaseProductQuantity(productId)">-</span> {{quantity}}
+            <span class="px-5 text-2xl cursor-pointer" (click)="icreaseProductQuantity(productId)">+</span>
         </div>
-        <div class="px-5 py-2 bg-[#333333] rounded-[10px] md:mx-2 mx-3">
+        <div class="px-5 py-2 bg-[#333333] rounded-[10px] md:mx-2 mx-3 cursor-pointer" (click)="deleteProduct(productId)">
             <i class="fa-solid fa-trash-can text-[#F55157]"></i>
         </div>
     </div>
 
-    <div class="text-white ps-2"><h5 class="inline-block md:hidden">Overall price : </h5><h5 class="inline-block text-secondary_color">{{overAllPrice}} EGP</h5> </div>
+    <div class="text-white ps-2 md:col-span-1 md:text-end"><h5 class="inline-block md:hidden">Overall price : </h5><h5 class="inline-block text-secondary_color">{{overAllPrice}} EGP</h5> </div>
 </div>

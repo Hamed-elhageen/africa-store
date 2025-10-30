@@ -81,6 +81,7 @@ constructor(private acitvatedRoute:ActivatedRoute, private productsService : Pro
                         title:"Failed to add to cart",
                         icon:"error"
                     })
+                                        this.spinner.hide()
                 }
             })
         }

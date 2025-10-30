@@ -29,7 +29,9 @@ export class NavbarComponent implements OnInit  {
     isMenuOpen = false;
     isScrolled = false;
     allcategories!:any[];
-    cartProducts!:any[]
+    cartProductsCount!:any[]
+    cartCount:number=0
+
 
   //   function to make the header sticky when scrolling a part  of pixels
     @HostListener('window:scroll', [])
@@ -116,7 +118,8 @@ this.categoriesService.getAllCategories().subscribe({
 //to get the number of products in the cart:
 this.cartService.getCartProducts().subscribe({
     next:(result)=>{
-        this.cartProducts=result.products;
+        this.cartProductsCount=result.data.itemsCount;
+        console.log(this.cartProductsCount)
     },
     error:(err)=>{
         console.log(err.message)
@@ -124,7 +127,14 @@ this.cartService.getCartProducts().subscribe({
 })
 
 
+this.cartService.getCartCount().subscribe(count => {
+      this.cartCount = count;
+    });
+        this.cartService.getCartProducts().subscribe();
+
+
     }
+
 
 
    logout() {

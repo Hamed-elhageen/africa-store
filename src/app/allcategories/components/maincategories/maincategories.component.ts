@@ -259,42 +259,57 @@ if(!this.selectedCategory){
 
 
 
-categorySelectForReset!:string;
-clubSelectForReset!:string;
-minPriceSelectForReset!:number;
-maxPriceSelectForReset!:number;
+
 
 
 
 resetFilters() {
-    this.spinner.show()
-    const radios = document.querySelectorAll('input[type="radio"]');
-  radios.forEach(radio => {
-    (radio as HTMLInputElement).checked = false;
+  // 1) الحالة الابتدائية في الـ component
+  this.selectedCategory = '';
+  this.selectedTeam = '';
+  this.minPrice = 0;
+  this.maxPrice = 5000; // لو بتحب ترجّعها للـ default
+  this.showAllTeams = false; // لو كنت مختار "see more" قبل كده
+
+  // 2) تظبيط DOM (الراديوز والـ inputs)
+  // رجّع راديو "All products" متعلم
+  const allCatRadio = document.getElementById('allCategoires') as HTMLInputElement | null;
+  if (allCatRadio) allCatRadio.checked = true;
+
+  // افحص كل راديوهات الفئات وغّيّرها لو احتاج
+  const categoryRadios = document.querySelectorAll('input[name="category"]') as NodeListOf<HTMLInputElement>;
+  categoryRadios.forEach(r => {
+    if (r.id !== 'allCategoires') r.checked = false;
   });
 
-  // 2️⃣ رجّع كل number inputs فاضية أو لصفر
-  const numbers = document.querySelectorAll('input[type="number"]');
-  numbers.forEach(input => {
-    (input as HTMLInputElement).value = '';
-  });
+  // افصل كل راديوهات النوادي (teams)
+  const teamRadios = document.querySelectorAll('input[name="team"]') as NodeListOf<HTMLInputElement>;
+  teamRadios.forEach(r => r.checked = false);
 
-    this.productsService.getAllProducts().subscribe({
-            next:(result)=>{
-                this.products=result.data
-                this.spinner.hide()
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            },
-            error:(err)=>{
-                console.log(err.message)
-                                this.spinner.hide()
-            }
-        })
-    this.spinner.hide()
+  // فرغ كل الـ number inputs (From / To)
+  const numberInputs = document.querySelectorAll('input[type="number"]') as NodeListOf<HTMLInputElement>;
+  numberInputs.forEach(i => i.value = '');
+
+  // 3) جيب كل المنتجات (بدون أي فلتر) وحدث الواجهة
+  this.spinner.show();
+  this.productsService.getAllProducts({ '[pagination][limit]': 1000 }).subscribe({
+    next: (result) => {
+      this.products = result.data || [];
+      // لو بتحسب طول لعرضه:
+      // this.theLength = this.products.length;
+      this.spinner.hide();
+      // سكرول لطيف للأعلى بعد تأخير صغير
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 200);
+    },
+    error: (err) => {
+      console.error('resetFilters error:', err);
+      this.spinner.hide();
+    }
+  });
 }
+
 
 
 
