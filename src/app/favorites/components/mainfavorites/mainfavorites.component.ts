@@ -18,13 +18,19 @@ const Toast = Swal.mixin({
 })
 export class MainfavoritesComponent implements OnInit{
         favoriteProducts:any;
-    constructor(private favoritesService:FavoritesService){
-
-    }
+        favoriteIds:any;
+    constructor(private favoritesService:FavoritesService){}
     ngOnInit(): void {
-        this.favoritesService.getFavorites().subscribe({
+        this.loadFavorites();
+    }
+    loadFavorites(){
+this.favoritesService.getFavorites().subscribe({
             next:(result)=>{
-                this.favoriteProducts=result.data;
+                this.favoriteProducts=result?.data?.map((prd:any)=>({
+                    ...prd,
+                    choosed:true
+                }));
+
             },
             error:(err)=>{
                 console.log(err.message)
@@ -32,7 +38,17 @@ export class MainfavoritesComponent implements OnInit{
         });
     }
 
-    
+
+
+
+
+
+    toggleFavorite(prdId: string) {
+  // لا نستدعي الـ backend هنا تاني
+  this.favoriteProducts = this.favoriteProducts.filter((prd: any) => prd._id !== prdId);
+}
+
+
     }
 
 

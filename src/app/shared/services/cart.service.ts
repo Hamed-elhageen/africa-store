@@ -11,7 +11,7 @@ export class CartService {
     constructor(private http : HttpClient) { }
 headers=new HttpHeaders().set(
                 'Authorization',
-                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjNmNTM3NjIyYTU3OWUwZWI4YTQyMSIsImlhdCI6MTc2MTgxMjI4OSwiZXhwIjoxNzYxODk4Njg5fQ.pg1JQhsuL5PpVdZPpv_fehCSbsACv6NwJgHDiCbOg9k`
+                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjNmNTM3NjIyYTU3OWUwZWI4YTQyMSIsImlhdCI6MTc2MjE1NTE0NCwiZXhwIjoxNzYyMjQxNTQ0fQ.L-wAw5iax9LbFstERwg4_vCofSBZei2aWhc36XjlZLw`
             )
     getCartProducts():Observable<any>{
         return this.http.get<any>(`${environment.api}/cart`,{headers:this.headers}).pipe(

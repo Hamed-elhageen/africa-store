@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FavoritesService } from '../../services/favorites.service';
 import Swal from 'sweetalert2';
 const Toast = Swal.mixin({
@@ -25,16 +25,19 @@ export class CardComponent {
   @Input() price="";
   @Input() priceBeforediscount="";
   @Input() discount="";
+  @Input() choosed!:boolean
+  @Output() toggleFavorite = new EventEmitter<string>();
 
 
-  choosed:boolean=false;
+
 
 
 
   toggleFavoriteProduct(prdId:string){
-                    this.choosed=!this.choosed;
         this.favoritesService.toggleAddition(prdId).subscribe({
             next:(result)=>{
+                    this.choosed=!this.choosed;
+                    this.toggleFavorite.emit(this.id);
                 Toast.fire({
                     title:`   ${result.message}` || "updated successfully",
                     icon:"success"

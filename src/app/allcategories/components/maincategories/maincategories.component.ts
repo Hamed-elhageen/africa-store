@@ -3,6 +3,7 @@ import { CategoriesService } from '../../../shared/services/categories.service';
 import { ProductsService } from '../../../shared/services/products.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import cluster from 'cluster';
+import { FavoritesService } from '../../../shared/services/favorites.service';
 
 @Component({
   selector: 'app-maincategories',
@@ -18,8 +19,9 @@ export class MaincategoriesComponent implements OnInit {
     showclubs:boolean=true;
     showprice:boolean=true;
     showAllTeams:boolean=false;
+    favoritesIds:string[]=[]
 
-    constructor(private categoriesService:CategoriesService , private productsService : ProductsService , private spinner:NgxSpinnerService){}
+    constructor(private categoriesService:CategoriesService , private productsService : ProductsService,private favoritesService:FavoritesService , private spinner:NgxSpinnerService){}
     ngOnInit(): void {
         this.spinner.show();
         this.categoriesService.getAllCategories().subscribe({
@@ -33,12 +35,30 @@ export class MaincategoriesComponent implements OnInit {
             }
         })
 
-        this.productsService.getAllProducts({'[pagination][limit]':1000}).subscribe({
+
+
+
+
+        this.favoritesService.getFavorites().subscribe({
+        next:(result)=>{
+            this.favoritesIds=result?.data?.map((prd:any)=> prd._id)
+            this.getAllProducts();
+        },
+        error:(err)=>{
+
+        }
+    })
+    }
+
+    getAllProducts(){
+this.productsService.getAllProducts({'[pagination][limit]':1000}).subscribe({
 
             next:(result)=>{
                 this.spinner.show()
-                this.products=result.data
-                this.spinner.hide()
+ this.products=result?.data?.map((prd:any)=>({
+                    ...prd ,
+                    choosed:this.favoritesIds.includes(prd._id)
+                }));                this.spinner.hide()
             },
             error:(err)=>{
                 console.log(err.message);

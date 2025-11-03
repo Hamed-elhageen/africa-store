@@ -6,7 +6,7 @@
   <div class="bg-white w-full h-[1px] mb-6 lg:mb-8"></div>
 
   <div class="flex items-center justify-between mb-4 lg:mb-6">
-    <h4 class="text-lg lg:text-xl">Shopping Cart</h4>
+    <h4 class="text-lg lg:text-xl">Favorites</h4>
     <div class="flex flex-col gap-5 md:items-center md:flex-row">
 
       <!-- select field one -->
@@ -86,6 +86,8 @@
           [price]="item.finalPrice"
           [priceBeforediscount]="item.price"
           [discount]="item.discount"
+          [choosed]="item.choosed"
+        (toggleFavorite)="toggleFavorite($event)"
         ></app-card>
         }
 

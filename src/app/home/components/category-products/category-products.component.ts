@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../shared/services/products.service';
 import { CategoriesService } from '../../../shared/services/categories.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { get } from 'http';
+import { FavoritesService } from '../../../shared/services/favorites.service';
 
 @Component({
   selector: 'app-category-products',
@@ -13,31 +15,23 @@ export class CategoryProductsComponent implements OnInit {
     products:any[]=[];
     categoryId!:string ;
     selectedCategory!:any;
-    constructor(private route:ActivatedRoute , private productsService:ProductsService , private categoriesService:CategoriesService , private spinner:NgxSpinnerService){}
+    constructor(private route:ActivatedRoute , private productsService:ProductsService , private categoriesService:CategoriesService, private favoritesService:FavoritesService , private spinner:NgxSpinnerService){}
+    favoritesIds:string[]=[]
+
+
     ngOnInit(): void {
         this.route.paramMap.subscribe((params)=>{
             this.categoryId=params.get('catId') || ''
-            this.spinner.show()
-            this.productsService.getAllProducts({category:this.categoryId}).subscribe({
-            next:(result)=>{
-                this.products=result.data;
-                this.spinner.hide()
-            },
-            error:(err)=>{
-                console.log(err)
-                this.spinner.hide()
-            }
-        })
+            this.getAllProducts();
         })
 
+        this.getAllCategories();
 
 
-
-
-
-    this.categoriesService.getSingleCategory(this.categoryId).subscribe({
+    this.favoritesService.getFavorites().subscribe({
         next:(result)=>{
-            this.selectedCategory=result.data;
+            this.favoritesIds=result?.data?.map((prd:any)=> prd._id)
+            this.getAllProducts();
         },
         error:(err)=>{
             console.log(err.message)
@@ -45,7 +39,37 @@ export class CategoryProductsComponent implements OnInit {
     })
 
 
+    }
 
+
+
+
+    getAllProducts(){
+            this.spinner.show()
+            this.productsService.getAllProducts({category:this.categoryId}).subscribe({
+            next:(result)=>{
+                this.products=result?.data?.map((prd:any)=>({
+                    ...prd ,
+                    choosed:this.favoritesIds.includes(prd._id)                                                                                                   //here we add a new property to the products and will be trun if the product was in favorites , and by that that product will have the colorful green love
+                }));
+                this.spinner.hide()
+            },
+            error:(err)=>{
+                console.log(err)
+                this.spinner.hide()
+            }
+        })
+    }
+
+    getAllCategories(){
+this.categoriesService.getSingleCategory(this.categoryId).subscribe({
+        next:(result)=>{
+            this.selectedCategory=result.data;
+        },
+        error:(err)=>{
+            console.log(err.message)
+        }
+    })
     }
 
 

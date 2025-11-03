@@ -131,6 +131,8 @@ this.cartService.getCartCount().subscribe(count => {
     this.favoritesService.getFavoritesCount().subscribe(favoritesCount=>{
         this.favoritesCount=favoritesCount
     })
+        this.favoritesService.getFavorites().subscribe();
+
 
     }
 
