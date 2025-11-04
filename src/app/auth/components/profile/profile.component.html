@@ -3,7 +3,7 @@
     <form [formGroup]="changeDetails" (ngSubmit)="changeUserDetails()">
       <!-- Logo -->
       <div class="flex justify-center mb-5 ">
-        <img src="colorful-logo.svg" alt="africastores logo" class="drop-shadow-lg w-52 md:w-auto " >
+        <img src="colorful-logo.webp" alt="africastores logo" class="drop-shadow-lg w-52 md:w-auto " >
       </div>
 
       <!-- Header -->
@@ -16,7 +16,7 @@
           <img
             [src]="avatarPreview || userData?.avatar"
             alt="Profile Picture"
-            class="object-cover max-w-none w-32 h-32 transition-transform duration-300 border-4 border-green-700 rounded-full shadow-lg group-hover:scale-105"
+            class="object-cover w-32 h-32 transition-transform duration-300 border-4 border-green-700 rounded-full shadow-lg max-w-none group-hover:scale-105"
           />
           <label class="absolute p-2 text-white transition bg-green-700 rounded-full shadow-lg cursor-pointer bottom-2 right-2 hover:bg-green-600">
             <input type="file" class="hidden" (change)="onFileSelected($event)" />

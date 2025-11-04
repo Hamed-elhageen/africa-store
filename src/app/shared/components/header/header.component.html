@@ -4,7 +4,7 @@
     <div class="container flex flex-wrap items-center justify-between p-4 mx-auto text-white">
         <!-- logo -->
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="header-logo.svg" alt="Logo" />
+            <img src="header-logo.webp" alt="Logo" />
         </a>
 
         <!-- Mobile  button (hidden on md and up) -->
@@ -12,7 +12,7 @@
             <button (click)="toggleMenu()" type="button"
                 class="inline-flex items-center justify-center p-2 text-sm text-gray-500 rounded-lg focus:outline-none"
                 aria-controls="navbar-cta" [attr.aria-expanded]="isMenuOpen">
-                <img src="for-nav.svg" alt="Menu"  class="w-12 transition-transform duration-300 ease-in-out"[ngClass]="{'rotate-45': isMenuOpen}">
+                <img src="for-nav.webp" alt="Menu"  class="w-12 transition-transform duration-300 ease-in-out"[ngClass]="{'rotate-45': isMenuOpen}">
             </button>
         </div>
 
@@ -45,7 +45,7 @@
             </button>
                 <!-- صورة المستخدم -->
             <div class="relative" (click)="toggleProfileMenuOpen()">
-                <img [hidden]="!isLogged" [src]="userImageSrc || '/userphoto.jpg'" alt="User" class="w-12 h-12 max-w-none rounded-full cursor-pointer" />
+                <img [hidden]="!isLogged" [src]="userImageSrc || '/userphoto.webp'" alt="User" class="w-12 h-12 rounded-full cursor-pointer max-w-none" />
 
             <!-- القائمة بتظهر بس لما menuOpen = true -->
             <div *ngIf="profileMenuOpen" class="absolute right-0 z-[40] w-56 h-auto mt-2 text-left  rounded-md shadow-lg bg-main_color duration-300" @dropdownAnimation>
@@ -66,9 +66,9 @@
             <div class="items-center justify-between w-full px-2 py-6">
                 <!-- the logo and x  -->
                 <div class="flex items-center justify-between px-2 mb-7">
-                    <img src="header-logo.svg" alt="Logo" />
-                    <img  [routerLink]="'/authentication/profile'"  [ngClass]="{ 'hidden': !isLogged }" [src]="userImageSrc || '/userphoto.jpg'" alt="profile" class="w-[52px] h-[52px] max-w-none rounded-full">
-                    <img src="imageshamooda.png" alt="quit" class="w-6 rounded-full" (click)="closeMenu()" [ngClass]="{ 'hidden': isLogged }">
+                    <img src="header-logo.webp" alt="Logo" />
+                    <img  [routerLink]="'/authentication/profile'"  [ngClass]="{ 'hidden': !isLogged }" [src]="userImageSrc || '/userphoto.webp'" alt="profile" class="w-[52px] h-[52px] max-w-none rounded-full">
+                    <img src="imageshamooda.webp" alt="quit" class="w-6 rounded-full" (click)="closeMenu()" [ngClass]="{ 'hidden': isLogged }">
                 </div>
                 <!-- search in mobile menue -->
                 <div class=" px-4 py-2 bg-white md:flex md:order-1 rounded-[100px] w-[95%] items-center justify-between hover:scale-[1.02] transition-transform duration-300 ease-in-out" id="desktop-nav">
