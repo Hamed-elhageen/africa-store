@@ -1,40 +1,27 @@
 <div class="card bg-[#333333] w-[90%] mx-auto md:w-[282px] md:h-[420px] rounded-[20px] text-white overflow-hidden relative">
-  <a [routerLink]="['/details/maindetails', id]">
-    <div class="w-full h-64 bg-[#222] flex items-center justify-center overflow-hidden">
-      <img
-        [src]="productImage"
-        alt="arsenal-shirt"
-        class="w-full h-full object-cover rounded-t-[20px]"
-      />
+    <a [routerLink]="['/details/maindetails', id]">
+        <div class="w-full h-64 bg-[#222] flex items-center justify-center overflow-hidden">
+            <img [src]="productImage" alt="arsenal-shirt" class="w-full h-full object-cover rounded-t-[20px]"/>
+        </div>
+    </a>
+
+    <div class="p-4 content">
+        <div class="flex items-center justify-between mb-2 gap-x-5">
+            <h6 class="font-semibold text-secondary_color">{{ title }}</h6>
+            <i  class="text-2xl text-green-700 cursor-pointer fa-regular fa-heart" [ngClass]="{ hidden: choosed }" (click)="toggleFavoriteProduct(id)"></i>
+            <i class="text-2xl cursor-pointer fa-solid fa-heart"style="color: #1c6f37"[ngClass]="{ hidden: !choosed }"(click)="toggleFavoriteProduct(id)"></i>
+        </div>
+
+        <h6 class="mb-2 font-normal">{{ discription.slice(0, 45) }}...</h6>
+
+        <div class="absolute flex items-center gap-6 bottom-3">
+            <h5 class="text-secondary_color">{{ price }} LE</h5>
+            @if (discount) {
+                <del class="text-[16px] font-bold text-[#A5A5A5]">
+                {{ priceBeforediscount }}LE </del
+            >}
+
+            <!-- <i _ngcontent-ng-c1598654381="" class="text-lg transition-transform duration-200 text-main_color fa-solid fa-cart-arrow-down hover:scale-110 ng-tns-c1598654381-1 end"></i> -->
+        </div>
     </div>
-  </a>
-
-  <div class="p-4 content">
-    <div class="flex items-center justify-between mb-2 gap-x-5">
-      <h6 class="font-semibold text-secondary_color">{{ title }}</h6>
-      <i
-        class="text-2xl text-green-700 cursor-pointer fa-regular fa-heart"
-        [ngClass]="{ hidden: choosed }"
-        (click)="toggleFavoriteProduct(id)"
-      ></i>
-      <i
-        class="text-2xl cursor-pointer fa-solid fa-heart"
-        style="color: #1C6F37;"
-        [ngClass]="{ hidden: !choosed }"
-        (click)="toggleFavoriteProduct(id)"
-      ></i>
-    </div>
-
-    <h6 class="mb-2 font-normal">{{ discription.slice(0,45) }}...</h6>
-
-    <div class="absolute flex items-center gap-6 bottom-3">
-      <h5 class="text-secondary_color">{{ price }} LE</h5>
-      @if (discount) {<del class="text-[16px] font-bold text-[#A5A5A5]" >
-        {{ priceBeforediscount }}LE
-      </del>}
-
-      <!-- <i _ngcontent-ng-c1598654381="" class="text-lg transition-transform duration-200 text-main_color fa-solid fa-cart-arrow-down hover:scale-110 ng-tns-c1598654381-1 end"></i> -->
-
-    </div>
-  </div>
 </div>

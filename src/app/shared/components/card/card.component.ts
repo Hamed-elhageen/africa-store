@@ -17,23 +17,19 @@ const Toast = Swal.mixin({
   styleUrl: './card.component.scss'
 })
 export class CardComponent {
+    @Input() id:string=""
+    @Input() productImage:string="";
+    @Input() title:string="";
+    @Input() discription="";
+    @Input() price="";
+    @Input() priceBeforediscount="";
+    @Input() discount="";
+    @Input() choosed!:boolean
+    @Output() toggleFavorite = new EventEmitter<string>();
+
     constructor(private favoritesService:FavoritesService){}
-  @Input() id:string=""
-  @Input() productImage:string="";
-  @Input() title:string="";
-  @Input() discription="";
-  @Input() price="";
-  @Input() priceBeforediscount="";
-  @Input() discount="";
-  @Input() choosed!:boolean
-  @Output() toggleFavorite = new EventEmitter<string>();
 
-
-
-
-
-
-  toggleFavoriteProduct(prdId:string){
+    toggleFavoriteProduct(prdId:string){
         this.favoritesService.toggleAddition(prdId).subscribe({
             next:(result)=>{
                     this.choosed=!this.choosed;
@@ -49,8 +45,6 @@ export class CardComponent {
                     icon:"error"
                 })
             }
-
         })
     }
-
 }
