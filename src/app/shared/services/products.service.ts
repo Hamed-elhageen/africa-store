@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { AllProductsResponse, SingleProductResponse } from '../modles/product-response';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,7 @@ constructor(private http:HttpClient) { }
                 )
 
     //i here get all products with its opetional filteration with query params ,, when you pass a query param in the function (all are optional) the products are filtered based on them
-    getAllProducts(queryParams?:{[key:string]:any}):Observable<any>{
+    getAllProducts(queryParams?:{[key:string]:any}):Observable<AllProductsResponse>{
         //by this way when you send the query params as object , when you want to pass only one query param , in the function in the component you pass its name and its value
         let params=new HttpParams;
         if(queryParams){
@@ -26,7 +27,7 @@ constructor(private http:HttpClient) { }
                 }
             })
         }
-        return this.http.get<any>(`${environment.api}/products`,{params}).pipe(
+        return this.http.get<AllProductsResponse>(`${environment.api}/products`,{params}).pipe(
             catchError((err)=>{
                 console.log(err)
                 return throwError(()=>err)
@@ -37,8 +38,8 @@ constructor(private http:HttpClient) { }
 
 
 
-    getSingleProduct(prdId:string):Observable<any>{
-        return this.http.get(`${environment.api}/products/${prdId}`,{headers:this.headers}).pipe(
+    getSingleProduct(prdId:string):Observable<SingleProductResponse>{
+        return this.http.get<SingleProductResponse>(`${environment.api}/products/${prdId}`,{headers:this.headers}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             })

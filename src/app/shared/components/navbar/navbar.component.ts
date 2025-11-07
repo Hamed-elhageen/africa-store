@@ -30,13 +30,12 @@ export class NavbarComponent implements OnInit  {
     isMenuOpen = false;
     isScrolled = false;
     profileMenuOpen:boolean=false;
-    allcategories!:any[];
-    cartProductsCount!:any[]
+    allcategories!:Category[];
     cartCount:number=0;
     favoritesCount:number=0
     currentSection: string = 'home';
     isLogged: boolean = false;
-    userImage:any;
+    userImage!:string;
 
 
     constructor(private authService: LoginService,private spinner:NgxSpinnerService , private profileService:ProfileService , private router :Router , private categoriesService:CategoriesService , private cartService:CartService , private favoritesService:FavoritesService ) {}

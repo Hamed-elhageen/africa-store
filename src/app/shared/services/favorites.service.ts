@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { FavoritesResponse, ToggleFavoriteResponse } from '../modles/favorites-response';
 
 @Injectable({
     providedIn: 'root'
@@ -9,15 +10,15 @@ import { environment } from '../../environments/environment';
 export class FavoritesService {
 headers=new HttpHeaders().set(
                 'Authorization',
-                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjNmNTM3NjIyYTU3OWUwZWI4YTQyMSIsImlhdCI6MTc2MjE1NTE0NCwiZXhwIjoxNzYyMjQxNTQ0fQ.L-wAw5iax9LbFstERwg4_vCofSBZei2aWhc36XjlZLw`
+                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjNmNTM3NjIyYTU3OWUwZWI4YTQyMSIsImlhdCI6MTc2MjUzMjE0MSwiZXhwIjoxNzYyNjE4NTQxfQ.xQbSOG5ZGKY5060WY9cDaQeWNa6atbre0PKe53fbELE`
             )
     constructor(private http : HttpClient) { }
 
 
 
 
-    getFavorites():Observable<any>{
-        return this.http.get(`${environment.api}/favorites`,{headers:this.headers}).pipe(
+    getFavorites():Observable<FavoritesResponse>{
+        return this.http.get<FavoritesResponse>(`${environment.api}/favorites`,{headers:this.headers}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             }),
@@ -27,8 +28,10 @@ headers=new HttpHeaders().set(
     })
         )
     }
-   toggleAddition(prdId: string): Observable<any> {
-  return this.http.post<any>(`${environment.api}/favorites/${prdId}`, {}, { headers: this.headers }).pipe(
+
+
+   toggleAddition(prdId: string): Observable<ToggleFavoriteResponse> {
+  return this.http.post<ToggleFavoriteResponse>(`${environment.api}/favorites/${prdId}`, {}, { headers: this.headers }).pipe(
 
     //to handle the count of favorites in the navbar
     tap((res: any) => {

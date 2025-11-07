@@ -11,7 +11,7 @@ export class FooterComponent implements OnInit {
     showProducts = false;
     showBranches = false;
     isMobile = window.innerWidth < 768;                                                  //is mobile will be trun if the width of the screen you are opening is less than 768
-    allcategories!:any[];
+    allcategories!:Category[];
     branches: string[] = [
     // First Column
     'Downtown',
