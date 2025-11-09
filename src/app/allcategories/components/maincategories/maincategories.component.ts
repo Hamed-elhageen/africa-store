@@ -4,6 +4,8 @@ import { ProductsService } from '../../../shared/services/products.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import cluster from 'cluster';
 import { FavoritesService } from '../../../shared/services/favorites.service';
+import { Category } from '../../../shared/modles/category';
+import { Product } from '../../../shared/modles/product';
 
 @Component({
   selector: 'app-maincategories',

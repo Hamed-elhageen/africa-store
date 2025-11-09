@@ -7,6 +7,7 @@ export interface Product {
   discount: number;
   finalPrice: number;
   stock: number;
+  choosed:any;
   club: string;
   sizes: string[];
   createdAt: string;

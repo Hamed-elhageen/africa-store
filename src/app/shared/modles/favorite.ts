@@ -10,6 +10,7 @@ export interface FavoriteProduct {
   price: number;
   discount: number;
   finalPrice: number;
+  choosed:boolean;
   club: string;
   sizes: string[];
   createdAt: string;
