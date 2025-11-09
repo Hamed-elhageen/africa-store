@@ -47,7 +47,7 @@
                         class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-3 rounded-[10px]"
                         placeholder="Input your password account"
                         [ngClass]="{'border-red-700': password!.touched && password!.invalid}"
-                        required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
+                        required >
                         <i class="absolute cursor-pointer fa-solid fa-eye-slash top-5 right-[3vh]" (click)="togglePasswordVisibility()" [hidden]="!passwordVisibility"></i>
                         <i class="absolute cursor-pointer fa-solid fa-eye top-5 right-[3vh]" (click)="togglePasswordVisibility()" [hidden]="passwordVisibility"></i>
                 </div>

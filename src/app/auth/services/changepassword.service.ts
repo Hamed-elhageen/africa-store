@@ -9,11 +9,14 @@ import { environment } from './../../environments/environment';
 export class ChangepasswordService {
 
     constructor(private http : HttpClient) {
+
 }
+
+
 //take care to pass the data to the sever with the names it want
     changePassword(old_password:string,new_password:string,new_password_confirmation:string):Observable<any>{
         const token = localStorage.getItem('token')
-        return this.http.put<any>(environment.apiUrl+'/auth/password/change_password',{old_password,new_password,new_password_confirmation},{headers: {
+        return this.http.put<any>(environment.api+'/auth/password/change_password',{old_password,new_password,new_password_confirmation},{headers: {
         Authorization: `Bearer ${token}`}
         }).pipe(
                 catchError(err=>{

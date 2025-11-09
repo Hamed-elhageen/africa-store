@@ -4,6 +4,7 @@ import { Router } from '@angular/router';                                       
 import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';                                                   // we use those from rxjs to deal with things that change and i subscribe on it to see this change
 import { environment } from '../../environments/environment';                                                                     //where the api link is found
 import { isPlatformBrowser } from '@angular/common';                                                                             // for checking if you are on browser or server
+import { LoginResponse } from '../models/login-response';
 
 @Injectable({
   providedIn: 'root'                                                                                                                                       //this means that you can use the service at every place in the project
@@ -26,22 +27,22 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
 
 
 
-    login(formData:FormData): Observable<any>{                                                                                         // login function which didnt return static data , it returns an observable "promise that i will return data later" or " we are waiting the response" and you subscribe on it to get the data sent from the server
-        return this.httpClient.post<any>(environment.apiUrl+"/auth/login",formData).pipe(
-            catchError(err=>{                                                                                                                               //handles the error if occured , Catches any error if login fails.
+    login(email:string,password:string): Observable<LoginResponse>{                                                                                         // login function which didnt return static data , it returns an observable "promise that i will return data later" or " we are waiting the response" and you subscribe on it to get the data sent from the server
+        return this.httpClient.post<LoginResponse>(environment.api+"/auth/login",{email:email,password:password}).pipe(
+            catchError(err=>{                                                                                                                                        //handles the error if occured , Catches any error if login fails.
                 console.log("login error ",err);
                 return throwError(()=>err)
             })
         )
     }
-                                                                                                                                                                        //after you finish the login funcion , you must 1- save the token back in the local storage               2- change isUserLoggedSubject value to true                         those 2 things will be put in a function called handleloginsuccess which works after login function
+                                                                                                                                                                            //after you finish the login funcion , you must 1- save the token back in the local storage               2- change isUserLoggedSubject value to true                         those 2 things will be put in a function called handleloginsuccess which works after login function
 
 
 
 
 
 
-                                                                                                                                                                        //now you did the login function and handled if there were any error , now handle if the login succeeded , "if you send the post request and the backend checks it and the user data sent are true" and passed to you a token , what i should do after that :
+                                                                                                                                                                           //now you did the login function and handled if there were any error , now handle if the login succeeded , "if you send the post request and the backend checks it and the user data sent are true" and passed to you a token , what i should do after that :
     handleLoginSuccess(token:string){                                                                                                                //this function will be used after  returning the token  ,  after that you pass the token to this funciton as parameter , and it will be added to local storage
         if(isPlatformBrowser(this.platformId)){                                                                                                      // in your login component you will use the login function with its error handling and after it you will use this function to save the toke retured from the back end
             localStorage.setItem('token',token)
@@ -71,7 +72,7 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
         if(isPlatformBrowser(this.platformId)){
                 return localStorage.getItem('token')? true:false;                                                                  //if the token of the user in the local storage , so isloggedin will be true , and vice verca
     }
-     return false;
+    return false;
 }
 
 

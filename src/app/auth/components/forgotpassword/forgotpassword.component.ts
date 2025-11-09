@@ -8,29 +8,29 @@ const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     customClass: {
-  popup: 'my-toast-style'
+    popup: 'my-toast-style'
     },
     showConfirmButton: false,
     timer: 4000,
     timerProgressBar: false,
-  });
+    });
 @Component({
-  selector: 'app-forgotpassword',
-  templateUrl: './forgotpassword.component.html',
-  styleUrl: './forgotpassword.component.scss'
+    selector: 'app-forgotpassword',
+    templateUrl: './forgotpassword.component.html',
+    styleUrl: './forgotpassword.component.scss'
 })
 export class ForgotpasswordComponent {
-email:string=""
-// for authentication **********************************************************************
-            constructor(private forgetPasswordService:ForgetPasswordService,public ngxSpinner :NgxSpinnerService,public router: Router)
-            {
-
-            }
-
-forgetPassword=new FormGroup({                                                                                                                                                            //for picking up the form and its input fields
-        emailInput:new FormControl('',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
-        ])
+    email:string=""
+    forgetPassword=new FormGroup({                                                                                                                                                            //for picking up the form and its input fields
+        emailInput:new FormControl('',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)])
     })
+
+    constructor(private forgetPasswordService:ForgetPasswordService,public ngxSpinner :NgxSpinnerService,public router: Router)
+        {
+
+        }
+
+
     get emailInput(){
         return this.forgetPassword.get('emailInput');
     }
@@ -56,6 +56,7 @@ forgetPassword=new FormGroup({                                                  
 
             error: (err) => {
                 this.ngxSpinner.hide();
+                console.log("error when sending the email for forgot password")
                 this.handleError(err)
         }
     })
@@ -75,11 +76,11 @@ forgetPassword=new FormGroup({                                                  
     }
 
     Toast.fire({
-    icon: 'error',
-    title: message,
-    confirmButtonText: 'حسناً'
- });
-}
+        icon: 'error',
+        title: message,
+        confirmButtonText: 'حسناً'
+    });
     }
+}
 
 

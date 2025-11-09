@@ -6,9 +6,10 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { error } from 'node:console';
 import { isPlatformBrowser } from '@angular/common';
+import { ForgetPasswordResponse } from './../models/forget-password-response';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ForgetPasswordService {
     public httpOptionAuth: { headers: HttpHeaders } = { headers: new HttpHeaders() };
@@ -16,15 +17,14 @@ export class ForgetPasswordService {
     public router:Router,
     public ngxSpinner:NgxSpinnerService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) { }
+    ) { }
 
 
 //handle is the email sent to the server
 //   this if the function that will send the email to the server , if everything is good at server .. it will return a code of four numbers , if there is an error , it will be handeled , all of this in the component that will use the service which is now update password
-    sendVerifyCode(handle:string):Observable<any>{
-        const url = environment.apiUrl + '/auth/password/forgot_password';
-        console.log("Sending request to:", url); // 👈 ده هيطبع اللينك النهائي
-        return this.httpClient.post<any>(url, {handle}).pipe(
+    sendVerifyCode(handle:string):Observable<ForgetPasswordResponse>{
+        const url = environment.api + '/auth/password/forgot_password';
+        return this.httpClient.post<ForgetPasswordResponse>(url, {handle}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             })
@@ -39,13 +39,10 @@ export class ForgetPasswordService {
 
 
 
-
-
-
     // this is the seconde step now , this function will be used in the otp verification , and when clicking send i will send the code and the email to the server , when we use in the compoent , if everything is good , it will take us to update password page else , it will show error message
     // we wrote the email here handle as it wrote at the backend
     verifyResetCode(handle: string, code: string): Observable<any> {
-        return this.httpClient.post<any>(environment.apiUrl + "/auth/password/validate_code", { handle, code }).pipe(
+        return this.httpClient.post<any>(environment.api + "/auth/password/validate_code", { handle, code }).pipe(
             catchError(err => {
             console.log("verify code error", err);
             return throwError(() => err);
@@ -69,7 +66,7 @@ export class ForgetPasswordService {
 // Update Password: After verifying OTP, user can update password
 updatePassword(handle: string, code:string, password:string, password_confirmation:string) {
     return this.httpClient.post<any>(
-        `${environment.apiUrl}/auth/password/reset_password`,
+        `${environment.api}/auth/password/reset_password`,
         { handle,  code,password,password_confirmation },
         this.httpOptionAuth
     ).pipe(
