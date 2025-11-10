@@ -67,12 +67,12 @@ export class ForgotpasswordComponent {
     if (error.status === 0) {
         message ='لا يوجد اتصال بالسيرفر، تحقق من الإنترنت';
     } else if (error.status === 400) {
-        message = `${error?.error?.data?.user}` ||'البريد الإلكتروني غير صحيح';
+        message = `${error?.error?.message}` ||'البريد الإلكتروني غير صحيح';
     } else if (error.status === 404 || error.status==422) {
-        message = `${error?.error?.data?.user}` ||'البريد الإلكتروني غير مسجل';
+        message = `${error?.error?.data?.message}` ||'البريد الإلكتروني غير مسجل';
     }
     else if (error.status === 500) {
-        message =`${error?.error?.data?.user}` || 'مشكلة في السيرفر، حاول لاحقًا';
+        message =`${error?.error?.message}` || 'مشكلة في السيرفر، حاول لاحقًا';
     }
 
     Toast.fire({

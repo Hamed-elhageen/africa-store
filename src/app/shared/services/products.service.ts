@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { AllProductsResponse, SingleProductResponse } from '../modles/product-response';
+import { AllProductsResponse, SingleProductResponse } from '../models/product-response';
 
 @Injectable({
     providedIn: 'root'

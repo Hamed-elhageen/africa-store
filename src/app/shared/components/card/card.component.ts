@@ -21,9 +21,9 @@ export class CardComponent {
     @Input() productImage:string="";
     @Input() title:string="";
     @Input() discription="";
-    @Input() price="";
-    @Input() priceBeforediscount="";
-    @Input() discount="";
+    @Input() price!:number;
+    @Input() priceBeforediscount!:number;
+    @Input() discount!:number;
     @Input() choosed!:boolean
     @Output() toggleFavorite = new EventEmitter<string>();
 

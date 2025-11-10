@@ -4,8 +4,8 @@ import { ProductsService } from '../../../shared/services/products.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import cluster from 'cluster';
 import { FavoritesService } from '../../../shared/services/favorites.service';
-import { Category } from '../../../shared/modles/category';
-import { Product } from '../../../shared/modles/product';
+import { Category } from '../../../shared/models/categories-response';
+import { Product } from '../../../shared/models/product-response';
 
 @Component({
   selector: 'app-maincategories',
@@ -13,8 +13,8 @@ import { Product } from '../../../shared/modles/product';
   styleUrl: './maincategories.component.scss'
 })
 export class MaincategoriesComponent implements OnInit {
-    categories!:any[];
-    products:any[]=[];
+    categories!:Category[];
+    products:Product[]=[];
     showCategories:boolean=true;
     selectedCategory = '';
     selectedTeam='';

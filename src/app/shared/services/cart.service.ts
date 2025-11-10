@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { CartResponse, UpdateCartResponse } from '../modles/cart-response';
+import { CartResponse, UpdateCartResponse } from '../models/cart-response';
 
 @Injectable({
     providedIn: 'root'

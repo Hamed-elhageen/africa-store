@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Category } from '../../shared/modles/category';
 import { catchError, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { CategoriesResponse, SingleCategoryResponse } from '../modles/categories-response';
+import { CategoriesResponse, SingleCategoryResponse } from '../models/categories-response';
 
 @Injectable({
   providedIn: 'root'

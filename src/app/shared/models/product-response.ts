@@ -1,3 +1,27 @@
+
+export interface SingleProductResponse {
+  data: Product;
+  message: string;
+  type: boolean;
+  code: number;
+  showToast?: boolean;
+  time?: string;
+}
+
+export interface AllProductsResponse {
+  data: Product[];
+  message: string;
+  type: boolean;
+  code: number;
+  showToast?: boolean;
+  time?: string;
+  pagination: {
+    totalSize: number;
+    totalPages: number;
+    pageNumber: number;
+    pageSize: number;
+  };
+}
 export interface Product {
   _id: string;
   name: string;

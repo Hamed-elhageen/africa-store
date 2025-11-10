@@ -1,4 +1,3 @@
-import { CartProduct } from "./cart";
 
 export interface CartResponse {
   data: {
@@ -35,4 +34,13 @@ export interface UpdateCartResponse {
   code: number;
   showToast: boolean;
   time: string;
+}
+export interface CartProduct {
+  _id: string;
+  productId: string;
+  name: string;
+  thumbnail: string;
+  quantity: number;
+  price: number;
+  subtotal: number;
 }

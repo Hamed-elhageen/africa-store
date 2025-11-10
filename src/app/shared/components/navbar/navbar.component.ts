@@ -1,5 +1,4 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Category } from '../../modles/category';
 import { LoginService } from '../../../auth/services/login.service';
 import { ProfileService } from './../../../auth/services/profile.service';
 import Swal from 'sweetalert2';
@@ -9,6 +8,7 @@ import { CategoriesService } from '../../services/categories.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CartService } from '../../services/cart.service';
 import { FavoritesService } from '../../services/favorites.service';
+import { Category } from '../../models/categories-response';
 
 @Component({
 selector: 'app-navbar',

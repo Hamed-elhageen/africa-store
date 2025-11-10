@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Category } from '../../modles/category';
 import { CategoriesService } from '../../services/categories.service';
+import { Category } from '../../models/categories-response';
 
 @Component({
   selector: 'app-footer',

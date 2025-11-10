@@ -30,7 +30,7 @@ export class LoginComponent {
     // linking the form and its fields in html with reactive forms
     loginForm = new FormGroup({
         email: new FormControl('', [Validators.required ,Validators.email]),
-        password: new FormControl('', [Validators.required ]),
+        password: new FormControl('', [Validators.required , Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/) ]),
     });
 
     constructor(private loginService:LoginService ,private router:Router, private spinner:NgxSpinnerService  )                                        // firstly , if you want to use ngxspinner animation for handling loading spinner animations , you should do       "npm install ngx-spinner" and after that go to app module.ts and import  the two modules      "import { NgxSpinnerModule } from "ngx-spinner";"     "import { BrowserAnimationsModule } from '@angular/platform-browser/animations';" and put them in imports and now ;you can go to your component which is login here and "import { NgxSpinnerService } from 'ngx-spinner';" and inject the service to your component constructor and use it

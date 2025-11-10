@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '../../../shared/modles/category';
 import { CategoriesService } from '../../../shared/services/categories.service';
+import { Category } from '../../../shared/models/categories-response';
 
 @Component({
   selector: 'app-categories',
@@ -8,7 +8,7 @@ import { CategoriesService } from '../../../shared/services/categories.service';
   styleUrl: './categories.component.scss'
 })
 export class CategoriesComponent implements OnInit{
-    allcategories!:any[];
+    allcategories!:Category[];
     constructor(private categoriesService:CategoriesService){}
     ngOnInit(): void {
         this.categoriesService.getAllCategories().subscribe({
