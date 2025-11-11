@@ -17,7 +17,55 @@ const Toast = Swal.mixin({
   styleUrl: './changepassword.component.scss'
 })
 export class ChangepasswordComponent {
-passwordVisibility:boolean=false;
+    passwordVisibility:boolean=false;
+    changePassword!:FormGroup;
+
+    constructor(private changePasswordService:ChangepasswordService,
+    private router:Router,
+    private ngxSpinner:NgxSpinnerService
+){}
+
+ngOnInit(): void {
+        // Retrieve data from localStorage or a shared service
+
+    this.changePassword = new FormGroup(
+    {
+        oldPasswordInput: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+    ]),
+
+    newPasswordInput: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+    ]),
+
+
+    passwordConfirmationInput: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+    ])
+    },
+
+    { validators: this.passwordsMatchValidator() } // ✅ على مستوى الفورم كله
+    );
+    }
+
+
+
+
+    //picking up the form and its input
+    get oldPasswordInput(){
+        return this.changePassword.get('oldPasswordInput')
+    }
+    get newPasswordInput(){
+        return this.changePassword.get('newPasswordInput')
+    }
+    get passwordConfirmationInput(){
+        return this.changePassword.get('passwordConfirmationInput')
+    }
+
+
 togglePasswordVisibility(){
     this.passwordVisibility=!this.passwordVisibility
 }
@@ -25,88 +73,14 @@ togglePasswordVisibility(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-    //for authentication ********************************************************************************************************************
-    changePassword!:FormGroup;
-
-
-ngOnInit(): void {
-        // Retrieve data from localStorage or a shared service
-
-      this.changePassword = new FormGroup(
-    {
-
-         oldPasswordInput: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
-      ]),
-
-      newPasswordInput: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
-      ]),
-
-
-      passwordConfirmationInput: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
-      ])
-    },
-
-
-    { validators: this.passwordsMatchValidator() } // ✅ على مستوى الفورم كله
-  );
-    }
-
-    //picking up the form and its input
-
-    get oldPasswordInput(){
-        return this.changePassword.get('oldPasswordInput')
-    }
-    get newPasswordInput(){
-        return this.changePassword.get('newPasswordInput')
-    }
-     get passwordConfirmationInput(){
-        return this.changePassword.get('passwordConfirmationInput')
-    }
-
-
-
-
-
-
-
-
-
 passwordsMatchValidator(): ValidatorFn {
-  return (group: AbstractControl): { [key: string]: any } | null => {
+    return (group: AbstractControl): { [key: string]: any } | null => {
     const password = group.get('newPasswordInput')?.value;
     const confirmPassword = group.get('passwordConfirmationInput')?.value;
 
     return password === confirmPassword ? null : { passwordsMismatch: true };
-  };
+    };
 }
-
-
-
-
-
-
-
-constructor(private changePasswordService:ChangepasswordService,
-    private router:Router,
-    private ngxSpinner:NgxSpinnerService
-){}
 
 
 
@@ -120,22 +94,22 @@ constructor(private changePasswordService:ChangepasswordService,
         this.ngxSpinner.show();
 
         this.changePasswordService.changePassword(old_password, new_password,new_password_confirmation).subscribe({
-          next: (resonse) => {
-            this.ngxSpinner.hide();
+            next: (resonse) => {
+                this.ngxSpinner.hide();
             Toast.fire({
-              icon: 'success',
-              title: `${resonse.message}`,
+                icon: 'success',
+                title: `${resonse.message}`,
             });
             this.router.navigateByUrl('/authentication/login');
             localStorage.removeItem("token");
-          },
-          error: (err) => {
-            this.ngxSpinner.hide();
-            Toast.fire({
-              icon: 'error',
-              title: err?.error?.data?.old_password || 'There was a problem changing your password.'
+            },
+            error: (err) => {
+                this.ngxSpinner.hide();
+                Toast.fire({
+                    icon: 'error',
+                    title: err?.error?.message || 'There was a problem changing your password.'
             });
-          }
+        }
         });
       }
 

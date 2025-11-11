@@ -31,10 +31,10 @@ constructor(private http : HttpClient){ }
 
 
 
-
+ token = localStorage.getItem("token")
 headers=new HttpHeaders().set(
                 'Authorization',
-                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjZjMzJlODU2MDBmMDI5MDAwMTQyOSIsImlhdCI6MTc2MjI1NDcyMywiZXhwIjoxNzYyMzQxMTIzfQ.sTq11jL96Ojp77bnM0s85TcgHwtoq9xKF5ZOhQWl11Y`
+                `Bearer ${this.token}`
             )
     addProduct(formData:FormData,catId:string):Observable<any>{
         return this.http.post<any>(`${environment.api}/products/${catId}`,formData,{headers:this.headers}).pipe(

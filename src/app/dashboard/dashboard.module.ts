@@ -22,6 +22,16 @@ const routes: Routes = [
           import('./categories/categories.module').then(m => m.CategoriesModule)
       },
       {
+        path: 'orders',
+        loadChildren: () =>
+          import('./orders/orders.module').then(m => m.OrdersModule)
+      },
+        {
+        path: 'homecontrol',
+        loadChildren: () =>
+          import('./homecontrol/homecontrol.module').then(m => m.HomecontrolModule)
+      },
+      {
         path: '',
         redirectTo: 'products',
         pathMatch: 'full'
@@ -37,7 +47,7 @@ const routes: Routes = [
     DashboardlayoutComponent
   ],
   imports: [
-  CommonModule,
+CommonModule,
 RouterModule.forChild(routes)
   ]
 })

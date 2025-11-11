@@ -62,12 +62,6 @@ export class RegisterService {
 
     //now , you knew that the services is used to separate in it business login and the requestes to make clean code , and this requests and function you subscribe on it in the component
 
-
-
-
-
-
-
     isUserLoggedObservable():Observable<boolean>{                                                          //here we are using isUserLoggedSubject as observable to subscribe on it directly instead of making it an observable in each component we use the service , ( we will use it in components liike header to know the log status)
         return this.isUserLoggedSubject.asObservable()
     }

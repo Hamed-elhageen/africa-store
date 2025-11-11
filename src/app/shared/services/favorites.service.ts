@@ -8,9 +8,10 @@ import { FavoritesResponse, ToggleFavoriteResponse } from '../models/favorites-r
     providedIn: 'root'
 })
 export class FavoritesService {
+token=localStorage.getItem("token")
 headers=new HttpHeaders().set(
                 'Authorization',
-                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjNmNTM3NjIyYTU3OWUwZWI4YTQyMSIsImlhdCI6MTc2MjUzMjE0MSwiZXhwIjoxNzYyNjE4NTQxfQ.xQbSOG5ZGKY5060WY9cDaQeWNa6atbre0PKe53fbELE`
+                `Bearer ${this.token}`
             )
     constructor(private http : HttpClient) { }
 
@@ -23,8 +24,8 @@ headers=new HttpHeaders().set(
                 return throwError(()=>err)
             }),
             tap((res: any) => {
-      const count = res?.data?.length || 0;
-      this.setFavoritesCount(count);
+        const count = res?.data?.length || 0;
+        this.setFavoritesCount(count);
     })
         )
     }

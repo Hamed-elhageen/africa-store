@@ -20,14 +20,26 @@ const Toast = Swal.mixin({
   styleUrl: './verification.component.scss'
 })
 export class VerificationComponent {
-
+    handle: string = '';
     verificationForm=new FormGroup({
         firstNumber:new FormControl('',[Validators.required,     Validators.pattern('^[0-9]$')]),
         secondNumber:new FormControl('',[Validators.required,     Validators.pattern('^[0-9]$')]),
         thirdNumber:new FormControl('',[Validators.required,     Validators.pattern('^[0-9]$')]),
         fourthNumber:new FormControl('',[Validators.required,     Validators.pattern('^[0-9]$')] ),
-    })                                                  //each input field will accept only one number
-                                                     // picking up the input fields to work on
+    })
+
+    constructor(private forgetPasswordService:ForgetPasswordService , private router:Router, private ngxSpinner:NgxSpinnerService)
+    {
+        const storedEmail = localStorage.getItem('handle');
+        if (storedEmail) {
+            this.handle= storedEmail;
+        } else {
+            this.router.navigate(['/authentication/forgotpassword']);
+    }
+    }
+
+
+
     get firstNumber(){
         return this.verificationForm.get('firstNumber')
     }
@@ -44,36 +56,26 @@ export class VerificationComponent {
 
 
 
-    handle: string = '';
-    constructor(private forgetPasswordService:ForgetPasswordService , private router:Router, private ngxSpinner:NgxSpinnerService)
-    {
-        const storedEmail = localStorage.getItem('handle');
-        if (storedEmail) {
-            this.handle= storedEmail;
-        } else {
-            this.router.navigate(['/authentication/forgotpassword']);
-    }
-    }
 
 
 
   // Auto-focus to the next field when one is filled
-  onInputChange(
-  event: any,
-  nextInput?: HTMLInputElement | null,
-  prevInput?: HTMLInputElement | null
+    onInputChange(
+    event: any,
+    nextInput?: HTMLInputElement | null,
+    prevInput?: HTMLInputElement | null
 ) {
-  const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement;
 
   // لو كتب رقم → يروح للبعده
-  if (input.value.length === 1 && nextInput) {
+    if (input.value.length === 1 && nextInput) {
     nextInput.focus();
-  }
+    }
 
   // لو مسح (Backspace) → يرجع للقبله
-  if (input.value.length === 0 && prevInput) {
+    if (input.value.length === 0 && prevInput) {
     prevInput.focus();
-  }
+ }
 }
 
 
@@ -82,7 +84,7 @@ export class VerificationComponent {
 
 
      // Handle form submission
-  onSubmit() {
+onSubmit() {
     if (this.verificationForm.invalid) return;
     const code = `${this.verificationForm.value.firstNumber}${this.verificationForm.value.secondNumber}${this.verificationForm.value.thirdNumber}${this.verificationForm.value.fourthNumber}`;
     this.ngxSpinner.show();
@@ -94,19 +96,19 @@ export class VerificationComponent {
                 icon: 'success',
                 title: `${res.message}`,
         });
-        this.router.navigateByUrl('/authentication/updatepassword');
-        localStorage.setItem("code",code)                                                                                                          //here we saved the code to be sent with the password and new password
-      },
-      error: (err) => {
-        this.ngxSpinner.hide();
-        Toast.fire({
-          icon: 'error',
-          title: `${err?.error?.data?.code}`,
+            this.router.navigateByUrl('/authentication/updatepassword');
+            localStorage.setItem("code",code)                                                                                                          //here we saved the code to be sent with the password and new password
+        },
+        error: (err) => {
+            this.ngxSpinner.hide();
+            Toast.fire({
+                icon: 'error',
+                title: `${err?.error?.message}`,
+            });
+            }
         });
-      }
-    });
-  }
     }
+}
 
 
 

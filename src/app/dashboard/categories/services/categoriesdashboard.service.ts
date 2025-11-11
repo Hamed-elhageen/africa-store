@@ -26,9 +26,10 @@ export class CategoriesdashboardService {
 
 
         //add category with formData
+ token = localStorage.getItem("token")
 headers=new HttpHeaders().set(
                 'Authorization',
-                `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjZjMzJlODU2MDBmMDI5MDAwMTQyOSIsImlhdCI6MTc2MjI1NDcyMywiZXhwIjoxNzYyMzQxMTIzfQ.sTq11jL96Ojp77bnM0s85TcgHwtoq9xKF5ZOhQWl11Y`
+                `Bearer ${this.token}`
             )
         addCategory(formData:FormData):Observable<any>{
             return this.http.post<any>(environment.api+"/category",formData,{headers:this.headers}).pipe(

@@ -69,7 +69,7 @@ export class ForgotpasswordComponent {
     } else if (error.status === 400) {
         message = `${error?.error?.message}` ||'البريد الإلكتروني غير صحيح';
     } else if (error.status === 404 || error.status==422) {
-        message = `${error?.error?.data?.message}` ||'البريد الإلكتروني غير مسجل';
+        message = `${error?.error?.message}` ||'البريد الإلكتروني غير مسجل';
     }
     else if (error.status === 500) {
         message =`${error?.error?.message}` || 'مشكلة في السيرفر، حاول لاحقًا';

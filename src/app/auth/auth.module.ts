@@ -4,7 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './components/register/register.component';
 import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
-import { UpdatepasswordComponent } from './components/updatepassword/updatepassword.component';
+import { UpdatepasswordComponent } from './components/resetPassword/updatepassword.component';
 import { VerificationComponent } from './components/verification/verification.component';
 import { SuccessComponent } from './components/success/success.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

@@ -20,7 +20,7 @@
         <!-- Category Image -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Category Image</label>
-            @if(imagePreview){<img    [src]="imagePreview "   alt="Category Preview" class="object-cover w-32 h-32 rounded-md shadow-md mb-5">}
+            @if(imagePreview){<img    [src]="imagePreview "   alt="Category Preview" class="object-cover w-32 h-32 mb-5 rounded-md shadow-md">}
             <input type="file"
                 formControlName="image"
                 (change)="onFileChange($event)"

@@ -1,0 +1,86 @@
+
+<div class="container min-h-screen p-8 text-white ">
+    <h1 class="mb-6 text-2xl font-semibold">Home Page Control</h1>
+
+  <form [formGroup]=" homeControlForm" (ngSubmit)="addBanner()" class="w-full max-w-3xl p-6 mx-auto space-y-6 border-gray-700 rounded-lg shadow-lg bg-slate-950">
+    <!-- Banner Title -->
+    <div>
+      <label class="block mb-2 text-gray-300" for="title">Banner Title</label>
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        placeholder="Enter banner title"
+        class="w-full bg-[#0f172a] text-gray-100 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+      />
+    </div>
+
+    <!-- Club Name -->
+    <div>
+      <label class="block mb-2 text-gray-300" for="club">Club Name</label>
+      <input
+        id="club"
+        formControlName="club"
+        type="text"
+        placeholder="Enter club name"
+        class="w-full bg-[#0f172a] text-gray-100 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+      />
+    </div>
+
+    <!-- Description -->
+    <div>
+      <label class="block mb-2 text-gray-300" for="description">Description</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="4"
+        placeholder="Enter description"
+        class="w-full bg-[#0f172a] text-gray-100 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500 resize-none"
+      ></textarea>
+    </div>
+
+    <!-- Season -->
+    <div>
+      <label class="block mb-2 text-gray-300" for="season">Season</label>
+      <input
+        id="season"
+        formControlName="season"
+        type="text"
+        placeholder="e.g. 2024/2025"
+        class="w-full bg-[#0f172a] text-gray-100 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+      />
+    </div>
+
+    <!-- Banner Image -->
+    <div>
+      <label class="block mb-2 text-gray-300" for="bannerImage">Banner Image</label>
+
+      <!-- صورة حالية -->
+        @if(imagePreview){
+      <div class="mb-3">
+<img    [src]="imagePreview "   alt="Category Preview" class="object-cover w-32 h-32 rounded-md shadow-md">
+      </div>
+        }
+
+      <input
+      (change)="onFileChange($event)"
+        id="bannerImage"
+        formControlName="bannerImage"
+        type="file"
+        accept="image/*"
+        class="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700"
+      />
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end space-x-4">
+
+      <button
+        type="submit"
+        class="px-6 py-2 text-white transition bg-green-600 rounded-md hover:bg-green-700"
+      >
+        Save Banner
+      </button>
+    </div>
+  </form>
+</div>

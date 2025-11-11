@@ -40,8 +40,6 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
 
 
 
-
-
                                                                                                                                                                            //now you did the login function and handled if there were any error , now handle if the login succeeded , "if you send the post request and the backend checks it and the user data sent are true" and passed to you a token , what i should do after that :
     handleLoginSuccess(token:string){                                                                                                                //this function will be used after  returning the token  ,  after that you pass the token to this funciton as parameter , and it will be added to local storage
         if(isPlatformBrowser(this.platformId)){                                                                                                      // in your login component you will use the login function with its error handling and after it you will use this function to save the toke retured from the back end
@@ -82,10 +80,7 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
 
 isLoggedInObservable(): Observable<boolean> {                                                                              //making isLoggedSubject to act as observable here
     return this.isUserLoggedSubject.asObservable();                                                                          //"by this function isUserloggedSubject will act as observable which i can subscribe on its value if it chaned , and based on its value i can do alot of actions such hiding log in and logout button and so on "
- }
-
-
-
+}
 
 
 
@@ -101,27 +96,23 @@ private updateHttpOptions(){                                                    
     }
     this.httpOptionAuth = {
         headers: new HttpHeaders({
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
           Authorization: 'Bearer ' + this.accessToken                                                                           //you passed the token with the headers to tell him that iam the user logged in , not needing to log in  , in each request
         })
-      };
-      this.httpOptionFormdataAuth = {
+    };
+    this.httpOptionFormdataAuth = {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + this.accessToken                                                                              //also passed the token with these headers
         })
-      };
+    };
 }
-
-
-
-
 
 
 
 
 refreshToken() {
     this.updateHttpOptions();
-  }
+    }
     // •	Simply calls updateHttpOptions() to re-read the token and update headers.
 
 }

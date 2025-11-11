@@ -11,17 +11,17 @@ const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     customClass: {
-  popup: 'my-toast-style'
+        popup: 'my-toast-style'
     },
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: false,
-  });
+});
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 
 export class LoginComponent {
@@ -34,12 +34,9 @@ export class LoginComponent {
     });
 
     constructor(private loginService:LoginService ,private router:Router, private spinner:NgxSpinnerService  )                                        // firstly , if you want to use ngxspinner animation for handling loading spinner animations , you should do       "npm install ngx-spinner" and after that go to app module.ts and import  the two modules      "import { NgxSpinnerModule } from "ngx-spinner";"     "import { BrowserAnimationsModule } from '@angular/platform-browser/animations';" and put them in imports and now ;you can go to your component which is login here and "import { NgxSpinnerService } from 'ngx-spinner';" and inject the service to your component constructor and use it
-        {
-
-        }
+        {}
 
 
-    //here we picked up the two input fields
     get email(){
         return this.loginForm.get('email')
     }
@@ -51,8 +48,8 @@ export class LoginComponent {
 
 
     togglePasswordVisibility(){
-    this.passwordVisibility=!this.passwordVisibility;
- }
+        this.passwordVisibility=!this.passwordVisibility;
+    }
 
 
 

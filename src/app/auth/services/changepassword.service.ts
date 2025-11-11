@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from './../../environments/environment';
+import { changePasswordResponse } from '../models/change-password-response';
 
 @Injectable({
     providedIn: 'root'
@@ -12,16 +13,20 @@ export class ChangepasswordService {
 
 }
 
+token=window.localStorage.getItem("token")
+headers=new HttpHeaders().set(
+            'Authorization',
+            `Bearer ${this.token}`
+        )
 
 //take care to pass the data to the sever with the names it want
-    changePassword(old_password:string,new_password:string,new_password_confirmation:string):Observable<any>{
+    changePassword(old_password:string,new_password:string,new_password_confirmation:string):Observable<changePasswordResponse>{
         const token = localStorage.getItem('token')
-        return this.http.put<any>(environment.api+'/auth/password/change_password',{old_password,new_password,new_password_confirmation},{headers: {
-        Authorization: `Bearer ${token}`}
-        }).pipe(
+        return this.http.put<changePasswordResponse>(environment.api+'/users/me/password',{old_password,new_password,new_password_confirmation},{headers: this.headers
+    }).pipe(
                 catchError(err=>{
-                                console.log("login error ",err);
-                                return throwError(()=>err)
+                        console.log("change password error ",err);
+                        return throwError(()=>err)
                             })
             )
     }

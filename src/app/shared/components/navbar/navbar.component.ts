@@ -116,7 +116,7 @@ scrollTo(sectionId: string) {
         this.spinner.show()
         this.profileService.showProfile().subscribe({
             next:(userData)=>{
-                this.userImage=userData.data.avatar;
+                this.userImage=userData.data.avatar.secure_url;
                 this.spinner.hide()
             },
             error:(err)=>{

@@ -89,7 +89,7 @@ scrollTo(sectionId: string) {
         this.spinner.show()
         return this.profileservice.showProfile().subscribe({
             next:(response)=>{
-                this.userImageSrc=response.data.avatar;
+                this.userImageSrc=response.data.avatar.secure_url;
                 this.spinner.hide()
             },
             error:(err)=>{

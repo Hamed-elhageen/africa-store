@@ -1,20 +1,20 @@
 <div class="flex items-center justify-center min-h-screen p-2 mine">
-  <div class="w-full max-w-3xl px-4 py-8 mx-auto text-white border border-green-800 shadow-2xl md:px-10 bg-gray-900/90 backdrop-blur-md rounded-2xl">
-    <form [formGroup]="changeDetails" (ngSubmit)="changeUserDetails()">
-      <!-- Logo -->
-      <div class="flex justify-center mb-5 ">
-        <img src="colorful-logo.webp" alt="africastores logo" class="drop-shadow-lg w-52 md:w-auto " >
-      </div>
+    <div class="w-full max-w-3xl px-4 py-8 mx-auto text-white border border-green-800 shadow-2xl md:px-10 bg-gray-900/90 backdrop-blur-md rounded-2xl">
+        <form [formGroup]="changeDetails" (ngSubmit)="changeUserDetails()">
+            <!-- Logo -->
+            <div class="flex justify-center mb-5 ">
+                <img src="colorful-logo.webp" alt="africastores logo" class="drop-shadow-lg w-52 md:w-auto " >
+            </div>
 
-      <!-- Header -->
-      <h2 class="mb-6 text-3xl font-bold text-center text-white profile">Your Profile</h2>
+        <!-- Header -->
+        <h2 class="mb-6 text-3xl font-bold text-center text-white profile">Your Profile</h2>
 
-      <!-- Profile Info -->
-      <div class="flex flex-col items-center gap-4 mb-10 md:flex-row md:items-start md:gap-8">
+        <!-- Profile Info -->
+        <div class="flex flex-col items-center gap-4 mb-10 md:flex-row md:items-start md:gap-8">
         <!-- Avatar -->
         <div class="relative group">
           <img
-            [src]="avatarPreview || userData?.avatar"
+            [src]="avatarPreview || userData.avatar.secure_url"
             alt="Profile Picture"
             class="object-cover w-32 h-32 transition-transform duration-300 border-4 border-green-700 rounded-full shadow-lg max-w-none group-hover:scale-105"
           />
@@ -30,7 +30,7 @@
           <div class="flex items-center justify-between">
             <div class="flex-1">
               <span class="text-gray-400">Name:  </span>
-              <span *ngIf="!editField.name" class="font-semibold">{{ userData?.name || 'No Name' }}</span>
+              <span *ngIf="!editField.name" class="font-semibold">{{ userData.name || 'No Name' }}</span>
               <input *ngIf="editField.name" formControlName="name" type="text"
                 class="w-64 px-3 py-1 mt-1 text-white bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-700"
                 placeholder="Enter new name">
@@ -44,13 +44,10 @@
           <div class="flex items-center justify-between">
             <div class="flex-1">
               <span class="text-gray-400">Email : </span>
-              <span *ngIf="!editField.email" class="font-semibold">{{ userData?.email || 'No Email' }}</span>
-              <input *ngIf="editField.email" formControlName="email" type="email"
-                class="w-64 px-3 py-1 text-white bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                placeholder="Enter new email">
+              <span *ngIf="!editField.email" class="font-semibold">{{ userData.email || 'No Email' }}</span>
+
             </div>
             <button type="button" (click)="toggleEdit('email')" class="text-green-500 hover:text-green-400">
-              <i class="fa fa-pencil"></i>
             </button>
           </div>
 
@@ -58,7 +55,7 @@
           <div class="flex items-center justify-between">
             <div class="flex-1">
               <span class="text-gray-400">Phone: </span>
-              <span *ngIf="!editField.phone" class="font-semibold">{{ userData?.phone || 'No Phone' }}</span>
+              <span *ngIf="!editField.phone" class="font-semibold">{{ userData.phone || 'No Phone' }}</span>
               <input *ngIf="editField.phone" formControlName="phone" type="tel"
                 class="w-64 px-3 py-1 text-white bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 placeholder="Enter new phone">
