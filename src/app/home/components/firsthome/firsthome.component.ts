@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HomecontrolService } from '../../../dashboard/homecontrol/services/homecontrol.service';
+import { ProductsService } from '../../../shared/services/products.service';
 
 @Component({
   selector: 'app-firsthome',
@@ -8,7 +8,8 @@ import { HomecontrolService } from '../../../dashboard/homecontrol/services/home
 })
 export class FirsthomeComponent implements OnInit {
     bannerDetails!:any;
-constructor(private homeControlService:HomecontrolService ){
+    imageUrl:any;
+constructor(private productsService:ProductsService ){
 
 }
     ngOnInit(): void {
@@ -16,9 +17,11 @@ constructor(private homeControlService:HomecontrolService ){
     }
 
     loadBannerDetails(){
-        this.homeControlService.getHomeBanner().subscribe({
+        this.productsService.getHomeBanner().subscribe({
             next:(result)=>{
-                this.bannerDetails=result.data;
+                this.bannerDetails=result?.data[result?.data?.length-1];
+                this.imageUrl=result?.data[result?.data?.length-1].image.secure_url;
+                console.log(this.bannerDetails)
             },
             error:(err)=>{
                 console.log("error in getting banner details " + err)

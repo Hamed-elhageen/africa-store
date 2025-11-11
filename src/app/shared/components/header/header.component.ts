@@ -38,7 +38,10 @@ export class HeaderComponent  implements OnInit{
     constructor(private loginService: LoginService , private router : Router , private profileservice:ProfileService , private spinner:NgxSpinnerService) {}
 
         ngOnInit(): void {
+            if(this.isLogged){
             this.getUserData();
+
+            }
             this.checkLogging();
     }
 

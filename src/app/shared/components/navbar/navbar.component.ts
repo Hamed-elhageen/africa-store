@@ -42,7 +42,10 @@ export class NavbarComponent implements OnInit  {
 
     ngOnInit(): void {
         this.checkLogging();
+        if(this.isLogged){
         this.getUserData();
+
+        }
         this.getCategories();
 
         //to get the number of products in the cart:

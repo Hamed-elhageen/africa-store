@@ -47,4 +47,19 @@ constructor(private http:HttpClient) { }
     }
 
 
+
+
+
+
+
+
+getHomeBanner():Observable<any>{
+        return this.http.get(`${environment.api}/home`).pipe(
+            catchError((err)=>{
+                console.log("error in home control" + err)
+                return throwError(()=>err)
+            })
+        )
+    }
+
 }
