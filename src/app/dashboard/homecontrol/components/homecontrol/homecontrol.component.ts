@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { HomecontrolService } from '../../services/homecontrol.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -23,11 +24,12 @@ export class HomecontrolComponent {
         title:new FormControl("",[Validators.required,Validators.maxLength(20)]),
         club:new FormControl("",[Validators.required,Validators.maxLength(20)]),
         description:new FormControl("",[Validators.required,Validators.maxLength(80)]),
+        season:new FormControl(""),
         bannerImage:new FormControl("",[Validators.required])
     })
 
 
-    constructor(private homeControleService:HomecontrolService , private spinner:NgxSpinnerService){
+    constructor(private homeControleService:HomecontrolService , private spinner:NgxSpinnerService,private router : Router){
 
     }
 
@@ -98,13 +100,14 @@ createFormData(){
 addBanner(){
     this.spinner.show();
     const formData = this.createFormData()
-    this.homeControleService.updateHomeBanner(formData).subscribe({
+    this.homeControleService.createHomeBanner(formData).subscribe({
         next:(result)=>{
                 this.spinner.hide();
                 Toast.fire({
                     icon:"success",
                     title:result.message || "Home banner updated successfully"
                 })
+                this.router.navigateByUrl("home/mainhome")
         },
         error:(err)=>{
             this.spinner.hide()

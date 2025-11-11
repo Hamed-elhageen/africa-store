@@ -14,11 +14,11 @@ headers=new HttpHeaders().set(
                 'Authorization',
                 `Bearer ${this.token}`
             )
-    
 
 
-        updateHomeBanner(formData:FormData):Observable<any>{
-        return this.http.patch(`${environment.api}/home`,formData,{headers:this.headers}).pipe(
+
+        createHomeBanner(formData:FormData):Observable<any>{
+        return this.http.post(`${environment.api}/home`,formData,{headers:this.headers}).pipe(
             catchError((err)=>{
                 console.log("error in update home banner"+err)
                 return throwError(()=>err)
