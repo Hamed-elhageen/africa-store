@@ -57,6 +57,7 @@ this.spinner.show();
 
     ngOnInit(): void {
         //to get all the products when the page is opened
+        this.spinner.show();
 this.productsService.getAllProducts().subscribe({
         next: (comingProducts) => {
             this.products = comingProducts.data;

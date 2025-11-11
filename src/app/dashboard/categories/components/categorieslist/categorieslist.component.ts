@@ -15,12 +15,15 @@ constructor(private categoriesService:CategoriesdashboardService , private spinn
 }
     ngOnInit(): void {
 // getting services
+this.spinner.show()
 this.categoriesService.getAllCategories().subscribe({
     next:(result)=>{
         this.allcategories=result.data;
+        this.spinner.hide()
     },
     error:(error)=>{
         console.log(error.message)
+                this.spinner.hide()
     }
 });
     }
