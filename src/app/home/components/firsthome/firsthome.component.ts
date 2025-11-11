@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../../shared/services/products.service';
+import TypeIt from 'typeit';
 
 @Component({
   selector: 'app-firsthome',
@@ -9,6 +10,10 @@ import { ProductsService } from '../../../shared/services/products.service';
 export class FirsthomeComponent implements OnInit {
     bannerDetails!:any;
     imageUrl:any;
+    description:any;
+    title:any;
+    club:any;
+    season:any
 constructor(private productsService:ProductsService ){
 
 }
@@ -21,7 +26,27 @@ constructor(private productsService:ProductsService ){
             next:(result)=>{
                 this.bannerDetails=result?.data[result?.data?.length-1];
                 this.imageUrl=result?.data[result?.data?.length-1].image.secure_url;
-                console.log(this.bannerDetails)
+                this.description=result?.data[result?.data?.length-1].description;
+                this.title=result?.data[result?.data?.length-1].title;
+                this.club=result?.data[result?.data?.length-1].club;
+                this.season=result?.data[result?.data?.length-1].season;
+                const midIndex = Math.floor(this.description.length / 2); // منتصف النص
+      const formattedText = this.description.slice(0, midIndex)
+                          + '<br>'
+                          + this.description.slice(midIndex);
+
+
+                new TypeIt("#typeit", {
+  speed: 80,
+  html: true,
+  loop: false
+})
+.type(formattedText)   // اكتب النص أولًا
+.pause(500)            // توقف نصف ثانية قبل الموسم (اختياري)
+.break()               // انتقل للسطر الجديد
+.type(`<h4 class="text-secondary_color">${this.season}</h4>`) // اكتب الموسم
+.go();
+
             },
             error:(err)=>{
                 console.log("error in getting banner details " + err)
