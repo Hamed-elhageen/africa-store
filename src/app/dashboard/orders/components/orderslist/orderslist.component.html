@@ -17,14 +17,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let order of orders; let i = index"
+                <tr *ngFor="let order of orders; let i = index" [ngClass]="{'bg-green-800':order.orderStatus=='completed' , 'bg-red-900':order.orderStatus==='cancelled' , 'bg-slate-950':order.orderStatus==='pending'}"
                     class="border-t border-gray-700 hover:bg-gray-800">
                     <td class="px-6 py-4">{{ i + 1 }}</td>
-                    <td class="px-6 py-4">{{ order.name}}</td>
+                    <td class="px-6 py-4">{{ order.username}}</td>
                     <td class="px-6 py-4">{{ order.phone }}</td>
                     <td class="px-6 py-4">${{ order.address }}</td>
                     <td class="px-6 py-4">{{ order.price }}</td>
-                    <td class="px-6 py-4">{{ order.date }}</td>
+                    <td class="px-6 py-4">{{ order.createdAt }}</td>
                     <td class="flex justify-center gap-2 px-6 py-4">
                         <button
                         [routerLink]="['/dashboard/orders/orderdetails/',order._id]"
@@ -48,13 +48,13 @@
             <div class="flex items-center gap-4">
                 <img [src]="order.image" alt="product" class="object-cover w-16 h-16 rounded-md" />
                 <div class="flex-1">
-                    <h3 class="text-lg font-semibold text-white">{{ order.name }}</h3>
-                    <p class="text-sm text-gray-400">{{ order.category }}</p>
+                    <h3 class="text-lg font-semibold text-white">{{ order.username }}</h3>
+                    <p class="text-sm text-gray-400">{{ order.phone }}</p>
                 </div>
             </div>
             <div class="flex items-center justify-between mt-4 text-gray-300">
                 <span>${{ order.price }}</span>
-                <span class="text-sm">Stock: {{ order.stock }}</span>
+                <span class="text-sm">date: {{ order.createdAt }}</span>
             </div>
             <div class="flex justify-end gap-2 mt-4">
                 <button

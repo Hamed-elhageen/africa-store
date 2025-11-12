@@ -16,7 +16,7 @@ export class OrderService {
                     `Bearer ${this.token}`
                 )
     getAllOrders():Observable<any>{
-        return this.http.get(`${environment.api}/orders`,{headers:this.headers}).pipe(
+        return this.http.get(`${environment.api}/order`,{headers:this.headers}).pipe(
             catchError((err)=>{
                 console.log("error in getting all orders" + err)
                 return throwError(()=>err)
@@ -25,7 +25,7 @@ export class OrderService {
     }
 
     updateOrderStatus(orderId:string,status:string):Observable<any>{
-        return this.http.patch(`${environment.api}/order`,{orderId,status},{headers:this.headers}).pipe(
+        return this.http.patch(`${environment.api}/order/${orderId}/status`,{status},{headers:this.headers}).pipe(
             catchError((err)=>{
                 console.log("error in updating order status "+err)
                 return throwError(()=>err)
@@ -41,6 +41,8 @@ export class OrderService {
             })
         )
     }
+
+
 
     deleteOrder(orderId:string):Observable<any>{
         return this.http.delete(`${environment.api}/order/${orderId}`,{headers:this.headers}).pipe(

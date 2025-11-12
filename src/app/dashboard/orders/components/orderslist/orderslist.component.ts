@@ -21,7 +21,7 @@ orders:any[]=[]
         this.spinner.show()
         this.ordersService.getAllOrders().subscribe({
             next:(result)=>{
-                this.orders= result?.data;
+                this.orders= result?.data?.data;
                 this.spinner.hide()
             },
             error:(err)=>{
@@ -79,5 +79,5 @@ Swal.fire({
 
 
 
-    
+
 }
