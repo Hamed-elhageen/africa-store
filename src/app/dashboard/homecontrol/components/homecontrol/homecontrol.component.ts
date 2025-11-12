@@ -85,7 +85,7 @@ createFormData(){
     formData.append('club',this.club?.value||"");
     formData.append('description',this.description?.value||"");
     formData.append('season',this.season?.value||"");
-    formData.append('productId',this.selectedProduct._id)
+    formData.append('product',this.selectedProduct._id)
 
     if(this.selectedFile){
     formData.append('image',this.selectedFile)
