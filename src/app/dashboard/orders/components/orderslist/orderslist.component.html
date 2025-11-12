@@ -1,0 +1,71 @@
+<div class="container p-4 md:p-6">
+        <!-- Title -->
+        <h2 class="mb-4 text-xl font-semibold text-white">Orders List</h2>
+
+    <!-- Table for Desktop -->
+    <div class="hidden overflow-x-auto rounded-lg shadow md:block">
+        <table class="min-w-full text-sm text-left text-gray-300 border border-gray-700 bg-slate-950">
+            <thead class="text-gray-400 bg-gray-900">
+                <tr>
+                    <th class="px-6 py-3">#</th>
+                    <th class="px-6 py-3">User Name</th>
+                    <th class="px-6 py-3">Phone</th>
+                    <th class="px-6 py-3">Address</th>
+                    <th class="px-6 py-3">Price</th>
+                    <th class="px-6 py-3">Date</th>
+                    <th class="px-6 py-3 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders; let i = index"
+                    class="border-t border-gray-700 hover:bg-gray-800">
+                    <td class="px-6 py-4">{{ i + 1 }}</td>
+                    <td class="px-6 py-4">{{ order.name}}</td>
+                    <td class="px-6 py-4">{{ order.phone }}</td>
+                    <td class="px-6 py-4">${{ order.address }}</td>
+                    <td class="px-6 py-4">{{ order.price }}</td>
+                    <td class="px-6 py-4">{{ order.date }}</td>
+                    <td class="flex justify-center gap-2 px-6 py-4">
+                        <button
+                        [routerLink]="['/dashboard/orders/orderdetails/',order._id]"
+                            class="px-3 py-1 text-sm text-white transition bg-blue-600 rounded hover:bg-blue-700">
+                            Details
+                        </button>
+                        <button
+                        (click)="deleteOrder(order._id)"
+                            class="px-3 py-1 text-sm text-white transition bg-red-600 rounded hover:bg-red-700">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Cards for Mobile -->
+    <div class="grid gap-4 md:hidden">
+        <div *ngFor="let order of orders" class="p-4 bg-gray-900 border border-gray-700 rounded-lg shadow">
+            <div class="flex items-center gap-4">
+                <img [src]="order.image" alt="product" class="object-cover w-16 h-16 rounded-md" />
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-white">{{ order.name }}</h3>
+                    <p class="text-sm text-gray-400">{{ order.category }}</p>
+                </div>
+            </div>
+            <div class="flex items-center justify-between mt-4 text-gray-300">
+                <span>${{ order.price }}</span>
+                <span class="text-sm">Stock: {{ order.stock }}</span>
+            </div>
+            <div class="flex justify-end gap-2 mt-4">
+                <button
+                    class="px-3 py-1 text-sm text-white transition bg-blue-600 rounded hover:bg-blue-700">
+                    <i class="fa-solid fa-pen"></i>
+                </button>
+                <button
+                    class="px-3 py-1 text-sm text-white transition bg-red-600 rounded hover:bg-red-700">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
