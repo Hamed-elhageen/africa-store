@@ -79,7 +79,7 @@ this.spinner.show()
 
     createOrder(){
         this.spinner.show();
-        this.cartService.createOrder(this.phone?.value!, this.address?.value!, this.paymentMethod?.value!).subscribe({
+        this.cartService.createOrder(this.name?.value!,this.phone?.value!, this.address?.value!, this.paymentMethod?.value!).subscribe({
             next:(result)=>{
                         this.spinner.hide()
                         Swal.fire({

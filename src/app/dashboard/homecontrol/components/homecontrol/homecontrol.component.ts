@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { HomecontrolService } from '../../services/homecontrol.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { ProductsdashboardService } from '../../../products/services/productsdashboard.service';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -25,11 +26,12 @@ export class HomecontrolComponent {
         club:new FormControl("",[Validators.required,Validators.maxLength(20)]),
         description:new FormControl("",[Validators.required,Validators.maxLength(80)]),
         season:new FormControl(""),
-        bannerImage:new FormControl("",[Validators.required])
+        bannerImage:new FormControl("",[Validators.required]),
+          choosenProduct: new FormControl('') // <-- هنا ضيفناه
     })
 
 
-    constructor(private homeControleService:HomecontrolService , private spinner:NgxSpinnerService,private router : Router){
+    constructor(private homeControleService:HomecontrolService , private spinner:NgxSpinnerService,private router : Router ,private productsService:ProductsdashboardService){
 
     }
 
@@ -47,6 +49,9 @@ export class HomecontrolComponent {
     }
     get bannerImage(){
         return this.homeControlForm.get("bannerImage")
+    }
+        get choosenProduct(){
+        return this.homeControlForm.get("choosenProduct")
     }
 
 
@@ -80,6 +85,7 @@ createFormData(){
     formData.append('club',this.club?.value||"");
     formData.append('description',this.description?.value||"");
     formData.append('season',this.season?.value||"");
+    formData.append('productId',this.selectedProduct._id)
 
     if(this.selectedFile){
     formData.append('image',this.selectedFile)
@@ -152,4 +158,37 @@ addBanner(){
             title: err?.error?.message || 'Something went wrong. Please try again.',
         });
     }
+
+
+
+    //**************************************************************************************************************************** */
+    //for handling the product search input
+    searchWord!:string;
+    filteredProducts!:any[];
+    selectedProduct!:any;
+
+    onChangeSearchWord(event:any){
+        this.searchWord=event.target.value;
+        this.spinner.show();
+    this.productsService.getAllProducts({ k :this.searchWord}).subscribe({
+        next:(comingProducts)=>{
+            this.filteredProducts=comingProducts.data;
+            this.spinner.hide()
+        },
+        error:(err)=>{
+            console.log(err.message)
+            this.spinner.hide()
+        }
+    })
+    }
+
+
+
+    selectProduct(product:any){
+        this.selectedProduct = product;
+  this.filteredProducts = [];
+  this.homeControlForm.get('choosenProduct')?.setValue(product.name); // <-- الاسم يظهر في الـ input
+    }
+
+
 }
