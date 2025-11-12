@@ -29,23 +29,7 @@ constructor(private productsService:ProductsService ){
                 this.description=result?.data[result?.data?.length-1].description;
                 this.title=result?.data[result?.data?.length-1].title;
                 this.club=result?.data[result?.data?.length-1].club;
-                this.season=result?.data[result?.data?.length-1].season;
-                const midIndex = Math.floor(this.description.length / 2); // منتصف النص
-      const formattedText = this.description.slice(0, midIndex)
-                          + '<br>'
-                          + this.description.slice(midIndex);
-
-
-                new TypeIt("#typeit", {
-  speed: 80,
-  html: true,
-  loop: false
-})
-.type(formattedText)   // اكتب النص أولًا
-.pause(500)            // توقف نصف ثانية قبل الموسم (اختياري)
-.break()               // انتقل للسطر الجديد
-.type(`<h4 class="text-secondary_color">${this.season}</h4>`) // اكتب الموسم
-.go();
+                this.season=result?.data[result?.data?.length-1].season
 
             },
             error:(err)=>{

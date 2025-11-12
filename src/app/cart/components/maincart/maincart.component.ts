@@ -133,7 +133,7 @@ this.spinner.show()
                 }
             }
             Swal.fire({
-                title:messages.join(' | '),
+                title:messages.join(' /*****/ '),
                 icon:"error"
             })
             return ;

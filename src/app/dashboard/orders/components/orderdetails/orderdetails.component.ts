@@ -1,11 +1,25 @@
-import { Component, Input } from '@angular/core';
-
+import { Component, Input, OnInit } from '@angular/core';
+import { OrderService } from '../../services/order.service';
+import { ActivatedRoute } from '@angular/router';
+import { get } from 'http';
+import Swal from 'sweetalert2';
+import {  NgxSpinnerService } from 'ngx-spinner';
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    customClass: {
+  popup: 'my-toast-style'
+    },
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: false,
+  });
 @Component({
   selector: 'app-orderdetails',
   templateUrl: './orderdetails.component.html',
   styleUrl: './orderdetails.component.scss'
 })
-export class OrderdetailsComponent {
+export class OrderdetailsComponent implements OnInit {
 // بيانات الطلب جاية من الأب أو Dummy data
     @Input() order: any = {
         id: 'ORD12345',
@@ -34,24 +48,50 @@ export class OrderdetailsComponent {
 
 
 
-    changeStatus() {
-//   this.orderService.updateStatus(this.order.id, this.order.status).subscribe({
-//     next: (res) => {
-//       Swal.fire({
-//         icon: 'success',
-//         title: 'Order status updated!',
-//         showConfirmButton: false,
-//         timer: 1500
-//       });
-//     },
-//     error: (err) => {
-//       Swal.fire({
-//         icon: 'error',
-//         title: 'Failed to update status',
-//         text: err.message
-//       });
-//     }
-//   });
+    //********************************************************************************************************** **********************************************/
+    orderId!:string  ;
+    choosenOrder:any;
+    constructor(private ordersService:OrderService , private activateRoute:ActivatedRoute , private spinner:NgxSpinnerService){}
+    ngOnInit(): void {
+        this.activateRoute.paramMap.subscribe((params)=>{
+            this.orderId!=params.get("orderId")
+        })
+
+        if(this.orderId){
+            this.ordersService.getSingeOrder(this.orderId).subscribe({
+                next:(result)=>{
+                    this.choosenOrder=result.data;
+                },
+                error:(err)=>{
+                    console.log("error in getting singe order"+err)
+                }
+            })
+        }
+    }
+
+
+    currentStatus!:string;
+    onChangeStatus(event:any) {
+        this.currentStatus=event.target.value;
 }
+
+    updateStatus(){
+        this.spinner.show()
+        this.ordersService.updateOrderStatus(this.orderId,this.currentStatus).subscribe({
+            next:(result)=>{
+                Toast.fire({
+                    icon:"success",
+                    title:`${result.message}`,
+                })
+                this.spinner.hide();
+            },
+            error:(err)=>{
+                Toast.fire({
+                    icon:"success",
+                    title:`${err.message}`,
+                })
+            }
+        })
+    }
 
 }

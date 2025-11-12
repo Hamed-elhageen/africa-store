@@ -1,6 +1,6 @@
 <div class="max-w-4xl p-6 mx-auto text-white bg-gray-900 shadow-lg rounded-xl">
 
-    <h2 class="pb-3 mb-6 text-2xl font-semibold border-b border-gray-700">Order Details (#{{order.id}})</h2>
+    <h2 class="pb-3 mb-6 text-2xl font-semibold border-b border-gray-700">Order Details (#{{choosenOrder?.id}})</h2>
 
     <!-- Customer & Order Info Grid -->
     <div class="grid grid-cols-1 gap-4 mb-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -10,7 +10,7 @@
             <i class="fa-solid fa-user text-main_color"></i>
             <div>
                 <p class="text-sm text-gray-400">Customer</p>
-                <p class="font-medium">{{order.customer.name}}</p>
+                <p class="font-medium">{{choosenOrder?.customer.name}}</p>
             </div>
         </div>
 
@@ -19,7 +19,7 @@
             <i class="fa-solid fa-phone text-main_color"></i>
             <div>
                 <p class="text-sm text-gray-400">Phone</p>
-                <p class="font-medium">{{order.customer.phone}}</p>
+                <p class="font-medium">{{choosenOrder?.customer.phone}}</p>
             </div>
         </div>
 
@@ -28,7 +28,7 @@
             <i class="fa-solid fa-location-dot text-main_color"></i>
             <div>
                 <p class="text-sm text-gray-400">Address</p>
-                <p class="font-medium">{{order.customer.address}}</p>
+                <p class="font-medium">{{choosenOrder?.customer.address}}</p>
             </div>
         </div>
 
@@ -37,17 +37,17 @@
             <i class="fa-solid fa-calendar text-main_color"></i>
             <div>
                 <p class="text-sm text-gray-400">Date</p>
-                <p class="font-medium">{{order.date}}</p>
+                <p class="font-medium">{{choosenOrder?.date}}</p>
             </div>
         </div>
 
         <!-- Payment Method -->
         <div class="flex items-center gap-2 p-3 bg-gray-800 rounded-lg shadow-inner">
-            <i class="fa-solid fa-credit-card text-main_color" *ngIf="order.paymentMethod === 'Card'"></i>
-            <i class="fa-solid fa-money-bill text-main_color" *ngIf="order.paymentMethod === 'Cash'"></i>
+            <i class="fa-solid fa-credit-card text-main_color" *ngIf="choosenOrder?.paymentMethod === 'Card'"></i>
+            <i class="fa-solid fa-money-bill text-main_color" *ngIf="choosenOrder?.paymentMethod === 'Cash'"></i>
             <div>
                 <p class="text-sm text-gray-400">Payment</p>
-                <p class="font-medium">{{order.paymentMethod}}</p>
+                <p class="font-medium">{{choosenOrder?.paymentMethod}}</p>
             </div>
         </div>
 
@@ -56,7 +56,7 @@
             <i class="text-yellow-400 fa-solid fa-circle-notch"></i>
             <div>
                 <p class="text-sm text-gray-400">Status</p>
-                <p class="font-medium text-yellow-400">{{order.status}}</p>
+                <p class="font-medium text-yellow-400">{{choosenOrder?.status}}</p>
             </div>
         </div>
 
@@ -75,7 +75,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let p of order.products" class="border-b border-gray-800">
+                <tr *ngFor="let p of choosenOrder?.products" class="border-b border-gray-800">
                     <td class="px-4 py-2"><img [src]="p.image" alt="{{p.name}}" class="object-cover w-16 h-16 rounded"></td>
                     <td class="px-4 py-2">{{p.name}}</td>
                     <td class="px-4 py-2">{{p.quantity}}</td>
@@ -91,7 +91,7 @@
     <div class="flex items-center justify-between p-4 mt-6 bg-gray-900 rounded-lg shadow-md">
   <div class="flex items-center gap-4">
     <p class="font-semibold text-gray-300">Order Status:</p>
-    <select (change)="changeStatus()"
+    <select (change)="onChangeStatus($event)"
             class="px-4 py-2 text-white transition bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-main_color">
       <option value="Pending">Pending</option>
       <option value="Completed">Completed</option>
@@ -103,9 +103,9 @@
 
         <!-- Price Summary -->
     <div class="flex flex-col items-end mt-4 space-y-1 text-lg font-medium">
-        <p>Subtotal: {{order.total}} EGP</p>
-        <p>Discount: {{order.discount || 0}} EGP</p>
-        <p class="text-xl text-secondary_color">Total: {{finalTotal}} EGP</p>
+        <p>Subtotal: {{choosenOrder?.total}} EGP</p>
+        <p>Discount: {{choosenOrder?.discount || 0}} EGP</p>
+        <p class="text-xl text-secondary_color">Total: {{choosenOrder?.finalPrice}} EGP</p>
     </div>
 
     </div>
@@ -114,7 +114,7 @@
 
 
     <div class="flex justify-end mt-6">
-        <button class="px-4 py-2 transition rounded-lg bg-main_color hover:bg-green-700">Save </button>
+        <button class="px-4 py-2 transition rounded-lg bg-main_color hover:bg-green-700" (click)="updateStatus()">Save </button>
     </div>
 
 </div>
