@@ -2,7 +2,7 @@
     <div class="images">
         <img [src]="currentImage" alt="arsenal shirt" class="mb-5 rounded-[20px] w-full h-[465px]  hidden md:block mainImage">
         <div class="flex flex-wrap gap-3 ">
-            <img [src]="choosenProduct.thumbnail.secure_url" (click)="changeMainImage(choosenProduct.thumbnail.secure_url)" alt=" shirt one" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer product-images">
+            <img [src]="choosenProduct.thumbnail.secure_url" (click)="changeMainImage(choosenProduct?.thumbnail?.secure_url)" alt=" shirt one" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer product-images">
             @if(choosenProduct?.images[0]){
             <img [src]="choosenProduct?.images[0]?.secure_url" (click)="changeMainImage(choosenProduct?.images[0]?.secure_url)"  alt="shirt two" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer product-images ">
             }
@@ -48,14 +48,14 @@
             <button class="border border-[#1C6F37] py-3 mt-4 px-6 rounded-[10px]">
                 <i
         class="text-2xl text-green-700 cursor-pointer fa-regular fa-heart"
-        [ngClass]="{ hidden: choosenProduct.choosed }"
-        (click)="toggleFavoriteProduct(choosenProduct._id)"
+        [ngClass]="{ hidden: choosenProduct?.choosed }"
+        (click)="toggleFavoriteProduct(choosenProduct?._id)"
       ></i>
       <i
         class="text-2xl cursor-pointer fa-solid fa-heart"
         style="color: #1C6F37;"
-        [ngClass]="{ hidden: !choosenProduct.choosed}"
-        (click)="toggleFavoriteProduct(choosenProduct._id)"
+        [ngClass]="{ hidden: !choosenProduct?.choosed}"
+        (click)="toggleFavoriteProduct(choosenProduct?._id)"
       ></i>
             </button>
         </div>

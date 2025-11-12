@@ -4,6 +4,7 @@ import { MaincartComponent } from './components/maincart/maincart.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomemainlayoutComponent } from '../shared/components/homemainlayout/homemainlayout.component';
 import { CartitemComponent } from './components/cartitem/cartitem.component';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 const routes: Routes = [
   {
@@ -29,7 +30,9 @@ const routes: Routes = [
     CartitemComponent
   ],
   imports: [
-    CommonModule,RouterModule.forChild(routes)
-  ]
+    CommonModule, RouterModule.forChild(routes),
+    FormsModule,
+    ReactiveFormsModule
+]
 })
 export class CartModule { }

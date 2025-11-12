@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../../shared/services/cart.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-maincart',
@@ -8,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrl: './maincart.component.scss'
 })
 export class MaincartComponent implements OnInit {
-    constructor(private cartService:CartService , private spinner:NgxSpinnerService ){
+    constructor(private cartService:CartService , private spinner:NgxSpinnerService , private router:Router ){
 
     }
         cartProducts:any[]=[];
@@ -47,5 +50,102 @@ this.spinner.show()
   // وكمان حدّث عدد العناصر
   this.theLength = this.cartProducts.length;
     }
+
+
+//**************************************************************************************************************************************************** */
+    //handle creating order :
+    createOrderFrom=new FormGroup({
+        name:new FormControl("",[Validators.required , Validators.maxLength(30) , Validators.minLength(10)]),
+        phone:new FormControl("",[Validators.required , Validators.maxLength(11) , Validators.minLength(11)]),
+        address:new FormControl("",[Validators.required , Validators.maxLength(40) , Validators.minLength(10)]),
+        paymentMethod:new FormControl("",[Validators.required ])
+    })
+
+    get name(){
+        return this.createOrderFrom.get('name');
+    }
+        get phone(){
+        return this.createOrderFrom.get('phone');
+    }
+        get address(){
+        return this.createOrderFrom.get('address');
+    }
+        get paymentMethod(){
+        return this.createOrderFrom.get('paymentMethod');
+    }
+
+
+
+
+    createOrder(){
+        this.spinner.show();
+        this.cartService.createOrder(this.phone?.value!, this.address?.value!, this.paymentMethod?.value!).subscribe({
+            next:(result)=>{
+                        this.spinner.hide()
+                        Swal.fire({
+                        title: `${result?.message}`,
+                        icon: 'success',
+                        confirmButtonColor: '#1C6F37',      // لون زرار الحذف
+                        confirmButtonText: 'ok!',
+                        })
+                        if(this.paymentMethod?.value=="card"){
+                            window.open(result.data, "_blank");
+                        }
+            },
+            error:(err)=>{
+                this.spinner.hide();
+                this.handleError(err)
+            }
+        })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //this is the error function that you will put it inside the error function when you are trying to get data from the backend and pass to it the error coming
+    handleError(err:any){
+        //handling if there is no conection to the internet
+        if(err.status===0){
+            Swal.fire({
+                title:"No internet connection. Please check your network.",
+                icon:"error"
+            })
+            return;
+        }
+
+        //if there is and error returned in the data object in postman (its error in data in feilds)
+        if(err?.error?.data){
+            const errors=err?.error?.data;
+            let messages:any[]=[];
+            for(const key in errors){                                                                                                                                                                           //using for in to loop on keys in the errors       like name or image for examble
+                if(errors.hasOwnProperty(key)){
+                    messages.push(`${key}:${errors[key]}`)
+                }
+            }
+            Swal.fire({
+                title:messages.join(' | '),
+                icon:"error"
+            })
+            return ;
+        }
+
+        //error in general
+        Swal.fire({
+            icon: 'error',
+            title: err?.error?.message || 'Something went wrong. Please try again.',
+        });
+    }
+
+
 
 }

@@ -80,4 +80,16 @@ headers=new HttpHeaders().set(
     setCartCount(count:number){
         this.cartCount.next(count)
     }
+
+    //************************************************************************************************************************** */
+    //handling create order
+
+    createOrder(phone:string , address:string, paymentMethod:string):Observable<any>{
+        return this.http.post<any>(`${environment.api}/order`,{phone,address,paymentMethod},{headers:this.headers}).pipe(
+            catchError((err)=>{
+                console.log("error in creating order" + err)
+                return throwError(()=>err)
+            })
+        )
+    }
 }
