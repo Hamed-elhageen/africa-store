@@ -33,16 +33,14 @@ export class HeaderComponent  implements OnInit{
     profileMenuOpen:boolean=false;
     isLogged: boolean = false;
     userImageSrc!:string;                                                    //which i will put in the html
+    isAdmin!:boolean;
 
 
     constructor(private loginService: LoginService , private router : Router , private profileservice:ProfileService , private spinner:NgxSpinnerService) {}
 
         ngOnInit(): void {
-            if(this.isLogged){
-            this.getUserData();
-
-            }
             this.checkLogging();
+            this.isAdmin=this.loginService.isAdmin();
     }
 
     // functions for openign and closing the menue in mobile
@@ -80,6 +78,9 @@ scrollTo(sectionId: string) {
         this.loginService.isUserLoggedSubject.subscribe({
             next: (status: boolean) => {
                 this.isLogged = status;
+                if (this.isLogged) {
+        this.getUserData();  // ⬅️ ننده هنا بعد ما المستخدم يكون logged in
+      }
             },
             error: (err) => {
                 console.error('Error subscribing to login status:', err);
@@ -92,7 +93,7 @@ scrollTo(sectionId: string) {
         this.spinner.show()
         return this.profileservice.showProfile().subscribe({
             next:(response)=>{
-                this.userImageSrc=response.data.avatar.secure_url;
+                this.userImageSrc=response?.data?.avatar?.secure_url;
                 this.spinner.hide()
             },
             error:(err)=>{
@@ -125,6 +126,10 @@ logout() {
     }
     });
 }
+
+
+
+
 }
 
 

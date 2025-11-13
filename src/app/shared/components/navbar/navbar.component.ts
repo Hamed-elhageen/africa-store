@@ -36,11 +36,13 @@ export class NavbarComponent implements OnInit  {
     currentSection: string = 'home';
     isLogged: boolean = false;
     userImage!:string;
+    isAdmin!:boolean;
 
 
     constructor(private authService: LoginService,private spinner:NgxSpinnerService , private profileService:ProfileService , private router :Router , private categoriesService:CategoriesService , private cartService:CartService , private favoritesService:FavoritesService ) {}
 
     ngOnInit(): void {
+        this.isAdmin=this.authService.isAdmin();
         this.checkLogging();
         if(this.isLogged){
         this.getUserData();

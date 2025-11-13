@@ -43,9 +43,14 @@
                 class="bg-main_color text-white rounded-[10px] py-4 px-6 w-[180px] font-bold transition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">
                 Sign Up
             </button>
+
+            <button [ngClass]="{'hidden':!(isLogged&&isAdmin)}" [routerLink]="'/dashboard'" type="button"
+                class="bg-main_color text-white rounded-[10px] py-4 px-6 w-[180px] font-bold transition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]">
+                Go to Dashboard
+            </button>
                 <!-- صورة المستخدم -->
             <div class="relative" (click)="toggleProfileMenuOpen()">
-                <img [hidden]="!isLogged" [src]="userImageSrc || '/userphoto.webp'" alt="User" class="w-12 h-12 rounded-full cursor-pointer max-w-none" />
+                <img [ngClass]="{'hidden':!(isLogged&&!isAdmin)}" [src]="userImageSrc || '/userphoto.webp'" alt="User" class="w-12 h-12 rounded-full cursor-pointer max-w-none" />
 
             <!-- القائمة بتظهر بس لما menuOpen = true -->
             <div *ngIf="profileMenuOpen" class="absolute right-0 z-[40] w-56 h-auto mt-2 text-left  rounded-md shadow-lg bg-main_color duration-300" @dropdownAnimation>
@@ -99,8 +104,8 @@
                 <button  [ngClass]="{'hidden':isLogged}" [routerLink]="'/authentication/register'" class="flex items-center justify-center flex-1 py-2 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">sign up</button>
                 <!-- the 2 buttons in case of you are logged in -->
                 <button [ngClass]="{'hidden':!isLogged}"  class=" bg-main_color flex items-center justify-center  py-2 px-3 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]" (click)="logout()" >logout</button>
-                <button  [ngClass]="{'hidden':!isLogged}"[routerLink]="'/authentication/changepassword'" class="flex items-center justify-center  py-2 px-3 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">Change Password</button>
-            </div>
+<button  [ngClass]="{'hidden':!(isLogged&&!isAdmin) }"[routerLink]="'/authentication/changepassword'" class="flex items-center justify-center  py-2 px-3 text-white transition-all duration-300 origin-left bg-transparent border rounded border-main_color hover:bg-main_color hover:scale-[1.03]">Change Password</button>
+                            <button [ngClass]="{'hidden':!(isLogged&&isAdmin)}"  class=" bg-main_color flex items-center justify-center  py-2 px-3 text-white rounded bg-main_colortransition-all duration-500 hover:bg-[#00af6cad] active:scale-95 shadow-md hover:shadow-lg active:shadow-inner hover:scale-[1.03]" (click)="logout()" >Go to Dashboard</button>            </div>
         </div>
 
 
