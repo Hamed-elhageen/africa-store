@@ -5,6 +5,7 @@ import { CategoriesService } from '../../../shared/services/categories.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { get } from 'http';
 import { FavoritesService } from '../../../shared/services/favorites.service';
+import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-category-products',
@@ -17,6 +18,9 @@ export class CategoryProductsComponent implements OnInit {
     selectedCategory!:any;
     constructor(private route:ActivatedRoute , private productsService:ProductsService , private categoriesService:CategoriesService, private favoritesService:FavoritesService , private spinner:NgxSpinnerService){}
     favoritesIds:string[]=[]
+    searchSub!: Subscription;
+    searchWord!:string
+
 
 
     ngOnInit(): void {
@@ -24,6 +28,18 @@ export class CategoryProductsComponent implements OnInit {
             this.categoryId=params.get('catId') || ''
             this.getAllProducts();
         })
+        //handling search
+        this.searchSub = this.productsService.search$
+  .pipe(
+    debounceTime(500),   // استنى نص ثانية قبل ما تعمل البحث
+    distinctUntilChanged() // ما تعملش نفس البحث مرتين
+  )
+  .subscribe(term => {
+    this.searchWord=term;
+    this.getAllProducts()
+  });
+
+  //end handling search
 
         this.getAllCategories();
 
@@ -46,8 +62,10 @@ export class CategoryProductsComponent implements OnInit {
 
     getAllProducts(){
             this.spinner.show()
-            this.productsService.getAllProducts({category:this.categoryId}).subscribe({
+
+            this.productsService.getAllProducts({category:this.categoryId , k:this.searchWord}).subscribe({
             next:(result)=>{
+
                 this.products=result?.data?.map((prd:any)=>({
                     ...prd ,
                     choosed:this.favoritesIds.includes(prd._id)                                                                                                   //here we add a new property to the products and will be trun if the product was in favorites , and by that that product will have the colorful green love

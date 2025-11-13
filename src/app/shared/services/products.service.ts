@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AllProductsResponse, SingleProductResponse } from '../models/product-response';
 
@@ -62,4 +62,14 @@ getHomeBanner():Observable<any>{
         )
     }
 
+
+    //******************************************************************************************************************************** */
+    //here i will handle the part of searching of navbar , i will make when a word is wrote in navbar is sent to the service here , and this word i will subscribe on it in the components of products to search on it
+
+      private searchSubject = new BehaviorSubject<string>(''); // بيبدأ بقيمة فاضية
+      search$ = this.searchSubject.asObservable(); // observable أي كومبوننت تقدر تسمع له
+
+    updateSearch(term: string) {
+    this.searchSubject.next(term); // نحدّث الكلمة الجديدة اللي المستخدم كتبها
+    }
 }

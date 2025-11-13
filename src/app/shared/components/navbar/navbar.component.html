@@ -33,7 +33,7 @@
         <!-- Desktop navigation (always visible on md and up)
         search first -->
         <div class="hidden px-6 py-3 bg-white md:flex md:order-1 rounded-[100px] w-[35%] items-center justify-between hover:scale-[1.02] transition-transform duration-300 ease-in-out" id="desktop-nav">
-            <input  type="text" name="search" placeholder="What you are looking for"
+            <input  type="text" name="search" placeholder="What you are looking for" (input)=" onSearchInputChange($event)"
                 class="text-gray-600 transition-all duration-300 focus:border-0 focus:outline-0 focus:placeholder:opacity-0">
             <i class="text-gray-600 transition-transform duration-300 fa-solid fa-magnifying-glass hover:scale-110"></i>
         </div>
@@ -94,7 +94,7 @@
                 </div>
                 <!-- search in mobile menue -->
                 <div class=" px-4 py-2 bg-white md:flex md:order-1 rounded-[100px] w-[95%] items-center justify-between hover:scale-[1.02] transition-transform duration-300 ease-in-out" id="desktop-nav">
-                    <input  type="text" name="search" placeholder="What you are looking for"
+                    <input (input)=" onSearchInputChange($event)"  type="text" name="search" placeholder="What you are looking for"
                         class="pr-4 text-gray-600 transition-all duration-300 focus:border-0 focus:outline-0 focus:placeholder:opacity-0">
                     <i class="text-gray-600 transition-transform duration-300 fa-solid fa-magnifying-glass hover:scale-110"></i>
                 </div>

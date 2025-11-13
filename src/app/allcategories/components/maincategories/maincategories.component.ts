@@ -6,6 +6,7 @@ import cluster from 'cluster';
 import { FavoritesService } from '../../../shared/services/favorites.service';
 import { Category } from '../../../shared/models/categories-response';
 import { Product } from '../../../shared/models/product-response';
+import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-maincategories',
@@ -22,6 +23,8 @@ export class MaincategoriesComponent implements OnInit {
     showprice:boolean=true;
     showAllTeams:boolean=false;
     favoritesIds:string[]=[]
+    searchSub!: Subscription;
+
 
     constructor(private categoriesService:CategoriesService , private productsService : ProductsService,private favoritesService:FavoritesService , private spinner:NgxSpinnerService){}
     ngOnInit(): void {
@@ -50,6 +53,61 @@ export class MaincategoriesComponent implements OnInit {
 
         }
     })
+
+
+    //**search     ************************************************** */
+   // 👇 اسمع لأي تغيير في السيرش
+// 👇 اسمع لأي تغيير في السيرش
+this.searchSub = this.productsService.search$
+  .pipe(
+    debounceTime(500),      // استنى نص ثانية قبل ما تعمل call
+    distinctUntilChanged()  // متعملش نفس السيرش مرتين لو الكلمة هي هي
+  )
+  .subscribe(term => {
+    const params: any = {
+      '[pagination][limit]': 1000
+    };
+
+    // لو فيه كلمة بحث حطها
+    if (term) params.k = term;
+
+    // ضيف الفلترات لو موجودة
+    if (this.selectedCategory) params.category = this.selectedCategory;
+    if (this.selectedTeam) params.club = this.selectedTeam;
+    if (this.minPrice !== undefined && this.minPrice !== null) params['[price][min]'] = this.minPrice;
+    if (this.maxPrice !== undefined && this.maxPrice !== null) params['[price][max]'] = this.maxPrice;
+
+    // لو كله فاضي ارجع كل المنتجات
+    const hasFilters = term || this.selectedCategory || this.selectedTeam || this.minPrice || this.maxPrice;
+    if (!hasFilters) {
+      this.getAllProducts();
+      return;
+    }
+
+    // اعمل جلب للمنتجات حسب السيرش + الفلترات
+    this.spinner.show();
+    this.productsService.getAllProducts(params).subscribe({
+      next: (result) => {
+        this.products = result.data.map((prd: any) => ({
+          ...prd,
+          choosed: this.favoritesIds.includes(prd._id)
+        }));
+        this.spinner.hide();
+
+        // scroll to top
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 200);
+      },
+      error: (err) => {
+        console.error(err.message);
+        this.spinner.hide();
+      }
+    });
+  });
+
+
+    //***************end search */
     }
 
     getAllProducts(){
@@ -202,6 +260,11 @@ if(!this.selectedCategory){
                                 this.spinner.hide()
             }
         })
+
+
+
+
+
 
 }
 

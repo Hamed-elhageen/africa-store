@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CartService } from '../../services/cart.service';
 import { FavoritesService } from '../../services/favorites.service';
 import { Category } from '../../models/categories-response';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
 selector: 'app-navbar',
@@ -39,7 +40,7 @@ export class NavbarComponent implements OnInit  {
     isAdmin!:boolean;
 
 
-    constructor(private authService: LoginService,private spinner:NgxSpinnerService , private profileService:ProfileService , private router :Router , private categoriesService:CategoriesService , private cartService:CartService , private favoritesService:FavoritesService ) {}
+    constructor(private authService: LoginService,private productsService:ProductsService,private spinner:NgxSpinnerService , private profileService:ProfileService , private router :Router , private categoriesService:CategoriesService , private cartService:CartService , private favoritesService:FavoritesService ) {}
 
     ngOnInit(): void {
         this.isAdmin=this.authService.isAdmin();
@@ -166,6 +167,16 @@ scrollTo(sectionId: string) {
             }
         });
     }
+
+    //************************************************************************************************************************************ */
+    //handling the search input :
+    searchWord!:string;
+    onSearchInputChange(event:any){
+        this.searchWord=event.target.value;
+        this.productsService.updateSearch(this.searchWord); // نبعته للسيرفس
+    }
+
+
 
 
 }
