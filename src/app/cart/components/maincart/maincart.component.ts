@@ -65,7 +65,8 @@ this.spinner.show()
         name:new FormControl("",[Validators.required , Validators.maxLength(30) , Validators.minLength(10)]),
         phone:new FormControl("",[Validators.required , Validators.maxLength(11) , Validators.minLength(11)]),
         address:new FormControl("",[Validators.required , Validators.maxLength(40) , Validators.minLength(10)]),
-        paymentMethod:new FormControl("",[Validators.required ])
+        paymentMethod:new FormControl("",[Validators.required ]),
+        promoCode:new FormControl("",[Validators.required ])
     })
 
     get name(){
@@ -80,13 +81,16 @@ this.spinner.show()
         get paymentMethod(){
         return this.createOrderFrom.get('paymentMethod');
     }
+    get promoCode(){
+        return this.createOrderFrom.get('promoCode');
+    }
 
 
 
 
     createOrder(){
         this.spinner.show();
-        this.cartService.createOrder(this.name?.value!,this.phone?.value!, this.address?.value!, this.paymentMethod?.value!).subscribe({
+        this.cartService.createOrder(this.name?.value!,this.phone?.value!, this.address?.value!, this.paymentMethod?.value!,this.promoCode?.value!).subscribe({
             next:(result)=>{
                         this.spinner.hide()
                         Swal.fire({
@@ -170,11 +174,17 @@ this.spinner.show()
 
 
 
-promoCode!:string;
-
+response!:any;
+fetchedCode!:boolean
 sendPromoCode(){
-    this.cartService.sendPromoCode(this.promoCode).subscribe({
+        console.log("Promo Code Entered:", this.promoCode);
+
+    this.spinner.show();
+    this.cartService.sendPromoCode(String(this.promoCode?.value!),Number(this.total)).subscribe({
         next:(result)=>{
+            this.response=result?.data;
+            this.fetchedCode=true
+            this.spinner.hide()
             this.getCartProducts();
             Toast.fire({
                 icon:"success",
@@ -182,10 +192,8 @@ sendPromoCode(){
             })
         },
         error:(err)=>{
-            Toast.fire({
-                icon:"error",
-                title:err?.message||"Failed to set promo code"
-            })
+            this.handleError(err)
+            this.spinner.hide()
         }
     })
 }

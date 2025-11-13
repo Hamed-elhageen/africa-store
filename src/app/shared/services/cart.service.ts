@@ -84,8 +84,8 @@ headers=new HttpHeaders().set(
     //************************************************************************************************************************** */
     //handling create order
 
-    createOrder(username:string ,phone:string , address:string, paymentMethod:string):Observable<any>{
-        return this.http.post<any>(`${environment.api}/order`,{username,phone,address,paymentMethod},{headers:this.headers}).pipe(
+    createOrder(username:string ,phone:string , address:string, paymentMethod:string , couponCode?:string):Observable<any>{
+        return this.http.post<any>(`${environment.api}/order`,{username,phone,address,paymentMethod,couponCode},{headers:this.headers}).pipe(
             catchError((err)=>{
                 console.log("error in creating order" + err)
                 return throwError(()=>err)
@@ -93,8 +93,14 @@ headers=new HttpHeaders().set(
         )
     }
 
-    sendPromoCode(promoCode:string):Observable<any>{
-        return this.http.post<any>(`${environment.api}/promocode`,{promoCode},{headers:this.headers}).pipe(
+
+
+
+
+
+
+    sendPromoCode(code:string ,total:number):Observable<any>{
+        return this.http.post<any>(`${environment.api}/coupons/apply`,{code,total},{headers:this.headers}).pipe(
             catchError((err)=>{
                 console.log("error in sending promo code to the server");
                 return throwError(()=>err)

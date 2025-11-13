@@ -113,12 +113,11 @@
             <div>
                 <p class="my-4 lg:mb-2 text-base lg:text-[18px]">Do you have promo code?</p>
                 <div class="flex gap-2 mb-8 lg:gap-3 lg:mb-4">
-                    <input type="text" name="promocode" class="border border-[#666666] bg-transparent py-2 rounded-lg lg:rounded-[10px] w-[75%] px-3 lg:px-4
+                    <input type="text" name="promoCode"  formControlName="promoCode"  class="border border-[#666666] bg-transparent py-2 rounded-lg lg:rounded-[10px] w-[75%] px-3 lg:px-4
                         placeholder:text-[#D6D6D6] text-sm lg:text-base"
                         placeholder="Promo code"
-                        [(ngModel)]="promoCode"
 >
-                    <button class="bg-[#666666] px-3 lg:px-4 py-2 rounded-lg lg:rounded-[10px] text-sm lg:text-base" (click)="sendPromoCode()">Apply</button>
+                    <button type="button" class="bg-[#666666] hover:bg-slate-600 px-3 lg:px-4 py-2 rounded-lg lg:rounded-[10px] text-sm lg:text-base" (click)="sendPromoCode()">Apply</button>
                 </div>
             </div>
 
@@ -131,12 +130,15 @@
 
                 <div class="flex justify-between">
                     <p class="text-sm lg:text-[18px]">Discount</p>
-                    <h5 class="text-base lg:text-lg">0 EGP</h5>
+                    <h5 class="text-base lg:text-lg">{{response?.discount}} EGP</h5>
                 </div>
 
                 <div class="flex justify-between pt-3 lg:pt-4 border-t border-[#444444]">
                     <p class="text-base lg:text-[18px] font-medium">Total (Incl VAT)</p>
-                    <h5 class="text-lg font-bold lg:text-xl text-secondary_color">{{total}} EGP</h5>
+
+                    @if(fetchedCode){<h5 class="text-lg font-bold lg:text-xl text-secondary_color" >{{response.finalTotal}} EGP</h5>}
+                    @else{
+                        <h5 class="text-lg font-bold lg:text-xl text-secondary_color">{{total}} EGP</h5>}
                 </div>
             </div>
 
