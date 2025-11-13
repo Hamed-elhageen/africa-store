@@ -41,9 +41,10 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
 
 
                                                                                                                                                                            //now you did the login function and handled if there were any error , now handle if the login succeeded , "if you send the post request and the backend checks it and the user data sent are true" and passed to you a token , what i should do after that :
-    handleLoginSuccess(token:string){                                                                                                                //this function will be used after  returning the token  ,  after that you pass the token to this funciton as parameter , and it will be added to local storage
+    handleLoginSuccess(response:any){                                                                                                                //this function will be used after  returning the token  ,  after that you pass the token to this funciton as parameter , and it will be added to local storage
         if(isPlatformBrowser(this.platformId)){                                                                                                      // in your login component you will use the login function with its error handling and after it you will use this function to save the toke retured from the back end
-            localStorage.setItem('token',token)
+            localStorage.setItem('token',response?.data?.token)
+            localStorage.setItem('role',response?.data?.user?.role)
         }
         this.isUserLoggedSubject.next(true);                                                                                                        //and now update the value of the isUserLoggedSubject with true after the user had logged /////dont forget that isUserLoggedSubjec is a behaviour subject that can act as observer and send data like now making his value true after logging and savign the token of the user to the local storage
         this.refreshToken();                                                                                                                                  // Refresh headers with new token as he is a user now
@@ -72,6 +73,19 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
     }
     return false;
 }
+
+
+getUserRole(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+        return localStorage.getItem('role');
+    }
+    return null;
+}
+
+isAdmin(): boolean {
+    return this.getUserRole() === 'admin';
+}
+
 
 
 

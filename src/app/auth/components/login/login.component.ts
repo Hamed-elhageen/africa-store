@@ -63,7 +63,15 @@ export class LoginComponent {
             this.spinner.show();
             this.loginService.login(this.email?.value!,this.password?.value!).subscribe({                                                        //using the login funciton which is in the service which sends the request and when it returns a response with a token i will be passed to handle success fucntion which will send the token to the local storage and update the login status;
                                                                                                                                                                                          //as you know login function was taking as a parameter the data in the form and take it to the backend to check
-                next:(response)=>this.handleSuccess(response),                                                                                           //if there is no error , it will execute next function which contains handle success function taking the response of the request
+                next:((response)=>{
+                    this.handleSuccess(response)
+                    if (this.loginService.isAdmin()) {
+                    this.router.navigate(['/dashboard']);
+                    } else {
+                        this.router.navigate(['/']);
+                    }
+                }),                                                                                           //if there is no error , it will execute next function which contains handle success function taking the response of the request
+
                 error:(err)=>this.handleError(err)                                                                                                                   // and if there is an error it will execute the error function which execute handleerror function
             })
         }
@@ -79,8 +87,7 @@ export class LoginComponent {
 
     handleSuccess(response:any){                                                                                    //you use this function in login function above and you passed to it a response and now we will know what it will do to this response
         this.spinner.hide();
-        const token =response.data.token;                                                                              //now you picked up the token back from the backend
-        this.loginService.handleLoginSuccess(token);                                                      //this function was taking the token and save it to the local storage
+        this.loginService.handleLoginSuccess(response);                                                      //this function was taking the token and save it to the local storage
         Toast.fire({
             icon: 'success',
             title: `${response.message}`
