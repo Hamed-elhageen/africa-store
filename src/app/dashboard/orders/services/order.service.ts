@@ -52,4 +52,15 @@ export class OrderService {
             })
         )
     }
+
+
+    createPromoCode(promoCode:string,discountPercentage:string):Observable<any>{
+        return this.http.post(`${environment.api}/promocode`,{promoCode,discountPercentage},{headers:this.headers}).pipe(
+            catchError((err)=>{
+                console.log("error in creating promo code");
+                return throwError(()=>err)
+            })
+        )
+
+    }
 }

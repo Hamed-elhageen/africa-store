@@ -92,4 +92,13 @@ headers=new HttpHeaders().set(
             })
         )
     }
+
+    sendPromoCode(promoCode:string):Observable<any>{
+        return this.http.post<any>(`${environment.api}/promocode`,{promoCode},{headers:this.headers}).pipe(
+            catchError((err)=>{
+                console.log("error in sending promo code to the server");
+                return throwError(()=>err)
+            })
+        )
+    }
 }

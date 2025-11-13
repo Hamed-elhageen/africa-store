@@ -4,7 +4,14 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    customClass: { popup: 'my-toast-style' },
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: false,
+});
 @Component({
   selector: 'app-maincart',
   templateUrl: './maincart.component.html',
@@ -145,6 +152,50 @@ this.spinner.show()
             title: err?.error?.message || 'Something went wrong. Please try again.',
         });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+promoCode!:string;
+
+sendPromoCode(){
+    this.cartService.sendPromoCode(this.promoCode).subscribe({
+        next:(result)=>{
+            this.getCartProducts();
+            Toast.fire({
+                icon:"success",
+                title:result?.message||"promo code worked successfully"
+            })
+        },
+        error:(err)=>{
+            Toast.fire({
+                icon:"error",
+                title:err?.message||"Failed to set promo code"
+            })
+        }
+    })
+}
+
+
+
+
+
+
+
 
 
 

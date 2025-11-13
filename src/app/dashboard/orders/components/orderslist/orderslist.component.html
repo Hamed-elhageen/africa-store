@@ -1,6 +1,15 @@
 <div class="container p-4 md:p-6">
         <!-- Title -->
-        <h2 class="mb-4 text-xl font-semibold text-white">Orders List</h2>
+        <div class="flex items-center justify-between mb-5">
+<h2 class="mb-4 text-xl font-semibold text-white">Orders List</h2>
+        <button
+            routerLink="/dashboard/orders/promocode"
+                class="flex items-center gap-2 px-4 py-2 text-white transition bg-green-600 rounded-md hover:bg-green-700">
+                <i class="fa-solid fa-plus"></i>
+                <span>Add Promo code</span>
+            </button>
+        </div>
+
 
     <!-- Table for Desktop -->
     <div class="hidden overflow-x-auto rounded-lg shadow md:block">
@@ -17,8 +26,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let order of orders; let i = index" [ngClass]="{'bg-green-800':order.orderStatus=='completed' , 'bg-red-900':order.orderStatus==='cancelled' , 'bg-slate-950':order.orderStatus==='pending'}"
-                    class="border-t border-gray-700 hover:bg-gray-800">
+                <tr *ngFor="let order of orders; let i = index" [ngClass]="{'bg-green-800':order.orderStatus=='completed','hover:bg-green-700':order.orderStatus=='completed' , 'bg-red-900':order.orderStatus==='cancelled', 'hover:bg-red-800':order.orderStatus==='cancelled' , 'bg-slate-950':order.orderStatus==='pending','hover:bg-slate-800':order.orderStatus==='pending'}"
+                    class="transition-all duration-100 border-t border-gray-700 hover:bg-geen-700">
                     <td class="px-6 py-4">{{ i + 1 }}</td>
                     <td class="px-6 py-4">{{ order.username}}</td>
                     <td class="px-6 py-4">{{ order.phone }}</td>
