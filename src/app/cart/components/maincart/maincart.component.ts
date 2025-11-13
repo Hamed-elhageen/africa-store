@@ -92,6 +92,7 @@ this.spinner.show()
         this.spinner.show();
         this.cartService.createOrder(this.name?.value!,this.phone?.value!, this.address?.value!, this.paymentMethod?.value!,this.promoCode?.value!).subscribe({
             next:(result)=>{
+                    this.getCartProducts();
                         this.spinner.hide()
                         Swal.fire({
                         title: `${result?.message}`,
