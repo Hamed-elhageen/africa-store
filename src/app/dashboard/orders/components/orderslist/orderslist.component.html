@@ -56,10 +56,12 @@
 
             <div class="flex justify-start gap-4 mt-4">
                 <button
+                                        [routerLink]="['/dashboard/orders/orderdetails/',order._id]"
                     class="px-3 py-1 text-sm text-white transition bg-blue-600 rounded hover:bg-blue-700">
                     Order Details <i class="fa-solid fa-pen ms-1"></i>
                 </button>
                 <button
+                                        (click)="deleteOrder(order._id)"
                     class="px-3 py-1 text-sm text-white transition bg-red-600 rounded hover:bg-red-700">
                     Delete Order <i class="fa-solid fa-trash ms-1"></i>
                 </button>

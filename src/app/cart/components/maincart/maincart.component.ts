@@ -50,7 +50,7 @@ this.spinner.show()
 
     //take care of something when you pass the id of the product in the cart you pass the id of the product when it was created not its id in the cart because it is different .
     removeFromCart(prdId:string){
-    this.cartProducts = this.cartProducts.filter(p => p.productId !== prdId);
+    this.cartProducts = this.cartProducts.filter(p => p._id !== prdId);
     // 🔁 بعد التصفية، احسب التوتال الجديد
   this.total = this.cartProducts.reduce((acc, item) => acc + (item.subtotal || 0), 0);
 
@@ -97,7 +97,7 @@ this.spinner.show()
                         Swal.fire({
                         title: `${result?.message}`,
                         icon: 'success',
-                        confirmButtonColor: '#1C6F37',      // لون زرار الحذف
+                        confirmButtonColor: '#1C6F37',
                         confirmButtonText: 'ok!',
                         })
                         if(this.paymentMethod?.value=="card"){

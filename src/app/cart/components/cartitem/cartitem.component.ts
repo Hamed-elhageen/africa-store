@@ -19,6 +19,7 @@ const Toast = Swal.mixin({
 })
 export class CartitemComponent implements OnInit {
   @Input() productId:string=""
+  @Input() _id:string=""
   @Input() productImage:string=""
   @Input() title:string=""
   @Input() price:string=""
@@ -72,7 +73,7 @@ cartProducts:any[]=[]
                     timer: 2000,
                     showConfirmButton: false
                 })
-                this.cartProducts = this.cartProducts.filter(product => product.productId !== prdId);                             //updating the categories imediately after deleting a category
+                this.cartProducts = this.cartProducts.filter(product => product._id !== prdId);                             //updating the categories imediately after deleting a category
                 this.productDeleted.emit(prdId)                                                                                                                  //now i emmitted the event , so it is sent to its parent that i deleted to delete it from him
                 this.spinner.hide();
                 },
@@ -101,7 +102,7 @@ cartProducts:any[]=[]
         }
 
     updateCart(prdId:string){
-        this.cartService.updateProduct(prdId,this.quantity).subscribe({
+        this.cartService.updateProduct(this.productId,this._id,this.quantity).subscribe({
             next:(result)=>{
                 this.quantityUpdated.emit();                                                              // here i emitted the event
                 console.log(result.message)

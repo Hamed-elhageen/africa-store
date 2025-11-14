@@ -27,16 +27,16 @@ headers=new HttpHeaders().set(
         )
     }
 
-    addToCart(productId:string):Observable<CartResponse>{
-        return this.http.post<CartResponse>(`${environment.api}/cart`,{productId:productId,quantity:1},{headers:this.headers}).pipe(
+    addToCart(productId:string,productSize:string):Observable<CartResponse>{
+        return this.http.post<CartResponse>(`${environment.api}/cart`,{productId:productId,quantity:1,productSize},{headers:this.headers}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             })
         )
     }
 
-    deleteProduct(prdId:string):Observable<CartResponse>{
-        return this.http.delete<CartResponse>(`${environment.api}/cart/${prdId}`,{headers:this.headers}).pipe(
+    deleteProduct(_id:string):Observable<CartResponse>{
+        return this.http.delete<CartResponse>(`${environment.api}/cart/${_id}`,{headers:this.headers}).pipe(
             tap(() => {
                 const current = this.cartCount.value;
                 this.setCartCount(current - 1); // 👈 تحديث العدد
@@ -48,8 +48,8 @@ headers=new HttpHeaders().set(
     }
 
 
-    updateProduct(prdId:string, newQuantity:number):Observable<UpdateCartResponse>{
-        return this.http.patch<UpdateCartResponse>(`${environment.api}/cart`,{productId:prdId,quantity:newQuantity},{headers:this.headers}).pipe(
+    updateProduct(productId:string,_id:string, newQuantity:number):Observable<UpdateCartResponse>{
+        return this.http.patch<UpdateCartResponse>(`${environment.api}/cart`,{productId,_id,quantity:newQuantity},{headers:this.headers}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             })

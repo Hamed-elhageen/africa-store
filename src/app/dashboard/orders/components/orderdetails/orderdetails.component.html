@@ -46,9 +46,15 @@
             <i class="fa-solid fa-credit-card text-main_color" *ngIf="choosenOrder?.paymentMethod === 'card'"></i>
             <i class="fa-solid fa-money-bill text-main_color" *ngIf="choosenOrder?.paymentMethod === 'cash'"></i>
             <div>
-                <p class="text-sm text-gray-400">Payment</p>
-                <p class="font-medium">{{choosenOrder?.paymentMethod}}</p>
+                <p class="text-sm text-gray-400">Payment <span class="text-white">({{choosenOrder?.paymentMethod}})</span> </p>
+                <div [ngClass]="{'hidden': !choosenOrder?.isPaid}" class="flex items-center text-green-500">Paid  <i class="text-lg text-green-600 fa-solid fa-check"></i></div>
+                <div [ngClass]="{'hidden': choosenOrder?.isPaid}" class="flex items-center text-red-600"> isn't Paid  <i class="text-[25px] text-red-600 ms-2 fa-solid fa-xmark"></i>
             </div>
+            <div>
+
+</div>
+            </div>
+
         </div>
 
         <!-- Status -->
@@ -122,3 +128,15 @@
     </div>
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+

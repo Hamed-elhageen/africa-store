@@ -2,7 +2,7 @@
     <div class="images">
         <img [src]="currentImage" alt="arsenal shirt" class="mb-5 rounded-[20px] w-full h-[465px]  hidden md:block mainImage">
         <div class="flex flex-wrap gap-3 ">
-            <img [src]="choosenProduct.thumbnail.secure_url" (click)="changeMainImage(choosenProduct?.thumbnail?.secure_url)" alt=" shirt one" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer product-images">
+            <img [src]="choosenProduct?.thumbnail.secure_url" (click)="changeMainImage(choosenProduct?.thumbnail?.secure_url)" alt=" shirt one" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer product-images">
             @if(choosenProduct?.images[0]){
             <img [src]="choosenProduct?.images[0]?.secure_url" (click)="changeMainImage(choosenProduct?.images[0]?.secure_url)"  alt="shirt two" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer product-images ">
             }
@@ -38,10 +38,36 @@
 
         <h6 class="mb-4">Available Sizes : </h6>
         <div class="flex flex-wrap gap-5 mb-4 sizes md:flex-nowrap">
-            @for (size of choosenProduct?.sizes; track $index) {
-            <div class="px-8 py-3 bg-transparent rounded-[10px] shadow-[0_0px_10px_3px_#52525240]  hover:shadow-[0_0px_10px_3px_#1C6F37] transition duration-300 ease-in-out">{{size}}</div>
-            }
-        </div>
+  @for (size of choosenProduct?.sizes; track $index) {
+    <div
+      (click)="chooseSize(size)"
+      class="px-8 py-3 rounded-[10px] cursor-pointer transition duration-300 ease-in-out
+             shadow-[0_0px_10px_3px_#52525240] hover:shadow-[0_0px_10px_3px_#1C6F37]"
+      [ngClass]="{
+        'shadow-[0_0px_10px_3px_#1C6F37] bg-green-700 text-white':
+          selectedSize === size
+      }"
+    >
+      {{ size }}
+    </div>
+  }
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <div class="flex items-center w-full gap-5 mt -10 buttons">
             <button  class="z-30 flex items-center justify-center flex-1 gap-2 px-10 py-4 mt-4 rounded-lg bg-main_color" (click)="addToCart(choosenProduct._id)">Add to cart <i _ngcontent-ng-c1536667229="" class="text-white fa-solid fa-cart-arrow-down"></i></button>

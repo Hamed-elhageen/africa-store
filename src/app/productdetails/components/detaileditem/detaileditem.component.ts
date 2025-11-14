@@ -27,6 +27,7 @@ export class DetaileditemComponent implements OnInit {
   choosenProduct: any;
   currentImage!: string;
   isFavorite: boolean = false; // 👈 لتتبع حالة المفضلة
+  selectedSize!:string;
 
   constructor(
     private acitvatedRoute: ActivatedRoute,
@@ -79,7 +80,7 @@ export class DetaileditemComponent implements OnInit {
 
   addToCart(prdId: string) {
     this.spinner.show();
-    this.cartService.addToCart(prdId).subscribe({
+    this.cartService.addToCart(prdId,this.selectedSize).subscribe({
       next: (result) => {
         Toast.fire({
           title: "Product added to cart successfully",
@@ -89,11 +90,9 @@ export class DetaileditemComponent implements OnInit {
         this.router.navigateByUrl("/cart/maincart");
       },
       error: (err) => {
-        Toast.fire({
-          title: "Failed to add to cart",
-          icon: "error"
-        });
+
         this.spinner.hide();
+        this.handleError(err)
       }
     });
   }
@@ -111,11 +110,49 @@ export class DetaileditemComponent implements OnInit {
         });
       },
       error: (err) => {
-        Toast.fire({
-          title: err.message || "Failed to update favorites",
-          icon: "error"
-        });
+        this.handleError(err)
       }
     });
   }
+
+
+  chooseSize(size:string){
+    this.selectedSize=size;
+    console.log("Chosen size:", this.selectedSize);
+  }
+
+
+   handleError(err:any){
+          //handling if there is no conection to the internet
+          if(err.status===0){
+              Swal.fire({
+                  title:"No internet connection. Please check your network.",
+                  icon:"error"
+              })
+              return;
+          }
+
+          //if there is and error returned in the data object in postman (its error in data in feilds)
+          if(err?.error?.data){
+              const errors=err?.error?.data;
+              let messages:any[]=[];
+              for(const key in errors){                                                                                                                                                                           //using for in to loop on keys in the errors       like name or image for examble
+                  if(errors.hasOwnProperty(key)){
+                      messages.push(`${key}:${errors[key]}`)
+                  }
+              }
+              Swal.fire({
+                  title:messages.join(' /*****/ '),
+                  icon:"error"
+              })
+              return ;
+          }
+
+          //error in general
+          Swal.fire({
+              icon: 'error',
+              title: err?.error?.message || 'Something went wrong. Please try again.',
+          });
+      }
+
 }
