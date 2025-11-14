@@ -60,7 +60,9 @@
                 </div>
             </div>
             <div class="flex justify-end gap-2 mt-4">
-                <button class="px-3 py-1 text-sm text-white bg-blue-600 rounded hover:bg-blue-700">
+                <button
+                [routerLink]="['/dashboard/categories/editcategory',category._id]"
+                class="px-3 py-1 text-sm text-white bg-blue-600 rounded hover:bg-blue-700">
                     Edit
                 </button>
                 <button  (click)="deleteService(category._id)"  class="px-3 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700">

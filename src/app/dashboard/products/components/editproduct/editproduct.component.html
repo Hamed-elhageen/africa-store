@@ -6,7 +6,7 @@
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Product Name</label>
             <input type="text" formControlName="name"   [ngClass]="{ 'border-red-700': name?.invalid && name?.touched }"
-                class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
+class="w-full max-w-full px-4 py-2 overflow-x-auto text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none whitespace-nowrap"                >
                     <small class="text-red-500"
                         *ngIf="name?.invalid && name?.touched">
                         <span *ngIf="name?.errors?.['minlength']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product name cant be lass that 3 letters.</span>
@@ -18,7 +18,7 @@
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Product Describtion</label>
             <input type="text" formControlName="description" [ngClass]="{ 'border-red-700': description?.invalid && description?.touched }"
-                class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
+class="w-full max-w-full px-4 py-2 overflow-x-auto text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none whitespace-nowrap"                >
                     <small class="text-red-500"
                         *ngIf="description?.invalid && description?.touched">
                         <span *ngIf="description?.errors?.['minlength']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Product description cant be lass that 10 letters.</span>
@@ -31,7 +31,7 @@
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Category</label>
             <select formControlName="category" (change)="onCategoryChange($event)" [ngClass]="{ 'border-red-700': category?.invalid && category?.touched }"
-                    class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
+                    class="w-full px-4 py-2 overflow-x-auto text-white bg-gray-800 border border-gray-600 rounded-md whitespace-nowrap focus:ring-2 focus:ring-green-500 focus:outline-none">
                     <option value="" disabled selected hidden>Select category</option>
                     <option *ngFor="let category of categories" [value]="category._id" >
                     {{ category.name }}
@@ -47,7 +47,7 @@
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Team</label>
             <select formControlName="club"   [ngClass]="{ 'border-red-700': club?.invalid && club?.touched }"
-                    class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
+                    class="w-full px-4 py-2 overflow-x-auto text-white bg-gray-800 border border-gray-600 rounded-md whitespace-nowrap focus:ring-2 focus:ring-green-500 focus:outline-none">
                 <option value="" disabled selected hidden>Select Team</option>
                 <option *ngFor="let team of teams" [value]="team.name">
                     {{ team.name }}
@@ -61,7 +61,7 @@
         </div>
 
 
-        <div class="flex items-center gap-28">
+        <div class="flex items-center gap-10">
         <!-- Sizes -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Available Sizes</label>
@@ -83,7 +83,7 @@
         <div class="flex-1">
                 <label class="block mb-2 text-sm font-medium text-gray-300">Available in stock</label>
                 <input type="number" formControlName="stock" [ngClass]="{'border-red-700':stock?.invalid&&stock?.touched}"
-                    class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
+class="w-full max-w-full px-4 py-2 overflow-x-auto text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none whitespace-nowrap"                    >
             <small class="text-red-500" *ngIf="stock?.invalid && stock?.touched">
                         <span *ngIf="stock?.errors?.['required']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>You must add the available quantity</span>
             </small>
@@ -131,7 +131,7 @@
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-300">Price Before Discount</label>
                 <input type="number" formControlName="priceBeforeDiscount"       (input)="updateFinalPrice()"
-                    class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
+class="w-full max-w-full px-4 py-2 overflow-x-auto text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none whitespace-nowrap"                    >
                     <small class="text-red-500"
                         *ngIf="priceBeforeDiscount?.invalid && priceBeforeDiscount?.touched">
                         <span *ngIf="priceBeforeDiscount?.errors?.['min']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>Price can't be less than 0.</span>
@@ -142,7 +142,7 @@
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-300">Discount (%)</label>
                 <input type="number" formControlName="discount"       (input)="updateFinalPrice()"
-                    class="w-full px-4 py-2 text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none">
+class="w-full max-w-full px-4 py-2 overflow-x-auto text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none whitespace-nowrap"                    >
             <small class="text-red-500"
                 *ngIf="discount?.invalid && discount?.touched">
                 <span *ngIf="discount?.errors?.['min']">Discount can't be less than 0%.</span>
@@ -153,7 +153,7 @@
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-300">Price After Discount</label>
                 <input type="number" formControlName="priceAfterDiscount" readonly
-                    class="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-md cursor-not-allowed">
+class="w-full max-w-full px-4 py-2 overflow-x-auto text-white bg-gray-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none whitespace-nowrap"                    >
             </div>
         </div>
 
