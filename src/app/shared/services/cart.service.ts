@@ -10,11 +10,11 @@ import { CartResponse, UpdateCartResponse } from '../models/cart-response';
 export class CartService {
 
     constructor(private http : HttpClient) { }
-    token=localStorage.getItem("token")
-headers=new HttpHeaders().set(
-                'Authorization',
-                `Bearer ${this.token}`
-            )
+    get headers() {
+  const token = localStorage.getItem("token");
+  return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+}
+
     getCartProducts():Observable<CartResponse>{
         return this.http.get<CartResponse>(`${environment.api}/cart`,{headers:this.headers}).pipe(
             catchError((err)=>{
