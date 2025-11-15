@@ -10,11 +10,11 @@ import { ProfileResponse, UpdateProfileResponse } from '../models/profile-respon
 export class ProfileService {
     constructor(private http:HttpClient) {
 }
-        token = localStorage.getItem("token")
-        headers=new HttpHeaders().set(
-            'Authorization',
-            `Bearer ${this.token}`
-        )
+        get headers() {
+  const token = localStorage.getItem("token");
+  return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+}
+
 
 //this is the function that will return the data of the user when you subscribe on it at any component, but take care you should give it the token of the user ( the token that determines that you are a user to return your data)
     showProfile():Observable<ProfileResponse>{
