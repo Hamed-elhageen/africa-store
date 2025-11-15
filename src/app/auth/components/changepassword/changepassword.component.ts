@@ -4,6 +4,7 @@ import { ChangepasswordService } from '../../services/changepassword.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { AuthErrorHandlerService } from '../../services/auth-error-handler.service';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -21,38 +22,21 @@ export class ChangepasswordComponent {
     changePassword!:FormGroup;
 
     constructor(private changePasswordService:ChangepasswordService,
+    private errorHandlerService:AuthErrorHandlerService,
     private router:Router,
     private ngxSpinner:NgxSpinnerService
 ){}
 
 ngOnInit(): void {
-        // Retrieve data from localStorage or a shared service
-
     this.changePassword = new FormGroup(
     {
-        oldPasswordInput: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
-    ]),
-
-    newPasswordInput: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
-    ]),
-
-
-    passwordConfirmationInput: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
-    ])
+        oldPasswordInput: new FormControl('', [Validators.required,Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)]),
+        newPasswordInput: new FormControl('', [Validators.required,Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/) ]),
+        passwordConfirmationInput: new FormControl('', [ Validators.required,Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)])
     },
-
     { validators: this.passwordsMatchValidator() } // ✅ على مستوى الفورم كله
     );
     }
-
-
-
 
     //picking up the form and its input
     get oldPasswordInput(){
@@ -70,9 +54,6 @@ togglePasswordVisibility(){
     this.passwordVisibility=!this.passwordVisibility
 }
 
-
-
-
 passwordsMatchValidator(): ValidatorFn {
     return (group: AbstractControl): { [key: string]: any } | null => {
     const password = group.get('newPasswordInput')?.value;
@@ -81,10 +62,6 @@ passwordsMatchValidator(): ValidatorFn {
     return password === confirmPassword ? null : { passwordsMismatch: true };
     };
 }
-
-
-
-
 
     onSubmit() {
         if (this.changePassword.invalid) return;
@@ -96,21 +73,18 @@ passwordsMatchValidator(): ValidatorFn {
         this.changePasswordService.changePassword(old_password, new_password,new_password_confirmation).subscribe({
             next: (resonse) => {
                 this.ngxSpinner.hide();
-            Toast.fire({
-                icon: 'success',
-                title: `${resonse.message}`,
-            });
-            this.router.navigateByUrl('/authentication/login');
-            localStorage.removeItem("token");
+                Toast.fire({
+                    icon: 'success',
+                    title: `${resonse.message}`||"password updated successfully",
+                });
+                this.router.navigateByUrl('/authentication/login');
+                localStorage.removeItem("token");
             },
             error: (err) => {
                 this.ngxSpinner.hide();
-                Toast.fire({
-                    icon: 'error',
-                    title: err?.error?.message || 'There was a problem changing your password.'
-            });
+                this.errorHandlerService.handleError(err)
         }
         });
-      }
+    }
 
 }

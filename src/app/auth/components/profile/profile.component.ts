@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { UserData } from '../../models/profile-response';
+import { AuthErrorHandlerService } from '../../services/auth-error-handler.service';
 
 const Toast = Swal.mixin({
     toast: true,
@@ -30,6 +31,7 @@ export class ProfileComponent implements OnInit {
 
     constructor(
         private profileservice: ProfileService,
+        private errorHandlerService:AuthErrorHandlerService,
         private spinner: NgxSpinnerService,
         private router: Router
     ) {}
@@ -50,7 +52,6 @@ export class ProfileComponent implements OnInit {
     get email() { return this.changeDetails.get('email'); }
     get phone() { return this.changeDetails.get('phone'); }
     get avatar() { return this.changeDetails.get('avatar'); }
-
 
         toggleEdit(field: 'name' | 'email' | 'phone') {
         this.editField[field] = !this.editField[field];
@@ -105,19 +106,10 @@ export class ProfileComponent implements OnInit {
         },
         error: (err) => {
             this.spinner.hide();
-            throwError(() => err);
-            Toast.fire({ icon: 'error', title: `${err?.error?.message}` });
+            this.errorHandlerService.handleError(err)
         },
     });
     }
   }
-
-
-
-
-
-
-
-
 
 }

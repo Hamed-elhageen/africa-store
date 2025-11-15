@@ -1,4 +1,4 @@
-export interface ResetPasswordResponse {
+export interface Reset_ForgetPasswordResponse {
     data: {
         success: boolean;
         message: string;

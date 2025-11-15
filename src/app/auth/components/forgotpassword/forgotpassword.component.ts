@@ -4,6 +4,7 @@ import { ForgetPasswordService } from '../../services/forget-password.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { AuthErrorHandlerService } from '../../services/auth-error-handler.service';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -20,21 +21,16 @@ const Toast = Swal.mixin({
     styleUrl: './forgotpassword.component.scss'
 })
 export class ForgotpasswordComponent {
-    email:string=""
     forgetPassword=new FormGroup({                                                                                                                                                            //for picking up the form and its input fields
         emailInput:new FormControl('',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)])
     })
 
-    constructor(private forgetPasswordService:ForgetPasswordService,public ngxSpinner :NgxSpinnerService,public router: Router)
-        {
-
-        }
-
+    constructor(private forgetPasswordService:ForgetPasswordService,private errorHandler:AuthErrorHandlerService,public ngxSpinner :NgxSpinnerService,public router: Router)
+        {}
 
     get emailInput(){
         return this.forgetPassword.get('emailInput');
     }
-
 
 
 
@@ -47,40 +43,20 @@ export class ForgotpasswordComponent {
                 this.ngxSpinner.hide();
                 Toast.fire({
                     icon: 'success',
-                    title: `${response.message}`,
+                    title: `${response.message}`||"OTP Code sent to your mail successfully",
                 });
-                      // Store the email the user entered in the local storage since we will send it again with the new password and password confirmation
-                localStorage.setItem('handle',handle);
-                this.router.navigateByUrl("/authentication/verification")                                               //go to the OTP  verification page
+                localStorage.setItem('handle',handle);                                                                                                    // Store the email the user entered in the local storage since we will send it again with the new password and password confirmation
+                this.router.navigateByUrl("/authentication/verification")                                                                      //go to the OTP  verification page
             },
 
             error: (err) => {
                 this.ngxSpinner.hide();
-                console.log("error when sending the email for forgot password")
-                this.handleError(err)
+                console.log("error when sending the email for forgot password" +err)
+                this.errorHandler.handleError(err)
         }
     })
 }
 
-    private handleError(error: any) {
-        let message = 'حدث خطأ غير متوقع، حاول مرة أخرى لاحقًا';
-    if (error.status === 0) {
-        message ='لا يوجد اتصال بالسيرفر، تحقق من الإنترنت';
-    } else if (error.status === 400) {
-        message = `${error?.error?.message}` ||'البريد الإلكتروني غير صحيح';
-    } else if (error.status === 404 || error.status==422) {
-        message = `${error?.error?.message}` ||'البريد الإلكتروني غير مسجل';
-    }
-    else if (error.status === 500) {
-        message =`${error?.error?.message}` || 'مشكلة في السيرفر، حاول لاحقًا';
-    }
-
-    Toast.fire({
-        icon: 'error',
-        title: message,
-        confirmButtonText: 'حسناً'
-    });
-    }
 }
 
 

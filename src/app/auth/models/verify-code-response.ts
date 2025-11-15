@@ -1,4 +1,4 @@
-export interface VerifyCodeResponse {
+export interface VerificationResponse {
     data: {
     success: boolean;
     message: string;

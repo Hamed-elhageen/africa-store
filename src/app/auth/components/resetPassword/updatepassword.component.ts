@@ -1,23 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {
-    AbstractControl,
-    FormControl,
-    FormGroup,
-    ValidatorFn,
-    Validators,
-} from '@angular/forms';
+import {AbstractControl,FormControl,FormGroup,ValidatorFn,Validators,} from '@angular/forms';
 import { ForgetPasswordService } from '../../services/forget-password.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { AuthErrorHandlerService } from '../../services/auth-error-handler.service';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     customClass: {
-        popup: 'my-toast-style',
+    popup: 'my-toast-style',
     },
     showConfirmButton: false,
-    timer: 4000,
+    timer: 3000,
     timerProgressBar: false,
 });
 @Component({
@@ -26,7 +21,6 @@ const Toast = Swal.mixin({
     styleUrl: './updatepassword.component.scss',
 })
 export class UpdatepasswordComponent implements OnInit {
-    //for password visibility and eye icon
     passwordVisibility: boolean = false;
     //those are at the local storage are save from the previous stages
     handle!: string;
@@ -35,6 +29,7 @@ export class UpdatepasswordComponent implements OnInit {
 
     constructor(
         private forgotPasswordService: ForgetPasswordService,
+        private errorHandlerService:AuthErrorHandlerService,
         private router: Router,
         private ngxSpinner: NgxSpinnerService
     ) {}
@@ -46,18 +41,8 @@ export class UpdatepasswordComponent implements OnInit {
 
         this.updatePassword = new FormGroup(
             {
-                newPasswordInput: new FormControl('', [
-                    Validators.required,
-                    Validators.pattern(
-                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-                    ),
-                ]),
-                passwordConfirmationInput: new FormControl('', [
-                    Validators.required,
-                    Validators.pattern(
-                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-                    ),
-                ]),
+                newPasswordInput: new FormControl('', [Validators.required,Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),]),
+                passwordConfirmationInput: new FormControl('', [Validators.required,Validators.pattern( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),]),
             },
             { validators: this.passwordsMatchValidator() } // ✅ على مستوى الفورم كله custom validator to check that the pasword and password confirmation are mathcing
         );
@@ -89,18 +74,9 @@ export class UpdatepasswordComponent implements OnInit {
     onSubmit() {
         if (this.updatePassword.invalid) return;
         const password = this.updatePassword.value.newPasswordInput || '';
-        const password_confirmation =
-            this.updatePassword.value.passwordConfirmationInput || ''; //here i picked up the values of the password and confirm password which set in the input fields
+        const password_confirmation =this.updatePassword.value.passwordConfirmationInput || ''; //here i picked up the values of the password and confirm password which set in the input fields
         this.ngxSpinner.show();
-
-        this.forgotPasswordService
-            .resetPassword(
-                this.handle,
-                this.code,
-                password,
-                password_confirmation
-            )
-            .subscribe({
+        this.forgotPasswordService.resetPassword(this.handle,this.code,password,password_confirmation).subscribe({
                 //in our back end and most of backends you should send the code and email which are stored in local storage from the previos tow stages and after that we will remove them from local storage
                 next: (response) => {
                     this.ngxSpinner.hide();
@@ -114,12 +90,7 @@ export class UpdatepasswordComponent implements OnInit {
                 },
                 error: (err) => {
                     this.ngxSpinner.hide();
-                    Toast.fire({
-                        icon: 'error',
-                        title:
-                            err?.error?.message ||
-                            'حدث خطأ اثناء تغيير كلمة المرور',
-                    });
+                    this.errorHandlerService.handleError(err)
                 },
             });
     }

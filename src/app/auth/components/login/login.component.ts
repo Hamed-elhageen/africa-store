@@ -5,6 +5,7 @@ import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthErrorHandlerService } from '../../services/auth-error-handler.service';
 //  configuration for sweet alert , data about the alert which will appear and you can change it                           This creates a reusable toast notification with custom styling and position.
 // Will be used to show login success or error messages.
 const Toast = Swal.mixin({
@@ -33,7 +34,7 @@ export class LoginComponent {
         password: new FormControl('', [Validators.required , Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/) ]),
     });
 
-    constructor(private loginService:LoginService ,private router:Router, private spinner:NgxSpinnerService  )                                        // firstly , if you want to use ngxspinner animation for handling loading spinner animations , you should do       "npm install ngx-spinner" and after that go to app module.ts and import  the two modules      "import { NgxSpinnerModule } from "ngx-spinner";"     "import { BrowserAnimationsModule } from '@angular/platform-browser/animations';" and put them in imports and now ;you can go to your component which is login here and "import { NgxSpinnerService } from 'ngx-spinner';" and inject the service to your component constructor and use it
+    constructor(private loginService:LoginService,private handeErrorService:AuthErrorHandlerService ,private router:Router, private spinner:NgxSpinnerService  )                                        // firstly , if you want to use ngxspinner animation for handling loading spinner animations , you should do       "npm install ngx-spinner" and after that go to app module.ts and import  the two modules      "import { NgxSpinnerModule } from "ngx-spinner";"     "import { BrowserAnimationsModule } from '@angular/platform-browser/animations';" and put them in imports and now ;you can go to your component which is login here and "import { NgxSpinnerService } from 'ngx-spinner';" and inject the service to your component constructor and use it
         {}
 
 
@@ -46,18 +47,11 @@ export class LoginComponent {
     //now you can use those fields directly
 
 
-
     togglePasswordVisibility(){
         this.passwordVisibility=!this.passwordVisibility;
     }
 
-
-
-
-
-
                                                                                                                                                                                             //as i said to you in the service , first you will send the request with the login function and after that you handle the error function and success fucntion , and here you need create from data funciton to send the input fields values as form data with the login request
-
     login(){                                                                                                                                                                            //this is the login function which i will use when clicking on login button and it will use the service and the fucntions inside it to handle the login request process and sending the token to the local storage after it using handle success function , but first , i check on the form , if theere are no errors an all its input fields are valid , execute what iside it
         if(this.loginForm.valid){                                                                                                                                              //cecking of the form is valid , means checking that all its input fields are valid
             this.spinner.show();
@@ -72,17 +66,11 @@ export class LoginComponent {
                     }
                 }),                                                                                           //if there is no error , it will execute next function which contains handle success function taking the response of the request
 
-                error:(err)=>this.handleError(err)                                                                                                                   // and if there is an error it will execute the error function which execute handleerror function
+                error:(err)=>this.handeErrorService.handleError(err)                                                                                                                   // and if there is an error it will execute the error function which execute handleerror function
             })
         }
     }
                                                                                                                                                                                       //summary : when sending the request with the form data the user enters in the input fields , if everything is good and data sent to the server successfully , we will execute the handlesuccess function which takes the token and saves it to local storage and update login status and show you a toast with successfully login , if there were an error , it will execute the handleerror function which checks on the errror type and gives you a toast with it . and take care , if we executes handle success or handle error , we should stop the spinner loading
-
-
-
-
-
-
 
 
     handleSuccess(response:any){                                                                                    //you use this function in login function above and you passed to it a response and now we will know what it will do to this response
@@ -95,28 +83,4 @@ export class LoginComponent {
         this.router.navigate(['/']); // Go to homepage
     }
 
-
-
-
-    handleError(error: any) {
-        this.spinner.hide();
-        if (error instanceof HttpErrorResponse) {                                                                                                         //here iam checking if the error comes from the server when response
-            if (error.status === 401) {
-            this.errorMessage = `${error?.error?.message}`||'يوجد خطأ فى اسم المستخدم او كلمه السر';
-            } else if (error.status === 500) {
-            this.errorMessage =`${error?.error?.message}`|| 'حدث خطأ في الخادم';
-            } else if (error.status === 0) {
-            this.errorMessage = 'حدث خطأ في الانترنت';
-            } else {
-            this.errorMessage = 'حدث خطأ غير متوقع';
-            }
-        } else {
-            this.errorMessage = 'حدث خطأ غير معروف';
-        }
-
-        Toast.fire({
-            icon: 'error',
-            title: this.errorMessage,
-        });
-    }
 }

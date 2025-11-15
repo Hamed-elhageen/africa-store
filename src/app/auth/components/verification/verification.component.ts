@@ -1,25 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ForgetPasswordService } from '../../services/forget-password.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { AuthErrorHandlerService } from '../../services/auth-error-handler.service';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     customClass: {
-  popup: 'my-toast-style'
+    popup: 'my-toast-style'
     },
     showConfirmButton: false,
     timer: 4000,
     timerProgressBar: false,
-  });
+    });
 @Component({
   selector: 'app-verification',
   templateUrl: './verification.component.html',
   styleUrl: './verification.component.scss'
 })
-export class VerificationComponent {
+export class VerificationComponent implements OnInit {
     handle: string = '';
     verificationForm=new FormGroup({
         firstNumber:new FormControl('',[Validators.required,     Validators.pattern('^[0-9]$')]),
@@ -28,16 +29,16 @@ export class VerificationComponent {
         fourthNumber:new FormControl('',[Validators.required,     Validators.pattern('^[0-9]$')] ),
     })
 
-    constructor(private forgetPasswordService:ForgetPasswordService , private router:Router, private ngxSpinner:NgxSpinnerService)
-    {
+    constructor(private forgetPasswordService:ForgetPasswordService, private router:Router, private ngxSpinner:NgxSpinnerService)
+    {}
+    ngOnInit(): void {
         const storedEmail = localStorage.getItem('handle');
         if (storedEmail) {
             this.handle= storedEmail;
         } else {
             this.router.navigate(['/authentication/forgotpassword']);
+        }
     }
-    }
-
 
 
     get firstNumber(){
@@ -55,23 +56,13 @@ export class VerificationComponent {
 
 
 
-
-
-
-
   // Auto-focus to the next field when one is filled
-    onInputChange(
-    event: any,
-    nextInput?: HTMLInputElement | null,
-    prevInput?: HTMLInputElement | null
-) {
+    onInputChange(event: any,nextInput?: HTMLInputElement | null,prevInput?: HTMLInputElement | null) {
     const input = event.target as HTMLInputElement;
-
   // لو كتب رقم → يروح للبعده
     if (input.value.length === 1 && nextInput) {
     nextInput.focus();
     }
-
   // لو مسح (Backspace) → يرجع للقبله
     if (input.value.length === 0 && prevInput) {
     prevInput.focus();
@@ -80,24 +71,20 @@ export class VerificationComponent {
 
 
 
-
-
-
      // Handle form submission
 onSubmit() {
     if (this.verificationForm.invalid) return;
     const code = `${this.verificationForm.value.firstNumber}${this.verificationForm.value.secondNumber}${this.verificationForm.value.thirdNumber}${this.verificationForm.value.fourthNumber}`;
     this.ngxSpinner.show();
-    // Call service to verify OTP code
     this.forgetPasswordService.verifyResetCode(this.handle, code).subscribe({
         next: (res) => {
             this.ngxSpinner.hide();
             Toast.fire({
                 icon: 'success',
-                title: `${res.message}`,
+                title: `${res.message}`||"done successfully , update your password now",
         });
             this.router.navigateByUrl('/authentication/updatepassword');
-            localStorage.setItem("code",code)                                                                                                          //here we saved the code to be sent with the password and new password
+            localStorage.setItem("code",code)                                                                                                                //here we saved the code to be sent with the password and new password
         },
         error: (err) => {
             this.ngxSpinner.hide();

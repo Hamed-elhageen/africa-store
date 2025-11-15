@@ -1,48 +1,51 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';                                                                //httpClient service for using request methods (get , post , delete , patch , update) , httpHeaders we use it to be sent with each request to the server and it contains the token that tell the server that this user who is doing the aciton
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';                                                                  //for using injection
-import { Router } from '@angular/router';                                                                                                      //for using navigate and go to pages after specific action
-import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';                                                   // we use those from rxjs to deal with things that change and i subscribe on it to see this change
-import { environment } from '../../environments/environment';                                                                     //where the api link is found
-import { isPlatformBrowser } from '@angular/common';                                                                             // for checking if you are on browser or server
+import { HttpClient, HttpHeaders } from '@angular/common/http';                                                                                //httpClient service for using request methods (get , post , delete , patch , update) , httpHeaders we use it to be sent with each request to the server and it contains the token that tell the server that this user who is doing the aciton
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';                                                                                  //for using injection
+import { Router } from '@angular/router';                                                                                                                      //for using navigate and go to pages after specific action
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';                                                                  // we use those from rxjs to deal with things that change and i subscribe on it to see this change
+import { environment } from '../../environments/environment';                                                                                   //where the api link is found
+import { isPlatformBrowser } from '@angular/common';                                                                                            // for checking if you are on browser or server
 import { LoginResponse } from '../models/login-response';
 
 @Injectable({
-  providedIn: 'root'                                                                                                                                       //this means that you can use the service at every place in the project
+  providedIn: 'root'                                                                                                                                                  //this means that you can use the service at every place in the project
 })
 export class LoginService {
-private accessToken:string|null=null;                                                                                                                     //Stores the current user's token sent from the backend
+private accessToken:string|null=null;                                                                                                                      //Stores the current user's token sent from the backend
 public isUserLoggedSubject:BehaviorSubject<boolean>;                                                                                    //this is a behaviour subject which acts as observable , which i will  subscibe on it in any component  and  listen to any changes to it , "it tells me if the user logged in or logged our or any change " ///and also can act as observer that can send data , like making is userlogged subject is true when user log in  "isuserloggedsubject.next(true)" and also can make it false if user logged out
 public httpOptionAuth: { headers: HttpHeaders } = { headers: new HttpHeaders() };                                         // those are the headers which will be sent with any request , this will be in the shape of json
-public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHeaders() };                         // those are the headers which will be sent with any request , this will be in the shape of formdata
-
 
 
   constructor(private httpClient:HttpClient                                                                                                        //injecting http client service to use all requests methods like get , post , delete , patch
      , private router:Router ,                                                                                                                                //injecting router for using navigate , to navigate to landing page if login succeeded or navigate to the dashboard if he was admin
-    @Inject(PLATFORM_ID) private platformId: Object )                                                                                    //i injected this service to use it to check if i am runing the project on the browser or not , because if i wasnt running it on browser it will be an problem with local storage  , so i do this check to safely use local storage.)
+    @Inject(PLATFORM_ID) private platformId: Object )                                                                                   //i injected this service to use it to check if i am runing the project on the browser or not , because if i wasnt running it on browser it will be an problem with local storage  , so i do this check to safely use local storage.)
     {
         this.isUserLoggedSubject=new BehaviorSubject<boolean>(this.isUserLoggedIn);                                //•	Initializes isUserLoggedSubject with the current login state (true or false). but we here didnt put it directly true or false , we put it in a varirable "isUserLoggedIn" which its value is determined under based on finding the token in local storage or not , take care (the behaviour subject should be initialized with initial value)
-        this.updateHttpOptions();                                                                                                                         //• Sets up HTTP headers with the current token (if available). this means that you update http options and any request will be send from now , will send with your token , as your are a user now , not needing to do login again, so it sends the token with the http headers and now he updates it with this token.
+        this.updateHttpOptions();                                                                                                                       //• Sets up HTTP headers with the current token (if available). this means that you update http options and any request will be send from now , will send with your token , as your are a user now , not needing to do login again, so it sends the token with the http headers and now he updates it with this token.
     }
 
+
+ get isUserLoggedIn() :boolean{                                                                                                                    //isUserLoggedIn which i used in isUserLoggedSubject as initial value wont be true or false by luck , it will be true or false based on finding the token of the user in the local storage
+        if(isPlatformBrowser(this.platformId)){
+                return localStorage.getItem('token')? true:false;                                                                        //if the token of the user in the local storage , so isloggedin will be true , and vice verca
+    }
+    return false;
+}
 
 
     login(email:string,password:string): Observable<LoginResponse>{                                                                                         // login function which didnt return static data , it returns an observable "promise that i will return data later" or " we are waiting the response" and you subscribe on it to get the data sent from the server
         return this.httpClient.post<LoginResponse>(environment.api+"/auth/login",{email:email,password:password}).pipe(
-            catchError(err=>{                                                                                                                                        //handles the error if occured , Catches any error if login fails.
+            catchError(err=>{                                                                                                                                                            //handles the error if occured , Catches any error if login fails.
                 console.log("login error ",err);
                 return throwError(()=>err)
             })
         )
     }
-                                                                                                                                                                            //after you finish the login funcion , you must 1- save the token back in the local storage               2- change isUserLoggedSubject value to true                         those 2 things will be put in a function called handleloginsuccess which works after login function
+                                                                                                                                                                                               //after you finish the login funcion , you must 1- save the token back in the local storage           2-save the role of the user in local storage (user or admin)              2- change isUserLoggedSubject value to true                         those 3 things will be put in a function called handleloginsuccess which works after login function
 
 
-
-
-                                                                                                                                                                           //now you did the login function and handled if there were any error , now handle if the login succeeded , "if you send the post request and the backend checks it and the user data sent are true" and passed to you a token , what i should do after that :
-    handleLoginSuccess(response:any){                                                                                                                //this function will be used after  returning the token  ,  after that you pass the token to this funciton as parameter , and it will be added to local storage
-        if(isPlatformBrowser(this.platformId)){                                                                                                      // in your login component you will use the login function with its error handling and after it you will use this function to save the toke retured from the back end
+                                                                                                                                                                                               //now you did the login function and handled if there were any error , now handle if the login succeeded , "if you send the post request and the backend checks it and the user data sent are true" and passed to you a token , what i should do after that :
+    handleLoginSuccess(response:any){                                                                                                                 //this function will be used after  returning the token  ,  after that you pass the token to this funciton as parameter , and it will be added to local storage
+        if(isPlatformBrowser(this.platformId)){                                                                                                       // in your login component you will use the login function with its error handling and after it you will use this function to save the toke retured from the back end
             localStorage.setItem('token',response?.data?.token)
             localStorage.setItem('role',response?.data?.user?.role)
         }
@@ -51,49 +54,26 @@ public httpOptionFormdataAuth: { headers: HttpHeaders } = { headers: new HttpHea
     }
 
 
-
-
-
-                                                                                                                                                                 //now it is the opposite of the 2 steps above , when logging out  1- remove the token from the local storage           2- changing isUserLoggedSubject value to false , do you know why we change it , becasue each place subscribing on it will listen to this change , like the header , in which the sign up button will appear when you logout
-    logout(){                                                                                                                                                //the same logout function if you call it when clicking on logout button it will remove the token of the user and he will be unknown and not logged
-        if(isPlatformBrowser(this.platformId)){                                                                                              //dont forget to use isplatformBrowser checking to safely use local storage
+                                                                                                                                                                    //now it is the opposite of the 2 steps above , when logging out  1- remove the token from the local storage           2- changing isUserLoggedSubject value to false , do you know why we change it , becasue each place subscribing on it will listen to this change , like the header , in which the sign up button will appear when you logout
+    logout(){                                                                                                                                                   //the same logout function if you call it when clicking on logout button it will remove the token of the user and he will be unknown and not logged
+        if(isPlatformBrowser(this.platformId)){                                                                                                 //dont forget to use isplatformBrowser checking to safely use local storage
+            localStorage.removeItem('role')
             localStorage.removeItem('token')
         }
-        this.isUserLoggedSubject.next(false);                                                                                               //so here we updated isUserLoggedSubject with false
+        this.isUserLoggedSubject.next(false);                                                                                                  //so here we updated isUserLoggedSubject with false
     }
 
 
 
-
-
-
-    get isUserLoggedIn() :boolean{                                                                                                        //isUserLoggedIn which i used in isUserLoggedSubject as initial value wont be true or false by luck , it will be true or false based on finding the token of the user in the local storage
-        if(isPlatformBrowser(this.platformId)){
-                return localStorage.getItem('token')? true:false;                                                                  //if the token of the user in the local storage , so isloggedin will be true , and vice verca
-    }
-    return false;
-}
-
-
-getUserRole(): string | null {
+getUserRole(): string | null {                                                                                                                   //puttin the role of the user in getUserRole
     if (isPlatformBrowser(this.platformId)) {
         return localStorage.getItem('role');
     }
     return null;
 }
 
-isAdmin(): boolean {
+isAdmin(): boolean {                                                                                                                                     //if the role was admin -=>isAdmin will be true
     return this.getUserRole() === 'admin';
-}
-
-
-
-
-
-
-
-isLoggedInObservable(): Observable<boolean> {                                                                              //making isLoggedSubject to act as observable here
-    return this.isUserLoggedSubject.asObservable();                                                                          //"by this function isUserloggedSubject will act as observable which i can subscribe on its value if it chaned , and based on its value i can do alot of actions such hiding log in and logout button and so on "
 }
 
 
@@ -112,11 +92,6 @@ private updateHttpOptions(){                                                    
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
           Authorization: 'Bearer ' + this.accessToken                                                                           //you passed the token with the headers to tell him that iam the user logged in , not needing to log in  , in each request
-        })
-    };
-    this.httpOptionFormdataAuth = {
-        headers: new HttpHeaders({
-          Authorization: 'Bearer ' + this.accessToken                                                                              //also passed the token with these headers
         })
     };
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -19,7 +19,7 @@ const Toast = Swal.mixin({
     templateUrl: './verifyregister.component.html',
     styleUrl: './verifyregister.component.scss'
 })
-export class VerifyregisterComponent {
+export class VerifyregisterComponent implements OnInit{
     handle: string = '';
     verificationForm=new FormGroup({
          //each input field will accept only one number
@@ -29,18 +29,19 @@ export class VerifyregisterComponent {
         fourthNumber:new FormControl('',[Validators.required,     Validators.pattern('^[0-9]$')] ),
     })
 
-
-
     // take care of very important thing , you are sending the email ( handle ) with the code and the email i stored in local storage when registering
     constructor(private registerService:RegisterService ,private router:Router,private ngxSpinner:NgxSpinnerService)
-    {
-        const storedEmail = localStorage.getItem('handle');
-    if (storedEmail) {
-        this.handle = storedEmail;
-    } else {
-        this.router.navigate(['/authentication/register']);
+    {}
+
+    ngOnInit(): void {
+            const storedEmail = localStorage.getItem('handle');
+            if (storedEmail) {
+                this.handle = storedEmail;
+            } else {
+            this.router.navigate(['/authentication/register']);
+        }
     }
-    }
+
 
     // picking up the input fields to work on
     get firstNumber(){
@@ -58,30 +59,18 @@ export class VerifyregisterComponent {
 
 
 
-
-
-
-
-
     // Auto-focus to the next or previous field
 onInputChange(event: any,nextInput?: HTMLInputElement | null,prevInput?: HTMLInputElement | null) {
-    const input = event.target as HTMLInputElement;
-
+    const input = event.target as HTMLInputElement;                                                                                                                         //here i pick up the input element i input in
   // لو كتب رقم → يروح للبعده
     if (input.value.length === 1 && nextInput) {
         nextInput.focus();
     }
-
   // لو مسح (Backspace) → يرجع للقبله
     if (input.value.length === 0 && prevInput) {
         prevInput.focus();
     }
 }
-
-
-
-
-
 
 
 
@@ -96,16 +85,16 @@ onSubmit() {
             this.ngxSpinner.hide();
             Toast.fire({
                 icon: 'success',
-                text:   `${res.message}`
+                text:   `${res.message} ||` || 'user registered successfully , login now!'
         });
         this.router.navigateByUrl('/authentication/login');
-        localStorage.removeItem('handle');                              //after verification delete the register email from the local storage
+        localStorage.removeItem('handle');                                                                                                       //after verification delete the register email from the local storage
         },
         error: (err) => {
             this.ngxSpinner.hide();
             Toast.fire({
                 icon: 'error',
-                text: `${err?.error?.data?.code}`,
+                text: `${err?.error?.message}` || "Failed to create the account",
             });
         }
     });
