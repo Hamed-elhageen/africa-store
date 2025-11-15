@@ -171,9 +171,9 @@ ngOnInit(): void {
     this.sizes?.setValue(selected);                                                                                                                       //the value of the sizes will be the final  selected array  after addition and remove
 }
 
-    onCategoryChange(event: any) {                                                                                                               //here the function to handle the change of the category and the value when changed will be put in catId variable
-    this.catId = event.target.value;
-    }
+    // onCategoryChange(event: any) {                                                                                                               //here the function to handle the change of the category and the value when changed will be put in catId variable
+    // this.catId = event.target.value;
+    // }
 
 
 
@@ -204,7 +204,7 @@ ngOnInit(): void {
     formData.append('discount', this.discount?.value || '0');
 
     //now its time to add the values of the select field or checkbox or files or any thing that is changed
-    formData.append('category', this.catId || '');
+formData.append('category', this.category?.value);
 
     const selectedSizes = this.sizes?.value || [];
     selectedSizes.forEach((size: string) => formData.append('sizes[]', size));
