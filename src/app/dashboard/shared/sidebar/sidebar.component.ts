@@ -10,23 +10,11 @@ import { Router } from '@angular/router';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-
-    constructor(private loginService:LoginService , private router:Router){
-        
-    }
 @Input() isSidebarOpen:boolean=false
+    constructor(private loginService:LoginService , private router:Router){}
 
-
-
-@Output() close = new EventEmitter<void>();
-
-    onClose() {
-        this.close.emit();
-    }
-
-
-
-     logout() {
+//first , isSidebarOpen will come from out , and based on its value the sidebar will be opened or closed.
+    logout() {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "Do you want to logout?",

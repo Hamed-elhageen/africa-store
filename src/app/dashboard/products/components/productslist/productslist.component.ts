@@ -3,6 +3,8 @@ import { ProductsdashboardService } from '../../services/productsdashboard.servi
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CategoriesdashboardService } from '../../../categories/services/categoriesdashboard.service';
+import { Product } from '../../models/products';
+import { Category } from '../../../categories/models/categories';
 
 @Component({
   selector: 'app-productslist',
@@ -10,81 +12,82 @@ import { CategoriesdashboardService } from '../../../categories/services/categor
   styleUrl: './productslist.component.scss'
 })
 export class ProductslistComponent implements OnInit {
-    products!:any[];
-    categories!:any[]
-constructor(private productsService:ProductsdashboardService,private categoriesService:CategoriesdashboardService , private spinner:NgxSpinnerService ){
+    products!:Product[];
+    categories!:Category[]
+    catId!:string
+    searchWord!:string;
+    searchTimeOut!:any
 
-}
-catId!:string
-//when changing the category the products are changed using param map
-onCategoryChange(event:any){
-this.catId=event.target.value;
-this.spinner.show()
- this.productsService.getAllProducts({category:this.catId}).subscribe({
-        next:(comingProducts)=>{
-            this.products=comingProducts.data;
-            this.spinner.hide()
-        },
-        error:(err)=>{
-            console.log(err.message)
-        }
-    })
-}
+constructor(private productsService:ProductsdashboardService,private categoriesService:CategoriesdashboardService , private spinner:NgxSpinnerService )
+    {
 
-searchWord!:string;
-searchTimeOut!:any
-onSearch(event:any){
-    this.searchWord=event.target.value;
-    if (this.searchTimeOut) {
-    clearTimeout(this.searchTimeOut);
-  }
-    this.searchTimeOut=setTimeout(()=>{
-this.spinner.show();
-    this.productsService.getAllProducts({category:this.catId, k :this.searchWord}).subscribe({
-        next:(comingProducts)=>{
-            this.products=comingProducts.data;
-            this.spinner.hide()
-        },
-        error:(err)=>{
-            console.log(err.message)
-        }
-    })
-    },900)
-
-}
-
-
+    }
 
     ngOnInit(): void {
-        //to get all the products when the page is opened
+        //to get all the products and all the categories in the selece field  when the page is opened
         this.spinner.show();
-this.productsService.getAllProducts().subscribe({
-        next: (comingProducts) => {
-            this.products = comingProducts.data;
-            this.spinner.hide();
-        },
-        error: (err) => {
-            console.log(err.message);
-            this.spinner.hide();
+        this.loadAllProducts();
+        this.loadAllCategories();
+    }
+
+
+    loadAllProducts(){
+        this.productsService.getAllProducts().subscribe({
+            next: (comingProducts) => {
+                this.products = comingProducts.data;
+                this.spinner.hide();
+            },
+            error: (err) => {
+                console.log(err.message);
+                this.spinner.hide();
+            }
+        });
+    }
+
+    loadAllCategories(){
+        this.categoriesService.getAllCategories().subscribe({
+            next:(result)=>{
+                this.categories=result.data
+            },
+            error:(err)=>{
+                console.log(err.message)
+            }
+        })
+    }
+    onCategoryChange(event:Event){
+        this.catId= (event.target as HTMLSelectElement).value;                                                                                                                                     //each time the the admin changes the category its id is put in catId and after that make fetch to the data with this catId query Param
+        this.spinner.show()
+        this.productsService.getAllProducts({category:this.catId}).subscribe({
+                next:(comingProducts)=>{
+                    this.products=comingProducts.data;
+                    this.spinner.hide()
+                },
+                error:(err)=>{
+                    console.log(err.message)
+                }
+            })
         }
-    });
 
 
-this.categoriesService.getAllCategories().subscribe({
-    next:(result)=>{
-        this.categories=result.data
-    },
-    error:(err)=>{
-        console.log(err.message)
+    onSearch(event:Event){
+        this.searchWord=(event.target as HTMLInputElement) .value;
+        if (this.searchTimeOut) {
+            clearTimeout(this.searchTimeOut);
+        }
+        this.searchTimeOut=setTimeout(()=>{
+            this.spinner.show();
+            this.productsService.getAllProducts({category:this.catId, k :this.searchWord}).subscribe({
+                next:(comingProducts)=>{
+                    this.products=comingProducts.data;
+                    this.spinner.hide()
+                },
+                error:(err)=>{
+                    console.log(err.message)
+                    this.spinner.hide()
+                }
+            })
+    },900)
     }
-})
-
-    }
-
-
-
-
-
 
 
 
@@ -104,15 +107,14 @@ deleteProduct(id:string){
                 this.productsService.deleteProduct(id).subscribe({
                     next:(comingData)=>{
                         Swal.fire({
-                                        title: 'Deleted!',
-                                    text: comingData.message || 'Product has been deleted successfully.',
-                                    icon: 'success',
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                    })
+                            title: 'Deleted!',
+                            text: comingData.message || 'Product has been deleted successfully.',
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                            })
                             this.products=this.products.filter((prd)=>prd._id!=id)
                             this.spinner.hide();
-
                     },
                     error:(err)=>{
                         Swal.fire({

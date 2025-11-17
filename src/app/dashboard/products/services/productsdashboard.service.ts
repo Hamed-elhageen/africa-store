@@ -2,16 +2,21 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { catchError, Observable, throwError } from 'rxjs';
-import { error } from 'console';
-import { env } from 'process';
+import { AllProductsResponse, Create_DeleteProductResponse, SingleProductResponse, UpdateProductResponse } from '../models/products';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProductsdashboardService {
 constructor(private http : HttpClient){ }
-//query params is passed as an object and behind the scene it is converted to that         /products?category=68ed728b9e7d27851235846a
-    getAllProducts(queryParams?:{[key:string]:any} ):Observable<any>{
+
+    get headers() {
+        const token = localStorage.getItem("token");
+        return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    }
+
+//query params is passed as an object and behind the scene it is converted to that         /products?category=68ed728b9e7d27851235846a and so on
+    getAllProducts(queryParams?:{[key:string]:any} ):Observable<AllProductsResponse>{
         let params = new HttpParams();
         if(queryParams){
             Object.keys(queryParams).forEach((key)=>{
@@ -20,10 +25,10 @@ constructor(private http : HttpClient){ }
                 }
             })
         }
-        params=params.set("[pagination][limit]","1000")
-        return this.http.get<any>(`${environment.api}/products`,{params}).pipe(
+        params=params.set("[pagination][limit]","1000")                                                                //iam setting it from here since we havent got pagination in design
+        return this.http.get<AllProductsResponse>(`${environment.api}/products`,{params}).pipe(
             catchError((err)=>{
-                console.log("the error is " + err)
+                console.log("error in getting all the products in dashboard " + err)
                 return throwError(()=>err)
             })
         )
@@ -31,14 +36,10 @@ constructor(private http : HttpClient){ }
 
 
 
- token = localStorage.getItem("token")
-headers=new HttpHeaders().set(
-                'Authorization',
-                `Bearer ${this.token}`
-            )
-    addProduct(formData:FormData,catId:string):Observable<any>{
-        return this.http.post<any>(`${environment.api}/products/${catId}`,formData,{headers:this.headers}).pipe(
+    addProduct(formData:FormData,catId:string):Observable<Create_DeleteProductResponse>{
+        return this.http.post<Create_DeleteProductResponse>(`${environment.api}/products/${catId}`,formData,{headers:this.headers}).pipe(
             catchError((error)=>{
+                console.log("error in creating product in dashbaord" + error)
                 return throwError(()=>error)
             })
         )
@@ -46,10 +47,18 @@ headers=new HttpHeaders().set(
 
 
 
+    deleteProduct(prdId:string):Observable<Create_DeleteProductResponse>{
+        return this.http.delete<Create_DeleteProductResponse>(`${environment.api}/products/${prdId}`,{headers:this.headers}).pipe(
+            catchError((err)=>{
+                console.log("error in deleting product in dashboard" +err)
+                return throwError(()=>err)
+            })
+        )
+    }
 
 
-    deleteProduct(prdId:string):Observable<any>{
-        return this.http.delete<any>(`${environment.api}/products/${prdId}`,{headers:this.headers}).pipe(
+    updateProduct(formData:FormData,prdId:string):Observable<UpdateProductResponse>{
+        return this.http.patch<UpdateProductResponse>(`${environment.api}/products/${prdId}`,formData,{headers:this.headers}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             })
@@ -57,17 +66,8 @@ headers=new HttpHeaders().set(
     }
 
 
-    updateProduct(formData:FormData,prdId:string):Observable<any>{
-        return this.http.patch<any>(`${environment.api}/products/${prdId}`,formData,{headers:this.headers}).pipe(
-            catchError((err)=>{
-                return throwError(()=>err)
-            })
-        )
-    }
-
-
-        gitSingleProduct(prdId:string):Observable<any>{
-        return this.http.get<any>(`${environment.api}/products/${prdId}`).pipe(
+        gitSingleProduct(prdId:string):Observable<SingleProductResponse>{
+        return this.http.get<SingleProductResponse>(`${environment.api}/products/${prdId}`).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             })

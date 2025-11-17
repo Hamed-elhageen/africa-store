@@ -24,25 +24,23 @@ import { Router } from '@angular/router';
 
 })
 export class DashboardheaderComponent  implements OnInit{
+    @Output() toggleSidebar = new EventEmitter<void>();
+    userImageSrc!:string;
+    profileMenuOpen:boolean=false;
+
     constructor(private loginService:LoginService , private spinner:NgxSpinnerService , private profileService:ProfileService , private router:Router){}
+
     ngOnInit(): void {
         this.getUserData();
     }
-@Output() toggleSidebar = new EventEmitter<void>();
-userImageSrc!:string;
 
     onToggleSidebar() {
         this.toggleSidebar.emit();
     }
 
-    //************************************************************************************************************************************ */
-    profileMenuOpen:boolean=false;
     toggleProfileMenuOpen(){
         this.profileMenuOpen=!this.profileMenuOpen
     }
-
-
-
 
 
     getUserData(){

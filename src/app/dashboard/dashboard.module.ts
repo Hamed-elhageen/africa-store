@@ -11,49 +11,49 @@ const routes: Routes = [
     path: '',
     component: DashboardlayoutComponent,
     children: [
-      {
+    {
         path: 'products',
         loadChildren: () =>
-          import('./products/products.module').then(m => m.ProductsModule)
-      },
-      {
+            import('./products/products.module').then(m => m.ProductsModule)
+    },
+    {
         path: 'categories',
         loadChildren: () =>
-          import('./categories/categories.module').then(m => m.CategoriesModule)
-      },
-      {
+            import('./categories/categories.module').then(m => m.CategoriesModule)
+    },
+    {
         path: 'orders',
         loadChildren: () =>
-          import('./orders/orders.module').then(m => m.OrdersModule)
-      },
-       {
+            import('./orders/orders.module').then(m => m.OrdersModule)
+    },
+    {
         path: 'copons',
         loadChildren: () =>
-          import('./copons/copons.module').then(m => m.CoponsModule)
-      },
+            import('./copons/copons.module').then(m => m.CoponsModule)
+    },
         {
         path: 'homecontrol',
         loadChildren: () =>
-          import('./homecontrol/homecontrol.module').then(m => m.HomecontrolModule)
-      },
-      {
+            import('./homecontrol/homecontrol.module').then(m => m.HomecontrolModule)
+    },
+    {
         path: '',
         redirectTo: 'products',
         pathMatch: 'full'
-      }
+    }
     ]
-  }
+}
 ];
 //by this routing , inside the router outlet , each module of the products and categories will be did and inside each module you will change between add product and edit product
 @NgModule({
-  declarations: [
+    declarations: [
     DashboardheaderComponent,
     SidebarComponent,
     DashboardlayoutComponent
-  ],
-  imports: [
+    ],
+    imports: [
 CommonModule,
 RouterModule.forChild(routes)
-  ]
+    ]
 })
 export class DashboardModule { }

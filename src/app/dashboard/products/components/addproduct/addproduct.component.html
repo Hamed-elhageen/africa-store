@@ -94,7 +94,7 @@
         <!-- Main Product Image -->
         <div>
             <label class="block mb-2 text-sm font-medium text-gray-300">Main Product Image</label>
-            <div  class="flex items-center gap-2">
+            <div  class="flex flex-col items-center gap-2 md:flex-row">
                 <input type="file" accept="image/*"  (change)="onMainImageChange($event)" formControlName="mainProductImage" [ngClass]="{'border-red-700':mainProductImage?.invalid&&mainProductImage?.touched}"
                 class="text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700">
                 <div *ngIf="mainImagePreview" class="mt-2 text-center">
@@ -104,14 +104,12 @@
             <small class="text-red-500" *ngIf="mainProductImage?.invalid && mainProductImage?.touched">
                         <span *ngIf="mainProductImage?.errors?.['required']"><i class="mr-1 fa-solid fa-circle-exclamation"></i>You must add the product main image</span>
             </small>
-
-
         </div>
 
         <!-- Images -->
         <div >
                 <label class="block mb-2 text-sm font-medium text-gray-300">Choose product images</label>
-                <div class="flex items-center gap-2">
+                <div class="flex flex-col items-center gap-2 md:flex-row">
                     <input type="file" multiple  accept="image/*" (change)="onExtraImageChange($event)" formControlName="extraProductImages" [ngClass]="{'border-red-700':extraProductImage?.invalid&&extraProductImage?.touched}"
                     class="text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700">
                     <div *ngIf="extraImagesPreview.length > 0" class="flex flex-wrap gap-2 mt-3 d-flex">

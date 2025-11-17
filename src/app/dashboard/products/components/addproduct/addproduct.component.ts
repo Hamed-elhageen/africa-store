@@ -5,12 +5,13 @@ import { ProductsdashboardService } from '../../services/productsdashboard.servi
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { Category } from '../../../categories/models/categories';
 //all the explanations are in edit product
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     customClass: {
-  popup: 'my-toast-style'
+    popup: 'my-toast-style'
     },
     showConfirmButton: false,
     timer: 3000,
@@ -23,7 +24,7 @@ const Toast = Swal.mixin({
   styleUrl: './addproduct.component.scss'
 })
 export class AddproductComponent implements OnInit{
-    categories:any[]=[]
+    categories:Category[]=[]
     //those are the images which will be sent with the request
     mainImage!:File | null;
     extraImages!:File[] | null
@@ -32,8 +33,6 @@ export class AddproductComponent implements OnInit{
     extraImagesPreview: string[] = [];
     productForm!: FormGroup;
     catId: string = '';
-
-
 
     teams = [
         { id: 1, name: 'Real Madrid' },
@@ -84,7 +83,6 @@ export class AddproductComponent implements OnInit{
         })
     }
 
-
 //holding each input field here
     get name(){
         return this.productForm.get("name")
@@ -122,9 +120,11 @@ export class AddproductComponent implements OnInit{
 
 
 
-
-
-
+    //for getting the category id the admin chossed to be passed to the url as params
+onCategoryChange(event: any) {
+    this.catId = event.target.value;
+}
+//each time you change the value of the category , its value is put in catId ,and put this event on the select field
 
 
     //handling the images inputs fields :
@@ -170,11 +170,7 @@ export class AddproductComponent implements OnInit{
 
 
 
-//for getting the category id the admin chossed to be passed to the url as params
-onCategoryChange(event: any) {
-    this.catId = event.target.value;
-}
-//each time you change the value of the category , its value is put in catId ,and put this event on the select field
+
 
 
 
