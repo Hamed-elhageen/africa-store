@@ -5,6 +5,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { CategoriesdashboardService } from '../../../categories/services/categoriesdashboard.service';
 import { ProductsdashboardService } from '../../services/productsdashboard.service';
+import { Category } from '../../../categories/models/categories';
+import { DashboardErrorHandlerService } from '../../../shared/services/dashboard-error-handler.service';
 
 const Toast = Swal.mixin({
     toast: true,
@@ -14,7 +16,6 @@ const Toast = Swal.mixin({
     timer: 3000,
     timerProgressBar: false,
 });
-
 @Component({
     selector: 'app-editproduct',
     templateUrl: './editproduct.component.html',
@@ -22,7 +23,7 @@ const Toast = Swal.mixin({
 })
 export class EditproductComponent implements OnInit {
     productForm!: FormGroup;                                            //declaring the edit form
-    categories: any[] = [];                                                   // array to put the categories in to be as values in the select field to choose the product category
+    categories: Category[] = [];                                                   // array to put the categories in to be as values in the select field to choose the product category
     productId!: string;                                                       //the product id that i will get  from the url , of the product that i will update
     mainImage: File | null = null;                                     // the image that will be sent in the request will be put here
     extraImages: File[] = [];                                            //array of images which will be sent with the request
@@ -50,12 +51,12 @@ export class EditproductComponent implements OnInit {
     constructor(
     private categoriesService: CategoriesdashboardService,
     private productsService: ProductsdashboardService,
+    private dashboardErrorHandler:DashboardErrorHandlerService,
     private spinner: NgxSpinnerService,
     private router: Router,
     private route: ActivatedRoute
 ) {}
 
-//inside onInit , which is executed automatically when the component is ready and the page is opened ,1- you put here any code you want to execute when the page is opened          2- getting data from api              3- handling the reactive form like formcontrolName and so on        4- getting route params from the url
 ngOnInit(): void {
     //getting the id of the product we want to update from the url
     this.route.paramMap.subscribe((params)=>{
@@ -80,13 +81,27 @@ ngOnInit(): void {
     this.loadProductData();
     }
 
-    //again and again , those functions will be executed automatically when the page is opened since they are put in onInit :
+
+    // ✅ Getters : to pickup all the fields to facilitate
+    get name() { return this.productForm.get('name'); }
+    get description() { return this.productForm.get('description'); }
+    get club() { return this.productForm.get('club'); }
+    get category() { return this.productForm.get('category'); }
+    get sizes() { return this.productForm.get('sizes'); }
+    get stock() { return this.productForm.get('stock'); }
+    get mainProductImage() { return this.productForm.get('mainProductImage'); }
+    get extraProductImage() { return this.productForm.get('extraProductImages'); }
+    get priceBeforeDiscount() { return this.productForm.get('priceBeforeDiscount'); }
+    get discount() { return this.productForm.get('discount'); }
+    get priceAfterDiscount() { return this.productForm.get('priceAfterDiscount'); }
+
     loadCategories() {
     this.categoriesService.getAllCategories().subscribe({
         next: (res) => (this.categories = res.data),
         error: (err) => console.log(err),
     });
     }
+
     loadProductData() {
     this.spinner.show();
     this.productsService.gitSingleProduct(this.productId).subscribe({
@@ -115,42 +130,25 @@ ngOnInit(): void {
     },
     });
 }
-
-
-// ✅ Getters : to pickup all the fields to facilitate
-    get name() { return this.productForm.get('name'); }
-    get description() { return this.productForm.get('description'); }
-    get club() { return this.productForm.get('club'); }
-    get category() { return this.productForm.get('category'); }
-    get sizes() { return this.productForm.get('sizes'); }
-    get stock() { return this.productForm.get('stock'); }
-    get mainProductImage() { return this.productForm.get('mainProductImage'); }
-    get extraProductImage() { return this.productForm.get('extraProductImages'); }
-    get priceBeforeDiscount() { return this.productForm.get('priceBeforeDiscount'); }
-    get discount() { return this.productForm.get('discount'); }
-    get priceAfterDiscount() { return this.productForm.get('priceAfterDiscount'); }
-
-
                                                                                                                                                                                               //uptill now we wroked on the product previous state and got it and put it in the fields and picked the fields and so on ,
                                                                                                                                                                                              //now its time to handle when these data is changed and sent to the server  ,specially the fields which isnt normal like select  , checkbox , file field      fields with which you use with it events and functions to handle its values
-
-
                                                                                                                                                                                              //to handle the image and take the value of this field we must use a function to handle that and put it to be executed when the image is changed
-    onMainImageChange(event: any) {
-        if (event.target.files && event.target.files.length > 0) {
-            this.mainImage = event.target.files[0];                                                                                                                   //here i put the image in this varible  and after that will be sent to the server as file
+    onMainImageChange(event: Event) {
+        let mainImageInput = event.target as HTMLInputElement
+        if (mainImageInput.files && mainImageInput.files.length > 0) {
+            this.mainImage = mainImageInput.files[0];                                                                                                                   //here i put the image in this varible  and after that will be sent to the server as file
             if(this.mainImage){
-            this.mainImagePreview = URL.createObjectURL(this.mainImage);                                                                       // here i created an url of this image as string and put in this variable and by this i will show the user the image when it is choosed
+            this.mainImagePreview = URL.createObjectURL(this.mainImage);                                                                            // here i created an url of this image as string and put in this variable and by this i will show the user the image when it is choosed
     }
     }
 }
 
 //this to handle the extra product images
-    onExtraImageChange(event: any) {
-        const files = event.target.files;
-        if (files && files.length > 0) {
-            this.extraImages = Array.from(files);
-            this.extraImagesPreview = this.extraImages.map((file) => URL.createObjectURL(file));                            //by this i put the links of the images and the array and will be shown to the user
+    onExtraImageChange(event: Event) {
+        const extraImagesInput = event.target as HTMLInputElement;
+        if (extraImagesInput?.files && extraImagesInput.files.length > 0) {
+            this.extraImages = Array.from(extraImagesInput.files);
+            this.extraImagesPreview = this.extraImages.map((file) => URL.createObjectURL(file));                                   //by this i put the links of the images and the array and will be shown to the user
         } else {
         this.extraImages = [];
         this.extraImagesPreview = [];
@@ -159,9 +157,10 @@ ngOnInit(): void {
 
 
                                                                                                                                                                               //also a function to handle the size checkbox , i told you that fields like checkbox and files and select need a function to handle it whe the value is changed
-    onSizeChange(size: string, event: any) {
+    onSizeChange(size: string, event: Event) {
+        let sizesInput = event.target as HTMLInputElement
         const selected = this.sizes?.value || [];                                                                                                            // first , the value of this array is the choosed values of the check box
-        if (event.target.checked) {
+        if (sizesInput.checked) {
         selected.push(size);                                                                                                                                        // after that if you choosed another size , add it to the array
         } else {
                                                                                                                                                                              //remove it from the selected array
@@ -174,8 +173,6 @@ ngOnInit(): void {
     // onCategoryChange(event: any) {                                                                                                               //here the function to handle the change of the category and the value when changed will be put in catId variable
     // this.catId = event.target.value;
     // }
-
-
 
     updateFinalPrice() {                                                                                                                                   // this is the function to put the final price automatically
     const price = this.priceBeforeDiscount?.value || 0;
@@ -191,8 +188,6 @@ ngOnInit(): void {
 
 
 
-
-
     createFormData() {                                                                                                                                                          //now its time to handle the function of create the form data that will be sent to the server
     const formData = new FormData();
     //here to handle the normal input fields that thier values are taken from them directly
@@ -204,7 +199,7 @@ ngOnInit(): void {
     formData.append('discount', this.discount?.value || '0');
 
     //now its time to add the values of the select field or checkbox or files or any thing that is changed
-formData.append('category', this.category?.value);
+    formData.append('category', this.category?.value);
 
     const selectedSizes = this.sizes?.value || [];
     selectedSizes.forEach((size: string) => formData.append('sizes[]', size));
@@ -220,15 +215,6 @@ formData.append('category', this.category?.value);
 
 
 
-
-
-
-
-
-
-
-
-
     updateProduct() {
         if (this.productForm.invalid) return;
         this.spinner.show();
@@ -241,63 +227,11 @@ formData.append('category', this.category?.value);
         this.router.navigateByUrl('/dashboard/products');
     },
         error: (err) => {
-        this.handleError(err)
+        this.dashboardErrorHandler.handleError(err)
         this.spinner.hide();
         },
     });
 }
-
-
-
-
-
-
-
-//this is the error function that you will put it inside the error function when you are trying to get data from the backend and pass to it the error coming
-    handleError(err:any){
-        //handling if there is no conection to the internet
-        if(err.status===0){
-            Toast.fire({
-                title:"No internet connection. Please check your network.",
-                icon:"error"
-            })
-            return;
-        }
-
-        //if there is and error returned in the data object in postman (its error in data in feilds)
-        if(err?.error?.data){
-            const errors=err?.error?.data;
-            let messages:any[]=[];
-            for(const key in errors){                                                                                                                                                                           //using for in to loop on keys in the errors       like name or image for examble
-                if(errors.hasOwnProperty(key)){
-                    messages.push(`${key}:${errors[key]}`)
-                }
-            }
-            Toast.fire({
-                title:messages.join(' | '),
-                icon:"error"
-            })
-            return ;
-        }
-
-        //error in general
-        Toast.fire({
-            icon: 'error',
-            title: err?.error?.message || 'Something went wrong. Please try again.',
-        });
-    }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
