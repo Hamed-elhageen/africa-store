@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { Category } from '../../../categories/models/categories';
+import { DashboardErrorHandlerService } from '../../../shared/services/dashboard-error-handler.service';
 //all the explanations are in edit product
 const Toast = Swal.mixin({
     toast: true,
@@ -52,6 +53,7 @@ export class AddproductComponent implements OnInit{
 
     constructor( private categoriesService:CategoriesdashboardService ,
         private productsService:ProductsdashboardService ,
+        private dashboardErrorHandler:DashboardErrorHandlerService,
         private spinner:NgxSpinnerService,
         private router:Router ) {}
 
@@ -120,21 +122,23 @@ export class AddproductComponent implements OnInit{
 
 
     //handling the images inputs fields :
-    onMainImageChange(event:any){
-        if(event.target.files&&event.target.files.length>0){
-            this.mainImage=event.target.files[0];
+    //here i used the change event with reactive forms becuase it is file and this was the exeption
+    onMainImageChange(event:Event){
+        const imageInput=event.target as HTMLInputElement
+        if(imageInput.files&&imageInput.files.length>0){
+            this.mainImage=imageInput.files[0];
 
             if(this.mainImage){
-             this.mainImagePreview = URL.createObjectURL(this.mainImage); // ✅ إنشاء رابط معاينة               creating an string url will be put in the mainimagepreview variable and will be passed to the html to make the image appera in front of the admin when he chosses the image
+             this.mainImagePreview = URL.createObjectURL(this.mainImage);                                                                                   // ✅ إنشاء رابط معاينة               creating an string url will be put in the mainimagepreview variable and will be passed to the html to make the image appera in front of the admin when he chosses the image
         }
     }
     }
 
 
-    onExtraImageChange(event:any){
-        const files = event.target.files;
-        if (files && files.length > 0) {
-            this.extraImages = Array.from(files);
+    onExtraImageChange(event:Event){
+        const imagesInput = event.target as HTMLInputElement;
+        if (imagesInput.files && imagesInput.files.length > 0) {
+            this.extraImages = Array.from(imagesInput.files);
             this.extraImagesPreview = this.extraImages.map(file => URL.createObjectURL(file));                                                      //here returns and array of the string urls of the images choosen
         } else {
             this.extraImages = null;
@@ -145,10 +149,10 @@ export class AddproductComponent implements OnInit{
 
 
     //a function for handling sizes and put choosed sizes in array when you choose it and remove size from array when you remove the mark on size:
-    onSizeChange(size: string, event: any) {
+    onSizeChange(size: string, event: Event) {
+    let sizesInput = event.target as HTMLInputElement;
     let selected: string[] = Array.isArray(this.sizes?.value) ? this.sizes?.value : [];
-
-    if (event.target.checked) {
+    if (sizesInput.checked) {
         if (!selected.includes(size)) selected.push(size);
     } else {
         selected = selected.filter(s => s !== size);
@@ -162,13 +166,7 @@ export class AddproductComponent implements OnInit{
 
 
 
-
-
-
-
-
 //handling the final price :
-
 updateFinalPrice() {
     const price = this.priceBeforeDiscount?.value || 0;
     const discount = this.discount?.value || 0;
@@ -207,14 +205,14 @@ updateFinalPrice() {
         formData.append("discount",this.discount?.value||"")
 
         const selectedSizes = this.sizes?.value
-    ? Array.isArray(this.sizes.value)
+        ? Array.isArray(this.sizes.value)
         ? this.sizes.value
         : [this.sizes.value]  // لو واحدة، حولها لمصفوفة
-    : [];
+        : [];
 
-selectedSizes.forEach((size: string) => {
-    formData.append('sizes[]', size);
-});
+        selectedSizes.forEach((size: string) => {
+            formData.append('sizes[]', size);
+        });
 
 
         if(this.mainImage){
@@ -228,7 +226,6 @@ selectedSizes.forEach((size: string) => {
         }
         return formData;
     }
-
 
 
 
@@ -251,68 +248,12 @@ selectedSizes.forEach((size: string) => {
                     this.router.navigateByUrl("/dashboard/products")
             },
             error:(err)=>{
-                    this.handleError(err)
+                    this.dashboardErrorHandler.handleError(err)
                     this.spinner.hide();
             }
         })
     }
 }
-
-
-
-
-
-
-
-
-//this is the error function that you will put it inside the error function when you are trying to get data from the backend and pass to it the error coming
-    handleError(err:any){
-        //handling if there is no conection to the internet
-        if(err.status===0){
-            Toast.fire({
-                title:"No internet connection. Please check your network.",
-                icon:"error"
-            })
-            return;
-        }
-
-        //if there is and error returned in the data object in postman (its error in data in feilds)
-        if(err?.error?.data){
-            const errors=err?.error?.data;
-            let messages:any[]=[];
-            for(const key in errors){                                                                                                                                                                           //using for in to loop on keys in the errors       like name or image for examble
-                if(errors.hasOwnProperty(key)){
-                    messages.push(`${key}:${errors[key]}`)
-                }
-            }
-            Toast.fire({
-                title:messages.join(' | '),
-                icon:"error"
-            })
-            return ;
-        }
-
-        //error in general
-        Toast.fire({
-            icon: 'error',
-            title: err?.error?.message || 'Something went wrong. Please try again.',
-        });
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

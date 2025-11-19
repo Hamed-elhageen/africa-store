@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductslistComponent } from './products/components/productslist/productslist.component';
-import { DashboardheaderComponent } from './shared/dashboardheader/dashboardheader.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { DashboardlayoutComponent } from './shared/dashboardlayout/dashboardlayout.component';
+import { DashboardheaderComponent } from './shared/components/dashboardheader/dashboardheader.component';
+import { DashboardlayoutComponent } from './shared/components/dashboardlayout/dashboardlayout.component';
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
 const routes: Routes = [
   {

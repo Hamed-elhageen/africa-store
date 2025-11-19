@@ -101,7 +101,7 @@ this.spinner.show()
                         confirmButtonText: 'ok!',
                         })
                         if(this.paymentMethod?.value=="card"){
-                            window.open(result.data, "_blank");
+                            window.open(result.data.session, "_blank");
                         }
             },
             error:(err)=>{

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import Swal from 'sweetalert2';
 import { BaseOptions } from 'vm';
-import { LoginService } from '../../../auth/services/login.service';
 import { Router } from '@angular/router';
+import { LoginService } from '../../../../auth/services/login.service';
 
 @Component({
   selector: 'app-sidebar',

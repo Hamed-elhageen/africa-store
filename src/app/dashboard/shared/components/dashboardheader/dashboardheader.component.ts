@@ -1,8 +1,8 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { LoginService } from '../../../auth/services/login.service';
+import { LoginService } from '../../../../auth/services/login.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ProfileService } from '../../../auth/services/profile.service';
+import { ProfileService } from '../../../../auth/services/profile.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
