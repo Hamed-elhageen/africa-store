@@ -71,17 +71,12 @@ export class AddproductComponent implements OnInit{
         priceAfterDiscount:new FormControl("",[Validators.required]),
     })
         this.loadCategories();
+         //for getting the category id the admin chossed to be passed to the url as params here i used value changes which is an observable in any input filed in reactive forms , you subscribe on it to see the change in the value of the field , every change will be reflected in the catId variable
+        this.categoryId?.valueChanges.subscribe((categoryId)=>{
+            this.catId=categoryId
+    })
     }
-    loadCategories(){
-        this.categoriesService.getAllCategories().subscribe({
-            next:(comingCategories)=>{
-                this.categories=comingCategories.data;
-            },
-            error:(err)=>{
-                console.log(err.message)
-            }
-        })
-    }
+
 
 //holding each input field here
     get name(){
@@ -120,10 +115,7 @@ export class AddproductComponent implements OnInit{
 
 
 
-    //for getting the category id the admin chossed to be passed to the url as params
-onCategoryChange(event: any) {
-    this.catId = event.target.value;
-}
+
 //each time you change the value of the category , its value is put in catId ,and put this event on the select field
 
 
@@ -191,6 +183,17 @@ updateFinalPrice() {
 }
 
 
+
+    loadCategories(){
+        this.categoriesService.getAllCategories().subscribe({
+            next:(comingCategories)=>{
+                this.categories=comingCategories.data;
+            },
+            error:(err)=>{
+                console.log(err.message)
+            }
+        })
+    }
 
 
     //creating the data that will be sent to the back end in the request

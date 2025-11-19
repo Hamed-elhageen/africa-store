@@ -60,7 +60,8 @@ export class ProfileComponent implements OnInit {
      //for handling the image and to appear in the circle when choose it
   // صورة الـ Preview
     onFileSelected(event: any) {
-        if (event.target.files && event.target.files.length > 0) {
+        const input = event.target as HTMLInputElement
+        if (input.files && input.files.length > 0) {
             this.selectedAvatar = event.target.files[0];
             this.changeDetails.patchValue({ avatar: this.selectedAvatar });
 

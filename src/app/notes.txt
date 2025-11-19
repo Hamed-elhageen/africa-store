@@ -1,0 +1,11 @@
+1- the input fields which value changes  :
+        if you work with reactive forms (formGroup and formControl) you must use
+               -"valueChanges" this is the best Practice at all and so easy .. it is an observable in each form control and form group and you can subscibe on it to see the change on the value of the field
+                    exept your filed type is file , then use change here
+               -if you used event and event.target as HTMLINPUTELEMENT wont be wrong , but value changes is the best practice
+               -you musnt use ngModel if your are working with reactive forms at all
+       if you work with template driven forms (simple forms and fields without formGroup and formControl):
+              - the best way is to use ngModel
+              -also you can use change event   and take care of something in ts if you are dealing with select field you make
+                    (event.target as HTMLSELECTELEMENT ).value
+                    any  another input field use                      (event.target as HTMLinputELEMENT ).value
