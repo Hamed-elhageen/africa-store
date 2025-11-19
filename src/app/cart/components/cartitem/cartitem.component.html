@@ -11,10 +11,10 @@
         <div
             class="h-auto px-0 md:px-5 py-1 bg-[#333333] rounded-[10px] flex flex-row items-center md:ms-0 "
         >
-            <span class="px-5 text-2xl cursor-pointer">-</span> {{quantity}}
-            <span class="px-5 cursor-pointer text-2x">+</span>
+            <span class="px-5 text-2xl cursor-pointer"  (click)="decreaseProductQuantity(productId)">-</span> {{quantity}}
+            <span class="px-5 cursor-pointer text-2x" (click)="icreaseProductQuantity(productId)">+</span>
         </div>
-        <div class="px-5 py-2 bg-[#333333] rounded-[10px] md:mx-2 mx-3">
+        <div class="px-5 py-2 bg-[#333333] rounded-[10px] md:mx-2 mx-3"  (click)="deleteProduct(_id)">
             <i class="fa-solid fa-trash-can text-[#F55157]"></i>
         </div>
     </div>
