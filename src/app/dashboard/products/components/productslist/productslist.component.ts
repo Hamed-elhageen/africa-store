@@ -55,19 +55,30 @@ constructor(private productsService:ProductsdashboardService,private categoriesS
         })
     }
     //here i didnt used reactive forms so i used event no valueChanges
-    onCategoryChange(event:Event){
-        this.catId= (event.target as HTMLSelectElement).value;                                                                                                                                     //each time the the admin changes the category its id is put in catId and after that make fetch to the data with this catId query Param
-        this.spinner.show()
-        this.productsService.getAllProducts({category:this.catId}).subscribe({
-                next:(comingProducts)=>{
-                    this.products=comingProducts.data;
-                    this.spinner.hide()
-                },
-                error:(err)=>{
-                    console.log(err.message)
-                }
-            })
+    onCategoryChange(event: Event) {
+    this.catId = (event.target as HTMLSelectElement).value;
+
+    this.spinner.show();
+
+    // لو اختار "All categories"
+    if (!this.catId) {
+        this.loadAllProducts();
+        return;
+    }
+
+    // لو اختار category معيّن
+    this.productsService.getAllProducts({ category: this.catId }).subscribe({
+        next: (comingProducts) => {
+            this.products = comingProducts.data;
+            this.spinner.hide();
+        },
+        error: (err) => {
+            console.log(err.message);
+            this.spinner.hide();
         }
+    });
+}
+
 
 
     onSearch(event:Event){
