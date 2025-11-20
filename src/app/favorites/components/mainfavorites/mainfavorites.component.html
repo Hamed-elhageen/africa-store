@@ -77,7 +77,7 @@
     <br>
     @if (favoriteProducts?.length>0) {
       <div class="grid grid-cols-1 md:grid-cols-[repeat(auto-fill,minmax(275px,1fr))] justify-between gap-x-5 gap-y-8">
-        @for (item of favoriteProducts; track $index) {
+        @for (item of favoriteProducts; track item._id) {
           <app-card
           [id]="item._id"
           [productImage]="item.thumbnail.secure_url"

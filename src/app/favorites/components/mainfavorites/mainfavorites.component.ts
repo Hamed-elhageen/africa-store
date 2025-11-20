@@ -49,6 +49,11 @@ this.favoritesService.getFavorites().subscribe({
 }
 
 
+trackById(index: number, item: any) {
+    return item._id;
+}
+
+
     }
 
 
