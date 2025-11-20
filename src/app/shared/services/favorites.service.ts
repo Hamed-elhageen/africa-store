@@ -8,13 +8,15 @@ import { FavoritesResponse, ToggleFavoriteResponse } from '../models/favorites-r
     providedIn: 'root'
 })
 export class FavoritesService {
-token=localStorage.getItem("token")
-headers=new HttpHeaders().set(
-                'Authorization',
-                `Bearer ${this.token}`
-            )
-    constructor(private http : HttpClient) { }
+    constructor(private http:HttpClient){}
 
+    get headers(){
+        const token=localStorage.getItem("token")
+        return new HttpHeaders().set(
+                'Authorization',
+                `Bearer ${token}`
+            )
+    }
 
 
 
