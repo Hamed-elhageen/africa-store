@@ -5,6 +5,8 @@ import { HomecontrolService } from '../../services/homecontrol.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { ProductsdashboardService } from '../../../products/services/productsdashboard.service';
+import { DashboardErrorHandlerService } from '../../../shared/services/dashboard-error-handler.service';
+import { Product } from '../../../products/models/products';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -21,6 +23,13 @@ const Toast = Swal.mixin({
   styleUrl: './homecontrol.component.scss'
 })
 export class HomecontrolComponent {
+    selectedFile!:File;                                                                                                                                                  //this will be the file image you choose , and in the html i did if the user choosed and image , execute the fucntion called onFileChange()
+    imagePreview: string | null = null;                                                                                                //variable to save in it a copy of the image to show to the user
+     //for handling the product search input
+    searchWord!:string;
+    filteredProducts!:Product[];
+    selectedProduct!:Product;
+
     homeControlForm=new FormGroup({
         title:new FormControl("",[Validators.required,Validators.maxLength(20)]),
         club:new FormControl("",[Validators.required,Validators.maxLength(20)]),
@@ -31,7 +40,7 @@ export class HomecontrolComponent {
     })
 
 
-    constructor(private homeControleService:HomecontrolService , private spinner:NgxSpinnerService,private router : Router ,private productsService:ProductsdashboardService){
+    constructor(private homeControleService:HomecontrolService ,  private dashbaordErrorHandler:DashboardErrorHandlerService,private spinner:NgxSpinnerService,private router : Router ,private productsService:ProductsdashboardService){
 
     }
 
@@ -56,26 +65,13 @@ export class HomecontrolComponent {
 
 
 
-    selectedFile:any;                                                                                                                                                  //this will be the file image you choose , and in the html i did if the user choosed and image , execute the fucntion called onFileChange()
-    imagePreview: string | ArrayBuffer | null = null;                                                                                                //variable to save in it a copy of the image to show to the user
-
-    onFileChange(event: any) {                                                                                                                            //this is an event that will occur when the admin changes the category image
-  if (event.target.files && event.target.files.length > 0) {                                                                                 // here we are checking if the user choosed a file (image)
-    this.selectedFile = event.target.files[0];                                                                                                      //here i put the file he choosed in the selected file variable
-
-    const reader = new FileReader();                                                                                                               // FileReaer is a tool that can read the content of the files , here it will read the image and i will take it from him and put it in a variable
-    reader.onload = () => {                                                                                                                             //when i finish reading :
-      this.imagePreview = reader.result;                                                                                                         // i will put in the imagePreview variable
-    };
-    reader.readAsDataURL(this.selectedFile);                                                                                                // this is the code that tell fileReader to start reading the selected file and  and convert it to data url
+    onFileChange(event: Event) {                                                                                                                            //this is an event that will occur when the admin changes the category image
+    const fileInput = event.target as HTMLInputElement
+        if (fileInput.files && fileInput.files.length > 0) {                                                                                 // here we are checking if the user choosed a file (image)
+              this.selectedFile = fileInput.files[0];                                                                                                      //here i put the file he choosed in the selected file variable
+            this.imagePreview=URL.createObjectURL(this.selectedFile)
+        }
     }
-}
-
-
-
-
-
-
 
 
 
@@ -95,14 +91,6 @@ createFormData(){
 
 
 
-
-
-
-
-
-
-
-
 addBanner(){
     this.spinner.show();
     const formData = this.createFormData()
@@ -117,58 +105,14 @@ addBanner(){
         },
         error:(err)=>{
             this.spinner.hide()
-            this.handleError(err)
+            this.dashbaordErrorHandler.handleError(err)
         }
     })
 }
 
-
-
-
-    //this is the error function that you will put it inside the error function when you are trying to get data from the backend and pass to it the error coming
-    handleError(err:any){
-        //handling if there is no conection to the internet
-        if(err.status===0){
-            Toast.fire({
-                title:"No internet connection. Please check your network.",
-                icon:"error"
-            })
-            return;
-        }
-
-        //if there is and error returned in the data object in postman (its error in data in feilds)
-        if(err?.error?.data){
-            const errors=err?.error?.data;
-            let messages:any[]=[];
-            for(const key in errors){                                                                                                                                                                           //using for in to loop on keys in the errors       like name or image for examble
-                if(errors.hasOwnProperty(key)){
-                    messages.push(`${key}:${errors[key]}`)
-                }
-            }
-            Toast.fire({
-                title:messages.join(' | '),
-                icon:"error"
-            })
-            return ;
-        }
-
-        //error in general
-        Toast.fire({
-            icon: 'error',
-            title: err?.error?.message || 'Something went wrong. Please try again.',
-        });
-    }
-
-
-
-    //**************************************************************************************************************************** */
-    //for handling the product search input
-    searchWord!:string;
-    filteredProducts!:any[];
-    selectedProduct!:any;
-
-    onChangeSearchWord(event:any){
-        this.searchWord=event.target.value;
+    // handling the search on product in adding banner
+    onChangeSearchWord(event:Event){
+        this.searchWord=(event.target as HTMLInputElement).value;
         this.spinner.show();
     this.productsService.getAllProducts({ k :this.searchWord}).subscribe({
         next:(comingProducts)=>{
@@ -186,9 +130,7 @@ addBanner(){
 
     selectProduct(product:any){
         this.selectedProduct = product;
-  this.filteredProducts = [];
-  this.homeControlForm.get('choosenProduct')?.setValue(product.name); // <-- الاسم يظهر في الـ input
+        this.filteredProducts = [];
+        this.homeControlForm.get('choosenProduct')?.setValue(product.name); // <-- الاسم يظهر في الـ input
     }
-
-
 }

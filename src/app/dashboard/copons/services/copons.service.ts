@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { CreateCouponResponse, DeleteCouponResponse, GetAllCouponsResponse } from '../models/copons';
 
 @Injectable({
     providedIn: 'root'
@@ -9,13 +10,16 @@ import { environment } from '../../../environments/environment';
 export class CoponsService {
 
     constructor(private http : HttpClient) { }
-token = localStorage.getItem("token")
-headers=new HttpHeaders().set(
+
+    get headers(){
+        const token = localStorage.getItem("token")
+        return new HttpHeaders().set(
                 'Authorization',
-                `Bearer ${this.token}`
-            )
-    getAllCopons():Observable<any>{
-        return this.http.get<any>(`${environment.api}/coupons`,{headers:this.headers}).pipe(
+                `Bearer ${token}`
+        )
+    }
+    getAllCopons():Observable<GetAllCouponsResponse>{
+        return this.http.get<GetAllCouponsResponse>(`${environment.api}/coupons`,{headers:this.headers}).pipe(
             catchError((err)=>{
                 console.log("error in getting all copons"+err)
                 return throwError(()=>err)
@@ -23,8 +27,8 @@ headers=new HttpHeaders().set(
         )
     }
 
-    createCopon(code:string,value:number):Observable<any>{
-        return this.http.post<any>(`${environment.api}/coupons`,{code,value},{headers:this.headers}).pipe(
+    createCopon(code:string,value:number):Observable<CreateCouponResponse>{
+        return this.http.post<CreateCouponResponse>(`${environment.api}/coupons`,{code,value},{headers:this.headers}).pipe(
             catchError((err)=>{
                 console.log("error in creating copon")
                 return throwError(()=>err)
@@ -32,8 +36,8 @@ headers=new HttpHeaders().set(
         )
     }
 
-    deleteCopon(coponId:string):Observable<any>{
-        return this.http.delete<any>(`${environment.api}/coupons/${coponId}`,{headers:this.headers}).pipe(
+    deleteCopon(coponId:string):Observable<DeleteCouponResponse>{
+        return this.http.delete<DeleteCouponResponse>(`${environment.api}/coupons/${coponId}`,{headers:this.headers}).pipe(
             catchError((err)=>{
                 console.log("error deleting copon"+err)
                 return throwError(()=>err)

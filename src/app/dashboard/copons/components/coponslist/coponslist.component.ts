@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CoponsService } from '../../services/copons.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { Coupon } from '../../models/copons';
 
 @Component({
   selector: 'app-coponslist',
@@ -9,14 +10,18 @@ import Swal from 'sweetalert2';
   styleUrl: './coponslist.component.scss'
 })
 export class CoponslistComponent implements OnInit {
-    copons:any[]=[]
+    copons:Coupon[]=[]
     constructor(private coponsService:CoponsService , private spinner:NgxSpinnerService){
 
 }
 
 ngOnInit(): void {
     this.spinner.show()
-    this.coponsService.getAllCopons().subscribe({
+    this.loadCoupons();
+}
+
+loadCoupons(){
+this.coponsService.getAllCopons().subscribe({
         next:(result)=>{
                 this.copons=result.data;
                 console.log(this.copons)
@@ -31,21 +36,6 @@ ngOnInit(): void {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 deleteCopon(coponId:string){
     Swal.fire({
     title: 'Are you sure?',
@@ -57,7 +47,6 @@ deleteCopon(coponId:string){
     confirmButtonText: 'Yes, delete it!',
     cancelButtonText: 'Cancel'
   }).then((result)=>{
-
 
     if(result.isConfirmed){
         this.spinner.show();
@@ -86,6 +75,5 @@ deleteCopon(coponId:string){
         })
     }
   })
-    }
-
+}
 }

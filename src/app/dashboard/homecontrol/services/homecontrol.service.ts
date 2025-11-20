@@ -4,17 +4,19 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class HomecontrolService {
 
-  constructor(private http : HttpClient) { }
- token = localStorage.getItem("token")
-headers=new HttpHeaders().set(
-                'Authorization',
-                `Bearer ${this.token}`
-            )
+    constructor(private http : HttpClient) { }
 
+    get headers(){
+        const  token = localStorage.getItem("token")
+        return new HttpHeaders().set(
+                'Authorization',
+                `Bearer ${token}`
+            )
+    }
 
 
         createHomeBanner(formData:FormData):Observable<any>{
