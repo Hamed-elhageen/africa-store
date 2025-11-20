@@ -4,16 +4,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { get } from 'http';
 import Swal from 'sweetalert2';
 import {  NgxSpinnerService } from 'ngx-spinner';
+import { Order } from '../../models/orders';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     customClass: {
-  popup: 'my-toast-style'
+    popup: 'my-toast-style'
     },
     showConfirmButton: false,
     timer: 1000,
     timerProgressBar: false,
-  });
+    });
 @Component({
   selector: 'app-orderdetails',
   templateUrl: './orderdetails.component.html',
@@ -21,7 +22,8 @@ const Toast = Swal.mixin({
 })
 export class OrderdetailsComponent implements OnInit {
     orderId!:string |null ;
-    choosenOrder:any;
+    choosenOrder!:Order;
+    currentStatus!:string;
     constructor(private ordersService:OrderService , private activateRoute:ActivatedRoute , private spinner:NgxSpinnerService ,private router:Router){}
     ngOnInit(): void {
         this.spinner.show()
@@ -40,15 +42,12 @@ export class OrderdetailsComponent implements OnInit {
                 }
             })
         }
-        })
-
-
+    })
     }
 
-
-    currentStatus!:string;
-    onChangeStatus(event:any) {
-        this.currentStatus=event.target.value;
+    //here we didnt used reactive forms so , i used event here rather than vlaue changes
+    onChangeStatus(event:Event) {
+        this.currentStatus=(event.target  as HTMLSelectElement).value;
 }
 
     updateStatus(){

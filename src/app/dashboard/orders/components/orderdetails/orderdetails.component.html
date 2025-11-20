@@ -1,6 +1,6 @@
 <div class="max-w-4xl p-6 mx-auto text-white shadow-lg bg-slate-950 rounded-xl">
 
-    <h2 class="pb-3 mb-6 text-2xl font-semibold border-b border-gray-700">Order Details ({{choosenOrder?._id}})</h2>
+    <h2 class="pb-3 mb-6 text-2xl font-semibold border-b border-gray-700">Order Details ({{choosenOrder._id}})</h2>
 
     <!-- Customer & Order Info Grid -->
     <div class="grid grid-cols-1 gap-4 mb-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -10,7 +10,7 @@
             <i class="fa-solid fa-user text-main_color"></i>
             <div>
                 <p class="text-sm text-gray-400">Customer</p>
-                <p class="font-medium">{{choosenOrder?.user?.name}}</p>
+                <p class="font-medium">{{choosenOrder.user.name}}</p>
             </div>
         </div>
 
@@ -19,7 +19,7 @@
             <i class="fa-solid fa-phone text-main_color"></i>
             <div>
                 <p class="text-sm text-gray-400">Phone</p>
-                <p class="font-medium">{{choosenOrder?.phone}}</p>
+                <p class="font-medium">{{choosenOrder.phone}}</p>
             </div>
         </div>
 
@@ -28,7 +28,7 @@
             <i class="fa-solid fa-location-dot text-main_color"></i>
             <div>
                 <p class="text-sm text-gray-400">Address</p>
-                <p class="font-medium">{{choosenOrder?.address}}</p>
+                <p class="font-medium">{{choosenOrder.address}}</p>
             </div>
         </div>
 
@@ -37,18 +37,18 @@
             <i class="fa-solid fa-calendar text-main_color"></i>
             <div>
                 <p class="text-sm text-gray-400">Date</p>
-                <p class="font-medium">{{choosenOrder?.createdAt}}</p>
+                <p class="font-medium">{{choosenOrder.createdAt}}</p>
             </div>
         </div>
 
         <!-- Payment Method -->
         <div class="flex items-center gap-3 p-3 bg-gray-800 rounded-lg shadow-inner">
-            <i class="fa-solid fa-credit-card text-main_color" *ngIf="choosenOrder?.paymentMethod === 'card'"></i>
-            <i class="fa-solid fa-money-bill text-main_color" *ngIf="choosenOrder?.paymentMethod === 'cash'"></i>
+            <i class="fa-solid fa-credit-card text-main_color" *ngIf="choosenOrder.paymentMethod === 'card'"></i>
+            <i class="fa-solid fa-money-bill text-main_color" *ngIf="choosenOrder.paymentMethod === 'cash'"></i>
             <div>
-                <p class="text-sm text-gray-400">Payment <span class="text-white">({{choosenOrder?.paymentMethod}})</span> </p>
-                <div [ngClass]="{'hidden': !choosenOrder?.isPaid}" class="flex items-center text-green-500">Paid  <i class="text-lg text-green-600 fa-solid fa-check"></i></div>
-                <div [ngClass]="{'hidden': choosenOrder?.isPaid}" class="flex items-center text-red-600"> isn't Paid  <i class="text-[25px] text-red-600 ms-2 fa-solid fa-xmark"></i>
+                <p class="text-sm text-gray-400">Payment <span class="text-white">({{choosenOrder.paymentMethod}})</span> </p>
+                <div [ngClass]="{'hidden': !choosenOrder.paid}" class="flex items-center text-green-500">Paid  <i class="text-lg text-green-600 fa-solid fa-check"></i></div>
+                <div [ngClass]="{'hidden': choosenOrder.paid}" class="flex items-center text-red-600"> isn't Paid  <i class="text-[25px] text-red-600 ms-2 fa-solid fa-xmark"></i>
             </div>
             <div>
 
@@ -62,7 +62,7 @@
             <i class="text-yellow-400 fa-solid fa-circle-notch"></i>
             <div>
                 <p class="text-sm text-gray-400">Status</p>
-                <p class="font-medium text-yellow-400">{{choosenOrder?.orderStatus}}</p>
+                <p class="font-medium text-yellow-400">{{choosenOrder.orderStatus}}</p>
             </div>
         </div>
 
@@ -81,7 +81,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let p of choosenOrder?.products" class="border-b border-gray-800">
+                <tr *ngFor="let p of choosenOrder.products" class="border-b border-gray-800">
                     <td class="px-4 py-2"><img [src]="p.image" alt="{{p.name}}" class="object-cover w-16 h-16 rounded myImage"></td>
                     <td class="px-4 py-2">{{p.name}}</td>
                     <td class="px-4 py-2">{{p.quantity}}</td>
@@ -100,7 +100,7 @@
     @if (choosenOrder) {
   <select
     (change)="onChangeStatus($event)"
-    [value]="choosenOrder?.orderStatus"
+    [value]="choosenOrder.orderStatus"
     class="px-4 py-2 text-white transition bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-main_color">
     <option value="pending">Pending</option>
     <option value="completed">Completed</option>
@@ -115,7 +115,7 @@
 
         <!-- Price Summary -->
     <div class="flex flex-col items-end mt-4 space-y-1 text-lg font-medium">
-        <p class="text-xl text-secondary_color">Total: {{choosenOrder?.price}} EGP</p>
+        <p class="text-xl text-secondary_color">Total: {{choosenOrder.price}} EGP</p>
     </div>
 
     </div>

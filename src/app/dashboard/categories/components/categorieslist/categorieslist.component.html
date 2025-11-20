@@ -27,8 +27,8 @@
                 <tr *ngFor="let category of allcategories" class="border-b border-gray-700 hover:bg-gray-800/70">
                     <td class="px-6 py-3">
                         <img [src]="category.image.secure_url"
-                             alt="{{ category.name }}"
-                             class="object-cover w-12 h-12 border border-gray-600 rounded-md">
+                                alt="{{ category.name }}"
+                                class="object-cover w-12 h-12 border border-gray-600 rounded-md">
                     </td>
                     <td class="px-6 py-3">{{ category._id }}</td>
                     <td class="px-6 py-3 font-medium">{{ category.name }}</td>
@@ -49,11 +49,11 @@
     <!-- Cards for Mobile -->
     <div class="grid gap-4 md:hidden">
         <div *ngFor="let category of allcategories"
-             class="p-4 bg-gray-800 border border-gray-700 rounded-lg shadow">
+            class="p-4 bg-gray-800 border border-gray-700 rounded-lg shadow">
             <div class="flex items-center gap-4">
                 <img [src]="category.image.secure_url"
-                     alt="{{ category.name }}"
-                     class="object-cover w-16 h-16 border border-gray-600 rounded-md">
+                        alt="{{ category.name }}"
+                        class="object-cover w-16 h-16 border border-gray-600 rounded-md">
                 <div class="flex-1">
                     <h3 class="text-lg font-semibold text-white">{{ category.name }}</h3>
                     <!-- <p class="text-sm text-gray-400">{{ category.productsCount }} Products</p> -->

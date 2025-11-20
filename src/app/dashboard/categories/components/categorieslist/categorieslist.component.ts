@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoriesdashboardService } from '../../services/categoriesdashboard.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Category } from '../../models/categories';
 
 @Component({
   selector: 'app-categorieslist',
@@ -9,27 +10,27 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrl: './categorieslist.component.scss'
 })
 export class CategorieslistComponent implements OnInit {
-    allcategories!:any[];
+    allcategories!:Category[];
 
 constructor(private categoriesService:CategoriesdashboardService , private spinner:NgxSpinnerService){
 }
     ngOnInit(): void {
-// getting services
-this.spinner.show()
-this.categoriesService.getAllCategories().subscribe({
-    next:(result)=>{
-        this.allcategories=result.data;
-        this.spinner.hide()
-    },
-    error:(error)=>{
-        console.log(error.message)
+        this.spinner.show();
+        this.loadCategories();
+    }
+
+    loadCategories(){
+        this.categoriesService.getAllCategories().subscribe({
+            next:(result)=>{
+                this.allcategories=result.data;
                 this.spinner.hide()
+            },
+            error:(error)=>{
+                console.log(error.message)
+                this.spinner.hide()
+            }
+        });
     }
-});
-    }
-
-
-
 
 
     // delete service :
@@ -43,8 +44,7 @@ this.categoriesService.getAllCategories().subscribe({
     cancelButtonColor: '#1C6F37',    // لون زرار الإلغاء
     confirmButtonText: 'Yes, delete it!',
     cancelButtonText: 'Cancel'
-  }).then((result)=>{
-
+    }).then((result)=>{
 
     if(result.isConfirmed){
         this.spinner.show();
@@ -57,7 +57,7 @@ this.categoriesService.getAllCategories().subscribe({
             timer: 2000,
             showConfirmButton: false
             })
-                      this.allcategories = this.allcategories.filter(category => category._id !== catId);                             //updating the categories imediately after deleting a category
+            this.allcategories = this.allcategories.filter(category => category._id !== catId);                             //updating the categories imediately after deleting a category
             this.spinner.hide();
             },
 
@@ -65,20 +65,13 @@ this.categoriesService.getAllCategories().subscribe({
                 this.spinner.show()
                 Swal.fire({
                 title: 'Error!',
-            text: err.message || 'Something went wrong while deleting.',
-            icon: 'error'
+                text: err.message || 'Something went wrong while deleting.',
+                icon: 'error'
                 })
-                  this.spinner.hide();
+                this.spinner.hide();
             }
         })
     }
   })
     }
-
-
-
-
-
-
-
 }

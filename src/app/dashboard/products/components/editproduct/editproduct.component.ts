@@ -170,10 +170,6 @@ ngOnInit(): void {
     this.sizes?.setValue(selected);                                                                                                                       //the value of the sizes will be the final  selected array  after addition and remove
 }
 
-    // onCategoryChange(event: any) {                                                                                                               //here the function to handle the change of the category and the value when changed will be put in catId variable
-    // this.catId = event.target.value;
-    // }
-
     updateFinalPrice() {                                                                                                                                   // this is the function to put the final price automatically
     const price = this.priceBeforeDiscount?.value || 0;
     const discount = this.discount?.value || 0;
@@ -190,7 +186,6 @@ ngOnInit(): void {
 
     createFormData() {                                                                                                                                                          //now its time to handle the function of create the form data that will be sent to the server
     const formData = new FormData();
-    //here to handle the normal input fields that thier values are taken from them directly
     formData.append('name', this.name?.value || '');
     formData.append('description', this.description?.value || '');
     formData.append('stock', this.stock?.value || '');
@@ -220,19 +215,17 @@ ngOnInit(): void {
         this.spinner.show();
         const formData = this.createFormData();
 
-    this.productsService.updateProduct( formData,this.productId).subscribe({
-        next: (res) => {
-        Toast.fire({ icon: 'success', title: `${res.message}` });
-        this.spinner.hide();
-        this.router.navigateByUrl('/dashboard/products');
-    },
+        this.productsService.updateProduct( formData,this.productId).subscribe({
+            next: (res) => {
+                Toast.fire({ icon: 'success', title: `${res.message}` });
+                this.spinner.hide();
+                this.router.navigateByUrl('/dashboard/products');
+        },
         error: (err) => {
         this.dashboardErrorHandler.handleError(err)
         this.spinner.hide();
         },
     });
 }
-
-
 
 }

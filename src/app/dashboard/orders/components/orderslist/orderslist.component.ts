@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { Order } from '../../models/orders';
 
 @Component({
   selector: 'app-orderslist',
@@ -9,7 +10,7 @@ import Swal from 'sweetalert2';
   styleUrl: './orderslist.component.scss'
 })
 export class OrderslistComponent implements OnInit {
-orders:any[]=[]
+orders:Order[]=[]
     constructor(private ordersService:OrderService, private spinner :NgxSpinnerService){
 
     }
@@ -33,8 +34,6 @@ orders:any[]=[]
 
 
 
-
-
 deleteOrder(orderId:string){
 Swal.fire({
     title: 'Are you sure?',
@@ -45,8 +44,7 @@ Swal.fire({
     cancelButtonColor: '#1C6F37',    // لون زرار الإلغاء
     confirmButtonText: 'Yes, delete it!',
     cancelButtonText: 'Cancel'
-  }).then((result)=>{
-
+    }).then((result)=>{
 
     if(result.isConfirmed){
         this.spinner.show();
@@ -76,8 +74,5 @@ Swal.fire({
     }
   })
 }
-
-
-
 
 }
