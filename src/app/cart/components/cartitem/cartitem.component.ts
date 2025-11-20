@@ -2,6 +2,7 @@ import { Component,  EventEmitter,  Input, OnInit, Output } from '@angular/core'
 import { CartService } from '../../../shared/services/cart.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CartProduct } from '../../../shared/models/cart-response';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -25,29 +26,29 @@ export class CartitemComponent implements OnInit {
   @Input() price:string=""
   @Input() size:string=""
   @Input() quantity:number=1;
-  @Input() overAllPrice!:number
-
-
-  @Output() productDeleted = new EventEmitter<string> ; // 👈 الأب هيستقبل ده
+  @Input() overAllPrice!:number;
+  @Output() productDeleted = new EventEmitter<string> ;
     //this is an event (from eventEmitter)     and will be sent to the parent (using @Output) when it is emitted
     @Output() quantityUpdated = new EventEmitter<void>();
     // the same this event will be sent to the parent when this event emitted ( when the quantity is updated )
 
 
 constructor(private cartService:CartService , private spinner:NgxSpinnerService){}
-cartProducts:any[]=[]
+cartProducts:CartProduct[]=[]
     ngOnInit(): void {
+        this.loadCartProducts();
+    }
+
+    loadCartProducts(){
         this.cartService.getCartProducts().subscribe({
             next:(result)=>{
-                this.cartProducts=result.data.products
+                this.cartProducts!=result.data.products
             },
             error:(err)=>{
                 console.log(err.message)
             }
         })
     }
-
-
 
 
     deleteProduct(prdId:string){
@@ -73,7 +74,7 @@ cartProducts:any[]=[]
                     timer: 2000,
                     showConfirmButton: false
                 })
-                this.cartProducts = this.cartProducts.filter(product => product._id !== prdId);                             //updating the categories imediately after deleting a category
+                this.cartProducts = this.cartProducts.filter(product => product._id !== prdId);                                          //updating the categories imediately after deleting a category
                 this.productDeleted.emit(prdId)                                                                                                                  //now i emmitted the event , so it is sent to its parent that i deleted to delete it from him
                 this.spinner.hide();
                 },
@@ -85,19 +86,19 @@ cartProducts:any[]=[]
                 }
             })
         }
-        })
-        }
+    })
+    }
 
 
 
         icreaseProductQuantity(prdId:string){
             this.quantity+=1;
-            this.updateCart(prdId)
+                this.updateCart(prdId)
         }
         decreaseProductQuantity(prdId:string){
             if(this.quantity>1){
-            this.quantity-=1;
-            this.updateCart(prdId)
+                this.quantity-=1;
+                this.updateCart(prdId)
             }
         }
 
@@ -107,25 +108,16 @@ cartProducts:any[]=[]
                 this.quantityUpdated.emit();                                                              // here i emitted the event
                 console.log(result.message)
                 Toast.fire({
-        icon: 'success',
-        title: result.message || 'Quantity updated successfully!'
-      });
+                    icon: 'success',
+                    title: result.message || 'Quantity updated successfully!'
+            });
             },
             error:(err)=>{
                 console.log(err.message)
-                Toast.fire({
-        icon: 'error',
-        title: err.message || 'Failed to update quantity!'
-      });
-            }
-        })
+                this.handleError(err)
+        }
+    })
     }
-
-
-
-
-
-
 
 
 
@@ -165,7 +157,4 @@ cartProducts:any[]=[]
             title: err?.error?.message || 'Something went wrong. Please try again.',
         });
     }
-
-
-
 }

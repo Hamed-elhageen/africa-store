@@ -9,3 +9,12 @@
               -also you can use change event   and take care of something in ts if you are dealing with select field you make
                     (event.target as HTMLSELECTELEMENT ).value
                     any  another input field use                      (event.target as HTMLinputELEMENT ).value
+
+
+
+
+2- sending data between components :
+     //if you want to pass data from parent to childe : using @INput
+    //if you want to pass data from child to pared : using @Output and eventEmitter
+    //if there is no relation like cart and navbar , you use a centralized service and behaviour subject and subscribe on it in any place you want
+

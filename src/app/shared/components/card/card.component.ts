@@ -5,16 +5,16 @@ const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     customClass: {
-  popup: 'my-toast-style'
+    popup: 'my-toast-style'
     },
     showConfirmButton: false,
     timer: 1000,
     timerProgressBar: false,
-  });
+    });
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.component.html',
-  styleUrl: './card.component.scss'
+    selector: 'app-card',
+    templateUrl: './card.component.html',
+    styleUrl: './card.component.scss'
 })
 export class CardComponent {
     @Input() id:string=""
@@ -25,6 +25,7 @@ export class CardComponent {
     @Input() priceBeforediscount!:number;
     @Input() discount!:number;
     @Input() choosed!:boolean
+    //this is and event will be sent to the parent when it is emitted
     @Output() toggleFavorite = new EventEmitter<string>();
 
     constructor(private favoritesService:FavoritesService){}
@@ -33,10 +34,11 @@ export class CardComponent {
         this.favoritesService.toggleAddition(prdId).subscribe({
             next:(result)=>{
                     this.choosed=!this.choosed;
+                    //here i emitted it , so the parent will see that and remove or add the product to the favorite products
                     this.toggleFavorite.emit(this.id);
-                Toast.fire({
-                    title:`   ${result.message}` || "updated successfully",
-                    icon:"success"
+                    Toast.fire({
+                        title:`   ${result.message}` || "updated successfully",
+                        icon:"success"
                 })
             },
             error:(err)=>{

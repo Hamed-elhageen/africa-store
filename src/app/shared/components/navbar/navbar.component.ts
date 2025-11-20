@@ -68,8 +68,6 @@ export class NavbarComponent implements OnInit  {
 
 
 
-
-
   //   function to make the header sticky when scrolling a part  of pixels
     @HostListener('window:scroll', [])
     onWindowScroll() {
@@ -163,20 +161,18 @@ scrollTo(sectionId: string) {
                     'You have been logged out.',
                     'success'
                 );
-                this.router.navigateByUrl('/authentication/login');                                                                                           // and now navigate him to the login page again
+                this.router.navigateByUrl('/authentication/login');                                                                                                    // and now navigate him to the login page again
             }
         });
     }
 
-    //************************************************************************************************************************************ */
+    //**************************************************************************************************************************************** */
     //handling the search input :
     searchWord!:string;
-    onSearchInputChange(event:any){
-        this.searchWord=event.target.value;
+    onSearchInputChange(event:Event){
+        this.searchWord=(event.target as HTMLInputElement).value;
         this.productsService.updateSearch(this.searchWord); // نبعته للسيرفس
     }
-
-
 
 
 }

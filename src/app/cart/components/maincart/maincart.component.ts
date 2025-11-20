@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { CartProduct } from '../../../shared/models/cart-response';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -18,25 +19,26 @@ const Toast = Swal.mixin({
   styleUrl: './maincart.component.scss'
 })
 export class MaincartComponent implements OnInit {
-    constructor(private cartService:CartService , private spinner:NgxSpinnerService , private router:Router ){
+     //take care of something , is that the cart products that appeared in the ui is comming from here , so when you delete item you should filter them from here
+    //so now , the responsibe for deleting should be the father component , and the delete button is in the child, so when the child delete an item it should tell the father , so that the father delete it from here      all that using a simple        @output and eventEmitter
 
+        cartProducts!:CartProduct[];
+        theLength!:number;
+        total!:number;
+
+    constructor(private cartService:CartService , private spinner:NgxSpinnerService , private router:Router ){
     }
-        cartProducts:any[]=[];
-        theLength:any;
-        total:any;
-        //take care of something , is that the cart products that appeared in the ui is comming from here , so when you delete item you should filter them from here
-        //so now , the responsibe for deleting should be the father component , and the delete button is in the child, so when the child delete an item it should tell the father , so that the father delete it from here      all that using a simple        @output and eventEmitter
 
     ngOnInit(): void {
     this.getCartProducts();
     }
 
     getCartProducts(){
-this.spinner.show()
+        this.spinner.show()
         this.cartService.getCartProducts().subscribe({
             next:(result)=>{
-                this.cartProducts=result.data.products;
-                this.total=result.data.total;
+                this.cartProducts!=result.data.products;
+                this.total!=result.data.total;
                 console.log(this.cartProducts)
                 this.theLength=result?.data?.products?.length;
                 this.spinner.hide()
@@ -52,10 +54,9 @@ this.spinner.show()
     removeFromCart(prdId:string){
     this.cartProducts = this.cartProducts.filter(p => p._id !== prdId);
     // 🔁 بعد التصفية، احسب التوتال الجديد
-  this.total = this.cartProducts.reduce((acc, item) => acc + (item.subtotal || 0), 0);
-
+    this.total = this.cartProducts.reduce((acc, item) => acc + (item.subtotal || 0), 0);
   // وكمان حدّث عدد العناصر
-  this.theLength = this.cartProducts.length;
+    this.theLength = this.cartProducts.length;
     }
 
 

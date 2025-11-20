@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { AllProductsResponse, SingleProductResponse } from '../models/product-response';
+import { AllProductsResponse, HomeBannerResponse, Product, SingleProductResponse } from '../models/product-response';
 
 @Injectable({
     providedIn: 'root'
@@ -10,15 +10,19 @@ import { AllProductsResponse, SingleProductResponse } from '../models/product-re
 export class ProductsService {
 
 constructor(private http:HttpClient) { }
-    products!: any[];
-    headers=new HttpHeaders().set(
+
+    get headers(){
+        const token = localStorage.getItem("token")
+        return new HttpHeaders().set(
                     'Authorization',
-                    `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZjNmNTM3NjIyYTU3OWUwZWI4YTQyMSIsImlhdCI6MTc2MTYwMDcyOCwiZXhwIjoxNzYxNjg3MTI4fQ.2Zz4ESQo8Sgvnnd_JJZswMQFuOBzMNjYu9lRexT2ZO8`
+                    `Bearer ${token}`
                 )
+    }
 
     //i here get all products with its opetional filteration with query params ,, when you pass a query param in the function (all are optional) the products are filtered based on them
+    //by this way when you send the query params as object , when you want to pass only one query param , in the function in the component you pass its name and its value
+    //the types here means that this query params are optional and is an object the key of it is string and the value is any
     getAllProducts(queryParams?:{[key:string]:any}):Observable<AllProductsResponse>{
-        //by this way when you send the query params as object , when you want to pass only one query param , in the function in the component you pass its name and its value
         let params=new HttpParams;
         if(queryParams){
             Object.keys(queryParams).forEach((key)=>{
@@ -37,7 +41,6 @@ constructor(private http:HttpClient) { }
 
 
 
-
     getSingleProduct(prdId:string):Observable<SingleProductResponse>{
         return this.http.get<SingleProductResponse>(`${environment.api}/products/${prdId}`,{headers:this.headers}).pipe(
             catchError((err)=>{
@@ -49,12 +52,8 @@ constructor(private http:HttpClient) { }
 
 
 
-
-
-
-
-getHomeBanner():Observable<any>{
-        return this.http.get(`${environment.api}/home`).pipe(
+getHomeBanner():Observable<HomeBannerResponse>{
+        return this.http.get<HomeBannerResponse>(`${environment.api}/home`).pipe(
             catchError((err)=>{
                 console.log("error in home control" + err)
                 return throwError(()=>err)
@@ -63,13 +62,13 @@ getHomeBanner():Observable<any>{
     }
 
 
-    //******************************************************************************************************************************** */
-    //here i will handle the part of searching of navbar , i will make when a word is wrote in navbar is sent to the service here , and this word i will subscribe on it in the components of products to search on it
+//********************************************************************************************************************************************** */
+//here i will handle the part of searching of navbar , i will make when a word is wrote in navbar is sent to the service here , and this word i will subscribe on it in the components of products to search on it
 
-      private searchSubject = new BehaviorSubject<string>(''); // بيبدأ بقيمة فاضية
-      search$ = this.searchSubject.asObservable(); // observable أي كومبوننت تقدر تسمع له
+      private searchSubject = new BehaviorSubject<string>('');                                                                           // بيبدأ بقيمة فاضية
+      search$ = this.searchSubject.asObservable();                                                                                             // observable أي كومبوننت تقدر تسمع له
 
     updateSearch(term: string) {
-    this.searchSubject.next(term); // نحدّث الكلمة الجديدة اللي المستخدم كتبها
+        this.searchSubject.next(term);                                                                                                                 // نحدّث الكلمة الجديدة اللي المستخدم كتبها
     }
 }

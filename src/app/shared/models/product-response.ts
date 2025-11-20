@@ -59,3 +59,34 @@ export interface Product {
   updatedBy?: string;
   __v?: number;
 }
+
+export interface HomeBanner {
+    _id: string;
+    title: string;
+    product: string;
+    club: string;
+    description: string;
+    season: string;
+    image: {
+        secure_url: string;
+        public_id: string;
+    };
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}
+
+export interface HomeBannerResponse {
+    data: HomeBanner[];
+    message: string;
+    type: boolean;
+    code: number;
+    showToast: boolean;
+    pagination:  {
+    totalSize: number;
+    totalPages: number;
+    pageNumber: number;
+    pageSize: number;
+};
+    time: string;
+}

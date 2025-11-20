@@ -9,9 +9,9 @@ import { Product } from '../../../shared/models/product-response';
 import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-maincategories',
-  templateUrl: './maincategories.component.html',
-  styleUrl: './maincategories.component.scss'
+    selector: 'app-maincategories',
+    templateUrl: './maincategories.component.html',
+    styleUrl: './maincategories.component.scss'
 })
 export class MaincategoriesComponent implements OnInit {
     categories!:Category[];
@@ -24,11 +24,92 @@ export class MaincategoriesComponent implements OnInit {
     showAllTeams:boolean=false;
     favoritesIds:string[]=[]
     searchSub!: Subscription;
+    minPrice!: number;
+    maxPrice: number = 5000;
+    teams = [
+    { id: 1, name: 'Real Madrid',logo:"madrid.webp" },
+    { id: 2, name: 'Barcelona',logo:"barca.webp" },
+    { id: 7, name: 'Al ahly',logo:" alahly.webp" },
+    { id: 8, name: 'Zamalek',logo:" zamalek.webp" },
+    { id: 3, name: 'Liverpool',logo:" liverpool.webp" },
+    { id: 4, name: 'Arsenal',logo:" arsenal.webp" },
+    { id: 5, name: 'Chelsea',logo:" chelsea.webp" },
+    { id: 6, name: 'Man city',logo:"city.webp" },
+    { id: 9, name: 'Inter miami',logo:" miami.webp" },
+    { id: 10, name: 'Al nasr',logo:" alnasr.webp" },
+    { id: 11, name: 'Another',logo:" another.webp" },
+    ];
 
 
     constructor(private categoriesService:CategoriesService , private productsService : ProductsService,private favoritesService:FavoritesService , private spinner:NgxSpinnerService){}
     ngOnInit(): void {
         this.spinner.show();
+        this.loadCategories();
+        this.loadFavorites();
+        this.initSearchListener()
+    }
+
+
+initSearchListener() {
+    this.searchSub = this.productsService.search$.pipe(
+        debounceTime(500),
+        distinctUntilChanged()
+    )
+    .subscribe(term => {
+        const params: any = { '[pagination][limit]': 1000 };
+
+      // search term
+    if (term) params.k = term;
+
+      // filters
+    if (this.selectedCategory) params.category = this.selectedCategory;
+    if (this.selectedTeam) params.club = this.selectedTeam;
+    if (this.minPrice !== undefined && this.minPrice !== null)
+        params['[price][min]'] = this.minPrice;
+
+    if (this.maxPrice !== undefined && this.maxPrice !== null)
+        params['[price][max]'] = this.maxPrice;
+
+      // check no filters at all
+    const hasFilters =
+        term ||
+        this.selectedCategory ||
+        this.selectedTeam ||
+        this.minPrice ||
+        this.maxPrice;
+
+    if (!hasFilters) {
+        this.getAllProducts();
+        return;
+    }
+
+      // fetch products with filters
+    this.spinner.show();
+    this.productsService.getAllProducts(params).subscribe({
+        next: (result) => {
+            this.products = result.data.map((prd: any) => ({
+            ...prd,
+            choosed: this.favoritesIds.includes(prd._id)
+        }));
+
+        this.spinner.hide();
+          // scroll to top
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 200);
+        },
+        error: (err) => {
+        console.error(err.message);
+        this.spinner.hide();
+        }
+    });
+    });
+}
+
+
+
+
+    loadCategories(){
         this.categoriesService.getAllCategories().subscribe({
             next:(result)=>{
                 this.categories=result.data;
@@ -36,80 +117,23 @@ export class MaincategoriesComponent implements OnInit {
             },
             error:(err)=>{
                 console.log(err.message);
-                                this.spinner.hide()
+                this.spinner.hide()
             }
         })
+    }
 
 
-
-
-
+    loadFavorites(){
         this.favoritesService.getFavorites().subscribe({
         next:(result)=>{
             this.favoritesIds=result?.data?.map((prd:any)=> prd._id)
             this.getAllProducts();
         },
         error:(err)=>{
-
+            console.log("error in favorites in allcategoires component" +err)
         }
     })
-
-
-    //**search     ************************************************** */
-   // 👇 اسمع لأي تغيير في السيرش
-// 👇 اسمع لأي تغيير في السيرش
-this.searchSub = this.productsService.search$
-  .pipe(
-    debounceTime(500),      // استنى نص ثانية قبل ما تعمل call
-    distinctUntilChanged()  // متعملش نفس السيرش مرتين لو الكلمة هي هي
-  )
-  .subscribe(term => {
-    const params: any = {
-      '[pagination][limit]': 1000
-    };
-
-    // لو فيه كلمة بحث حطها
-    if (term) params.k = term;
-
-    // ضيف الفلترات لو موجودة
-    if (this.selectedCategory) params.category = this.selectedCategory;
-    if (this.selectedTeam) params.club = this.selectedTeam;
-    if (this.minPrice !== undefined && this.minPrice !== null) params['[price][min]'] = this.minPrice;
-    if (this.maxPrice !== undefined && this.maxPrice !== null) params['[price][max]'] = this.maxPrice;
-
-    // لو كله فاضي ارجع كل المنتجات
-    const hasFilters = term || this.selectedCategory || this.selectedTeam || this.minPrice || this.maxPrice;
-    if (!hasFilters) {
-      this.getAllProducts();
-      return;
     }
-
-    // اعمل جلب للمنتجات حسب السيرش + الفلترات
-    this.spinner.show();
-    this.productsService.getAllProducts(params).subscribe({
-      next: (result) => {
-        this.products = result.data.map((prd: any) => ({
-          ...prd,
-          choosed: this.favoritesIds.includes(prd._id)
-        }));
-        this.spinner.hide();
-
-        // scroll to top
-        setTimeout(() => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 200);
-      },
-      error: (err) => {
-        console.error(err.message);
-        this.spinner.hide();
-      }
-    });
-  });
-
-
-    //***************end search */
-    }
-
     getAllProducts(){
 this.productsService.getAllProducts({'[pagination][limit]':1000}).subscribe({
 
@@ -143,22 +167,20 @@ this.productsService.getAllProducts({'[pagination][limit]':1000}).subscribe({
     toggleShowingTeams():void{
         this.showAllTeams=!this.showAllTeams;
     }
-    /////////////////////////////////************************************************************************** */
 
-    onCategoryChange(event:any){
-        this.selectedCategory=event.target.value;
+    onCategoryChange(event:Event){
+        this.selectedCategory=(event.target as HTMLInputElement).value;
         //make a new fetch after you choose the category to get the products of the choosen category
-
         //here if the user selected all products which its value if "" , iam saying if there is no category id , get all products without any filteration
         if(!this.selectedCategory){
             this.productsService.getAllProducts({'[pagination][limit]':1000 , club:this.selectedTeam  }).subscribe({
-            next:(result)=>{
-                this.products=result.data
-            },
-            error:(err)=>{
-                console.log(err.message)
-            }
-        })
+                next:(result)=>{
+                    this.products=result.data
+                },
+                error:(err)=>{
+                    console.log(err.message)
+                }
+            })
         }
         //here do the filteration with category id
         this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam}).subscribe({
@@ -173,8 +195,8 @@ this.productsService.getAllProducts({'[pagination][limit]':1000}).subscribe({
 
 
 
-    onTeamChange(event:any){
-        this.selectedTeam=event.target.value;
+    onTeamChange(event:Event){
+        this.selectedTeam=(event.target as HTMLInputElement).value;
         this.spinner.show();
         //to hadle if the user choosed all products without choosing any category , wont pass category
         if(!this.selectedCategory){
@@ -183,13 +205,13 @@ this.productsService.getAllProducts({'[pagination][limit]':1000}).subscribe({
                 this.products=result.data
                 this.spinner.hide()
                 window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-    });
+                    top: 0,
+                    behavior: 'smooth'
+            });
             },
             error:(err)=>{
                 console.log(err.message)
-                                this.spinner.hide()
+                this.spinner.hide()
             }
         })
         }
@@ -200,43 +222,37 @@ this.productsService.getAllProducts({'[pagination][limit]':1000}).subscribe({
                 this.products=result.data
                 this.spinner.hide()
                 window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-    });
+                    top: 0,
+                    behavior: 'smooth'
+            });
             },
             error:(err)=>{
                 console.log(err.message)
-                                this.spinner.hide()
+                this.spinner.hide()
             }
         })
     }
 
 
-
-
-
-
-
-minPrice!: number;
-maxPrice: number = 5000;
+//changing price
 onMinPriceChange(event:any){
-this.minPrice=event.target.value;
-if(!this.selectedCategory){
+    this.minPrice=event.target.value;
+    if(!this.selectedCategory){
             this.spinner.show()
             this.productsService.getAllProducts({'[pagination][limit]':1000 , club:this.selectedTeam , '[price][min]':this.minPrice  }).subscribe({
-            next:(result)=>{
-                this.products=result.data
-                this.spinner.hide()
+                next:(result)=>{
+                    this.products=result.data
+                    this.spinner.hide()
                 setTimeout(()=>{
                     window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
+                        top: 0,
+                        behavior: 'smooth'
                 });
                 },500)
             },
             error:(err)=>{
                 console.log(err.message)
-                                this.spinner.hide()
+                this.spinner.hide()
             }
         })
         }
@@ -244,57 +260,36 @@ if(!this.selectedCategory){
         //if the user choosed a category.
         this.spinner.show()
         this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam , '[price][min]':this.minPrice}).subscribe({
-
             next:(result)=>{
                 this.products=result.data
-                                this.spinner.hide()
-                                setTimeout(()=>{
+                this.spinner.hide()
+                setTimeout(()=>{
                     window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
+                        top: 0,
+                        behavior: 'smooth'
                 });
                 },500)
             },
             error:(err)=>{
                 console.log(err.message)
-                                this.spinner.hide()
+                this.spinner.hide()
             }
         })
-
-
-
-
-
 
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-onMaxPriceChange(event:any){
-this.maxPrice=event.target.value;
-if(!this.selectedCategory){
+    onMaxPriceChange(event:any){
+        this.maxPrice=event.target.value;
+        if(!this.selectedCategory){
             this.spinner.show()
             this.productsService.getAllProducts({'[pagination][limit]':1000 , club:this.selectedTeam , '[price][min]':this.minPrice , '[price][max]':this.maxPrice  }).subscribe({
             next:(result)=>{
             setTimeout(()=>{
                     window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
+                        top: 0,
+                        behavior: 'smooth'
                 });
                 },500)
                 this.products=result.data
@@ -302,7 +297,7 @@ if(!this.selectedCategory){
             },
             error:(err)=>{
                 console.log(err.message)
-                                this.spinner.hide()
+                this.spinner.hide()
             }
         })
         }
@@ -313,16 +308,16 @@ if(!this.selectedCategory){
             next:(result)=>{
                 setTimeout(()=>{
                     window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
+                        top: 0,
+                        behavior: 'smooth'
                 });
                 },500)
                 this.products=result.data
-                                this.spinner.hide()
+                this.spinner.hide()
             },
             error:(err)=>{
                 console.log(err.message)
-                                this.spinner.hide()
+                this.spinner.hide()
             }
         })
 
@@ -331,86 +326,42 @@ if(!this.selectedCategory){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 resetFilters() {
-  // 1) الحالة الابتدائية في الـ component
-  this.selectedCategory = '';
-  this.selectedTeam = '';
-  this.minPrice = 0;
-  this.maxPrice = 5000; // لو بتحب ترجّعها للـ default
-  this.showAllTeams = false; // لو كنت مختار "see more" قبل كده
+    this.selectedCategory = '';
+    this.selectedTeam = '';
+    this.minPrice = 0;
+    this.maxPrice = 5000;
+    this.showAllTeams = false;
 
-  // 2) تظبيط DOM (الراديوز والـ inputs)
-  // رجّع راديو "All products" متعلم
-  const allCatRadio = document.getElementById('allCategoires') as HTMLInputElement | null;
-  if (allCatRadio) allCatRadio.checked = true;
+    const allCatRadio = document.getElementById('allCategoires') as HTMLInputElement | null;
+    if (allCatRadio) allCatRadio.checked = true;
 
-  // افحص كل راديوهات الفئات وغّيّرها لو احتاج
-  const categoryRadios = document.querySelectorAll('input[name="category"]') as NodeListOf<HTMLInputElement>;
-  categoryRadios.forEach(r => {
+    const categoryRadios = document.querySelectorAll('input[name="category"]') as NodeListOf<HTMLInputElement>;
+    categoryRadios.forEach(r => {
     if (r.id !== 'allCategoires') r.checked = false;
-  });
+    });
 
-  // افصل كل راديوهات النوادي (teams)
-  const teamRadios = document.querySelectorAll('input[name="team"]') as NodeListOf<HTMLInputElement>;
-  teamRadios.forEach(r => r.checked = false);
+    const teamRadios = document.querySelectorAll('input[name="team"]') as NodeListOf<HTMLInputElement>;
+    teamRadios.forEach(r => r.checked = false);
 
-  // فرغ كل الـ number inputs (From / To)
-  const numberInputs = document.querySelectorAll('input[type="number"]') as NodeListOf<HTMLInputElement>;
-  numberInputs.forEach(i => i.value = '');
+    const numberInputs = document.querySelectorAll('input[type="number"]') as NodeListOf<HTMLInputElement>;
+    numberInputs.forEach(i => i.value = '');
 
-  // 3) جيب كل المنتجات (بدون أي فلتر) وحدث الواجهة
-  this.spinner.show();
-  this.productsService.getAllProducts({ '[pagination][limit]': 1000 }).subscribe({
+    this.spinner.show();
+    this.productsService.getAllProducts({ '[pagination][limit]': 1000 }).subscribe({
     next: (result) => {
-      this.products = result.data || [];
-      // لو بتحسب طول لعرضه:
-      // this.theLength = this.products.length;
-      this.spinner.hide();
-      // سكرول لطيف للأعلى بعد تأخير صغير
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 200);
+        this.products = result.data || [];
+        this.spinner.hide();
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 200);
     },
     error: (err) => {
-      console.error('resetFilters error:', err);
-      this.spinner.hide();
+        console.error('resetFilters error:', err);
+        this.spinner.hide();
     }
-  });
+    });
 }
 
-
-
-
-
-  teams = [
-    { id: 1, name: 'Real Madrid',logo:"madrid.webp" },
-    { id: 2, name: 'Barcelona',logo:"barca.webp" },
-    { id: 7, name: 'Al ahly',logo:" alahly.webp" },
-    { id: 8, name: 'Zamalek',logo:" zamalek.webp" },
-    { id: 3, name: 'Liverpool',logo:" liverpool.webp" },
-    { id: 4, name: 'Arsenal',logo:" arsenal.webp" },
-    { id: 5, name: 'Chelsea',logo:" chelsea.webp" },
-    { id: 6, name: 'Man city',logo:"city.webp" },
-    { id: 9, name: 'Inter miami',logo:" miami.webp" },
-    { id: 10, name: 'Al nasr',logo:" alnasr.webp" },
-    { id: 11, name: 'Another',logo:" another.webp" },
-    ];
 
 }

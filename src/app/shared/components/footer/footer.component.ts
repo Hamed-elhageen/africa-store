@@ -46,8 +46,12 @@ export class FooterComponent implements OnInit {
     'Menoufia "Shibin El-Kom"'
     ] ;
 
-    constructor(private categoriresService:CategoriesService){}
+        constructor(private categoriresService:CategoriesService){}
     ngOnInit(): void {
+        this.loadCategories()
+    }
+
+    loadCategories(){
         this.categoriresService.getAllCategories().subscribe({
                 next:(result)=>{
                     this.allcategories=result.data;
@@ -60,8 +64,7 @@ export class FooterComponent implements OnInit {
 
     @HostListener('window:resize', ['$event'])
     onResize(event: any) {
-    this.isMobile = event.target.innerWidth < 768;                            // here you are lestening on the window resize , if its size became less than 768 , so ismobile will be true
+        this.isMobile = event.target.innerWidth < 768;                            // here you are lestening on the window resize , if its size became less than 768 , so ismobile will be true
     }
-
 
 }
