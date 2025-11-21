@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ProductsService } from '../../../shared/services/products.service';
 import { CategoriesService } from '../../../shared/services/categories.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Product } from '../../../shared/models/product-response';
 
 @Component({
   selector: 'app-someProducts',
@@ -9,10 +10,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrl: './someProducts.scss'
 })
 export class FootballShoesComponent implements OnInit {
-    products!: any[]
-    categories!:any[]
-     @Input() categoryName?:string;
-     @Input() categoryId?:string
+    products!: Product[]
+    categories!:Product[]
+    @Input() categoryName?:string;
+    @Input() categoryId?:string
 
     constructor(private productsService:ProductsService,private categoriesService:CategoriesService, private spinner:NgxSpinnerService){
 

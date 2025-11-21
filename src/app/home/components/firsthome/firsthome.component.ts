@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../../shared/services/products.service';
 import TypeIt from 'typeit';
+import { HomeBanner } from '../../../shared/models/product-response';
 
 @Component({
   selector: 'app-firsthome',
@@ -8,12 +9,12 @@ import TypeIt from 'typeit';
   styleUrl: './firsthome.component.scss'
 })
 export class FirsthomeComponent implements OnInit {
-    bannerDetails!:any;
-    imageUrl:any;
-    description:any;
-    title:any;
-    club:any;
-    season:any
+    bannerDetails!:HomeBanner;
+    imageUrl!:string;
+    description!:string;
+    title!:string;
+    club!:string;
+    season!:string;
 constructor(private productsService:ProductsService ){
 
 }

@@ -6,7 +6,7 @@
             <h1 class="text-[38px] md-[text-80px] mb-5 md:mb-10">{{bannerDetails?.club}}</h1>
             <h4 id="typeit" class="w-full mb-5 md:w-[50%] md:mb-10">  {{bannerDetails?.description}}<span class="text-secondary_color"> {{bannerDetails?.season}}</span></h4>
             <h4 id="typeit" class="text-secondary_color "> </h4>
-            <button [routerLink]="['/details/maindetails',bannerDetails?.product ]" class="z-30 flex justify-center w-full gap-1 px-10 py-4 mb-8 duration-300 rounded-lg bg-main_color md:w-fit hover:bg-green-700"> Order now <img src="arrow-up-right.webp" alt="arrow image" /></button>
+            <button [routerLink]="['/details/maindetails',bannerDetails.product ]" class="z-30 flex justify-center w-full gap-1 px-10 py-4 mb-8 duration-300 rounded-lg bg-main_color md:w-fit hover:bg-green-700"> Order now <img src="arrow-up-right.webp" alt="arrow image" /></button>
         </div>
     </div>
 </div>
