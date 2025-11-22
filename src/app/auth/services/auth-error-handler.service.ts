@@ -32,6 +32,10 @@ constructor(private spinner :NgxSpinnerService) { }
         else if (error.status === 0) {
             message = error?.error?.message ||'Internet Error , check your connection';
         }
+           else if (error.status === 400) {
+            message = error?.error?.message ||'email already exists';
+        }
+
         else {
             message = 'Unexpected Error occured';
         }

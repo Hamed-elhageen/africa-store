@@ -1,16 +1,16 @@
-<div class="container grid grid-cols-1 gap-5 mt-10 md:grid-cols-2">
+<div *ngIf="choosenProduct" class="container grid grid-cols-1 gap-5 mt-10 md:grid-cols-2">
     <div class="images">
         <img [src]="currentImage" alt="arsenal shirt" class="mb-5 rounded-[20px] w-full h-[465px]  hidden md:block mainImage">
         <div class="flex flex-wrap gap-3 ">
-            <img [src]="choosenProduct?.thumbnail?.secure_url" (click)="changeMainImage(choosenProduct.thumbnail.secure_url)" alt=" shirt one" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer product-images">
-            <img *ngIf="choosenProduct?.images?.[0]"  [src]="choosenProduct.images[0].secure_url" (click)="changeMainImage(choosenProduct.images[0].secure_url)"  alt="shirt two" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer product-images ">
-            <img *ngIf="choosenProduct?.images?.[1]"  [src]="choosenProduct.images[1]?.secure_url"   (click)="changeMainImage(choosenProduct.images[1].secure_url)" alt=" shirt three" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer  product-images">
+            <img [src]="choosenProduct.thumbnail.secure_url" (click)="changeMainImage(choosenProduct.thumbnail.secure_url)" alt=" shirt one" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer product-images">
+            <img *ngIf="choosenProduct.images[0]"  [src]="choosenProduct.images[0].secure_url" (click)="changeMainImage(choosenProduct.images[0].secure_url)"  alt="shirt two" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer product-images ">
+            <img *ngIf="choosenProduct.images[1]"  [src]="choosenProduct.images[1].secure_url"   (click)="changeMainImage(choosenProduct.images[1].secure_url)" alt=" shirt three" class="w-[160px] md:h-[150px] rounded-[20px] cursor-pointer  product-images">
         </div>
     </div>
 
 
     <div class="text-white content">
-        <h3 class="mb-5 text-white">{{choosenProduct?.name}}</h3>
+        <h3 class="mb-5 text-white">{{choosenProduct.name}}</h3>
         <div class="flex gap-5 mb-4">
         <div class="flex items-center gap-1 stars">
             <i class="text-yellow-400 fa-solid fa-star"></i>
@@ -22,19 +22,19 @@
         <p class="text-[#FFFFFF]">3 reviews</p>
         </div>
         <div class="flex items-center gap-4 mb-7">
-            <h4 class="text-secondary_color">{{choosenProduct?.finalPrice}} LE</h4>
-            @if(choosenProduct?.discount){
-            <del class="text-[#A5A5A5]">{{choosenProduct?.price}} LE </del>
+            <h4 class="text-secondary_color">{{choosenProduct.finalPrice}} LE</h4>
+            @if(choosenProduct.discount){
+            <del class="text-[#A5A5A5]">{{choosenProduct.price}} LE </del>
             }
         </div>
 
 
         <h5 class="mb-5">About :</h5>
-        <p class="mb-10  font-normal leading-[160%]"> {{choosenProduct?.description}}</p>
+        <p class="mb-10  font-normal leading-[160%]"> {{choosenProduct.description}}</p>
 
         <h6 class="mb-4">Available Sizes : </h6>
         <div class="flex flex-wrap gap-5 mb-4 sizes md:flex-nowrap">
-    @for (size of choosenProduct?.sizes; track $index) {
+    @for (size of choosenProduct.sizes; track $index) {
     <div
         (click)="chooseSize(size)"
         class="px-8 py-3 rounded-[10px] cursor-pointer transition duration-300 ease-in-out shadow-[0_0px_10px_3px_#52525240] hover:shadow-[0_0px_10px_3px_#1C6F37]"
@@ -52,14 +52,14 @@
             <button class="border border-[#1C6F37] py-3 mt-4 px-6 rounded-[10px]">
                 <i
                     class="text-2xl text-green-700 cursor-pointer fa-regular fa-heart"
-                    [ngClass]="{ hidden: choosenProduct?.choosed }"
-                    (click)="toggleFavoriteProduct(choosenProduct?._id)"
+                    [ngClass]="{ hidden: choosenProduct.choosed }"
+                    (click)="toggleFavoriteProduct(choosenProduct._id)"
                 ></i>
                 <i
                     class="text-2xl cursor-pointer fa-solid fa-heart"
                     style="color: #1C6F37;"
-                    [ngClass]="{ hidden: !choosenProduct?.choosed}"
-                    (click)="toggleFavoriteProduct(choosenProduct?._id)"
+                    [ngClass]="{ hidden: !choosenProduct.choosed}"
+                    (click)="toggleFavoriteProduct(choosenProduct._id)"
                 ></i>
             </button>
         </div>

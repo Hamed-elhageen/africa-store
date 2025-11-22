@@ -19,10 +19,10 @@ export class RegisterService {
 
     // this is the registeration function which take from me the form data writen by the user as object and post it and also it handles the error
     register(name:string, email:string, password:string, password_confirmation:string):Observable<RegisterResponse>{                                                                                               //the function return obsrevable ( the data will come later, we are waiting for it ) and you will subscribe on it to get the data and the type of data returning i made it any becuase i dont know what will it be
-        return this.httpClient.post<RegisterResponse>(environment.api+"/auth/register" , {name:name,email:email,password:password,password_confirmation:password_confirmation}).pipe(                            //put inside the pipe observables operators to control the observalbels
+        return this.httpClient.post<RegisterResponse>(environment.api+"/auth/register" , {name,email,password,password_confirmation}).pipe(                            //put inside the pipe observables operators to control the observalbels
             catchError(err=>{                                                                                                                                                         // catchError(...)This is an RxJS operator that catches errors from an observable (like a failed HTTP request) and lets you handle them, instead of crashing the app.
                                                                                                                                                                                                   // err => { ... }This is a callback function. It receives the error that was thrown during the observable execution (e.g., if the HTTP request fails).
-                console.log("registeration error :"+err);                                                                                                                  //  this is only for debugging and you can delete it
+                console.log("registeration error :"+err.message);                                                                                                                  //  this is only for debugging and you can delete it
                 return throwError(()=>err)
             })
         )

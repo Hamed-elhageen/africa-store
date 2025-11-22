@@ -4,7 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { CartProduct } from '../../../shared/models/cart-response';
+import { CartProduct, CartResponse } from '../../../shared/models/cart-response';
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -37,8 +37,8 @@ export class MaincartComponent implements OnInit {
         this.spinner.show()
         this.cartService.getCartProducts().subscribe({
             next:(result)=>{
-                this.cartProducts!=result.data.products;
-                this.total!=result.data.total;
+                this.cartProducts=result.data.products;
+                this.total =result.data.total;
                 console.log(this.cartProducts)
                 this.theLength=result?.data?.products?.length;
                 this.spinner.hide()

@@ -1,4 +1,4 @@
-<div class="container mt-8 text-white">
+<div *ngIf="favoriteProducts" class="container mt-8 text-white">
     <div class="flex items-center justify-between mb-4 lg:mb-6">
         <h4 class="text-lg lg:text-xl">My favorites</h4>
         <p class="text-sm lg:text-base">({{favoriteProducts.length}}) Items</p>

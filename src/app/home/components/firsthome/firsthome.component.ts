@@ -9,7 +9,7 @@ import { HomeBanner } from '../../../shared/models/product-response';
   styleUrl: './firsthome.component.scss'
 })
 export class FirsthomeComponent implements OnInit {
-    bannerDetails!:HomeBanner;
+    bannerDetails: HomeBanner | null = null;
     imageUrl!:string;
     description!:string;
     title!:string;
@@ -25,12 +25,12 @@ constructor(private productsService:ProductsService ){
     loadBannerDetails(){
         this.productsService.getHomeBanner().subscribe({
             next:(result)=>{
-                this.bannerDetails=result?.data[result?.data?.length-1];
-                this.imageUrl=result?.data[result?.data?.length-1].image.secure_url;
-                this.description=result?.data[result?.data?.length-1].description;
-                this.title=result?.data[result?.data?.length-1].title;
-                this.club=result?.data[result?.data?.length-1].club;
-                this.season=result?.data[result?.data?.length-1].season
+                this.bannerDetails=result.data[result?.data?.length-1];
+                this.imageUrl=result.data[result?.data?.length-1].image.secure_url;
+                this.description=result.data[result?.data?.length-1].description;
+                this.title=result.data[result?.data?.length-1].title;
+                this.club=result.data[result?.data?.length-1].club;
+                this.season=result.data[result?.data?.length-1].season
 
             },
             error:(err)=>{

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -18,7 +18,16 @@ export class OrderService {
             `Bearer ${token}`
         )
     }
-    getAllOrders():Observable<GetAllOrdersResponse>{
+    getAllOrders(queryParams?:{[key:string]:any}):Observable<GetAllOrdersResponse>{
+           let params = new HttpParams();
+                if(queryParams){
+                    Object.keys(queryParams).forEach((key)=>{
+                        if(queryParams[key]!==undefined&&queryParams[key]!==null){
+                            params=params.set(key,queryParams[key])
+                        }
+                    })
+                }
+                params=params.set("[pagination][page]","100")                                                                //iam setting it from here since we havent got pagination in design
         return this.http.get<GetAllOrdersResponse>(`${environment.api}/order`,{headers:this.headers}).pipe(
             catchError((err)=>{
                 console.log("error in getting all orders" + err)

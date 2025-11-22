@@ -25,8 +25,8 @@ export class CartService {
         this.cartCount.next(count)
     }
 
-    getCartProducts():Observable<CartResponse>{
-        return this.http.get<CartResponse>(`${environment.api}/cart`,{headers:this.headers}).pipe(
+    getCartProducts():Observable<any>{
+        return this.http.get<any>(`${environment.api}/cart`,{headers:this.headers}).pipe(
             catchError((err)=>{
                 return throwError(()=>err)
             }),

@@ -15,7 +15,7 @@ import { Category } from '../../../shared/models/categories-response';
   styleUrl: './category-products.component.scss'
 })
 export class CategoryProductsComponent implements OnInit {
-    products:Product[]=[];
+    products:Product[] | null=null;
     categoryId!:string ;
     selectedCategory!:Category;
     favoritesIds:string[]=[]
