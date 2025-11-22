@@ -2,7 +2,6 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { CategoriesService } from '../../../shared/services/categories.service';
 import { ProductsService } from '../../../shared/services/products.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import cluster from 'cluster';
 import { FavoritesService } from '../../../shared/services/favorites.service';
 import { Category } from '../../../shared/models/categories-response';
 import { Product } from '../../../shared/models/product-response';
@@ -183,7 +182,7 @@ this.productsService.getAllProducts({'[pagination][limit]':1000}).subscribe({
             })
         }
         //here do the filteration with category id
-        this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam}).subscribe({
+        this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam ,  '[price][max]':this.maxPrice,'[price][min]':this.minPrice}).subscribe({
             next:(result)=>{
                 this.products=result.data
             },
@@ -217,7 +216,7 @@ this.productsService.getAllProducts({'[pagination][limit]':1000}).subscribe({
         }
 
         //if the user choosed a category.
-        this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam}).subscribe({
+        this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam ,  '[price][max]':this.maxPrice,'[price][min]':this.minPrice}).subscribe({
             next:(result)=>{
                 this.products=result.data
                 this.spinner.hide()
@@ -239,7 +238,7 @@ onMinPriceChange(event:any){
     this.minPrice=event.target.value;
     if(!this.selectedCategory){
             this.spinner.show()
-            this.productsService.getAllProducts({'[pagination][limit]':1000 , club:this.selectedTeam , '[price][min]':this.minPrice  }).subscribe({
+            this.productsService.getAllProducts({'[pagination][limit]':1000 , club:this.selectedTeam , '[price][min]':this.minPrice , '[price][max]':this.maxPrice  }).subscribe({
                 next:(result)=>{
                     this.products=result.data
                     this.spinner.hide()
@@ -304,7 +303,7 @@ onMinPriceChange(event:any){
 
         //if the user choosed a category.
         this.spinner.show()
-        this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam ,  '[price][max]':this.maxPrice}).subscribe({
+        this.productsService.getAllProducts({'[pagination][limit]':1000 ,     category:this.selectedCategory , club:this.selectedTeam ,  '[price][max]':this.maxPrice,'[price][min]':this.minPrice}).subscribe({
             next:(result)=>{
                 setTimeout(()=>{
                     window.scrollTo({
