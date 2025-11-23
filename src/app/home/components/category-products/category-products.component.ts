@@ -30,9 +30,9 @@ export class CategoryProductsComponent implements OnInit {
         this.route.paramMap.subscribe((params)=>{
             this.categoryId=params.get('catId') || ''
             this.getAllProducts();
+                    this.getSingleCategories()
         })
 
-        this.getSingleCategories()
         this.getFavorites();
 
 
@@ -52,7 +52,7 @@ export class CategoryProductsComponent implements OnInit {
 
     getAllProducts(){
             this.spinner.show()
-            this.productsService.getAllProducts({category:this.categoryId , k:this.searchWord}).subscribe({
+            this.productsService.getAllProducts({category:this.categoryId , k:this.searchWord,'[pagination][limit]':1000}).subscribe({
                 next:(result)=>{
                     this.products=result?.data?.map((prd:any)=>({
                         ...prd ,
