@@ -18,11 +18,6 @@ import { AuthInterceptor } from './core/auth.interceptor';
   declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule,HttpClientModule ,NgxSpinnerModule,BrowserAnimationsModule],
   providers: [provideClientHydration(),
-    {
-  provide: HTTP_INTERCEPTORS,
-  useClass: AuthInterceptor,
-  multi: true
-}
   ],
   bootstrap: [AppComponent],
 })
