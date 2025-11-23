@@ -22,7 +22,7 @@ export class DashboardErrorHandlerService {
         //handling if there is no conection to the internet
         if(err.status===0){
             Toast.fire({
-                title:"No internet connection. Please check your network.",
+                title:"Weack internet connection. Please check your network.",
                 icon:"error"
             })
             return;
