@@ -12,3 +12,8 @@
 .my-toast-style {
   z-index: 99999 !important; // يخلي التوست فوق أي حاجة
 }
+input:-webkit-autofill {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    color: #000 !important;
+}
