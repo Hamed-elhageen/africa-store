@@ -26,7 +26,7 @@
 
                 <label for="email " class="flex items-center gap-1 mb-3 text-sm font-semibold"><i class="mr-1 text-white fa-solid fa-envelope"></i> Email address <span class="text-[#E03137] text-l">*</span></label>
                 <input formControlName="email" type="email" name="email" id="email" required
-                    class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-3 rounded-[10px] transition-all duration-300"
+                    class="w-full focus:bg-transparent bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-3 rounded-[10px] transition-all duration-300"
                     placeholder="Input your registered email"
                     [ngClass]="{'border-red-700': email!.touched && email!.invalid}">
 
@@ -44,7 +44,7 @@
                 <label for="password" class="flex items-center gap-1 mt-5 mb-3 text-sm font-semibold"><i class="mr-1 text-white fa-solid fa-key"></i> Password <span class="text-[#E03137] text-l">*</span></label>
                 <div class="relative flex justify-between">
                     <input formControlName="password" [type]="passwordVisibility ? 'text' : 'password' " name="password"  id="password"
-                        class="w-full bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-3 rounded-[10px]"
+                        class="w-full focus:bg-transparent bg-transparent border border-[#E9EAEC] placeholder:text-[#A5A5A5] px-5 py-4 mb-3 rounded-[10px]"
                         placeholder="Input your password account"
                         [ngClass]="{'border-red-700': password!.touched && password!.invalid}"
                         required >
