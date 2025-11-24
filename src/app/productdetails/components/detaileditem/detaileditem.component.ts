@@ -88,7 +88,14 @@ constructor(
             },
             error: (err) => {
                 this.spinner.hide();
-                this.handleError(err)
+                 if(err.status===401){
+                    Toast.fire({
+                    title:`you must login to use this feature`,
+                    icon:"error"
+                })
+                }
+                else
+                    this.handleError(err)
             }
         });
     }
@@ -105,7 +112,14 @@ constructor(
                 });
             },
             error: (err) => {
-                this.handleError(err)
+                if(err.status===401){
+                    Toast.fire({
+                    title:`you must login to use this feature`,
+                    icon:"error"
+                })
+                }
+                else
+                    this.handleError(err)
             }
         });
     }

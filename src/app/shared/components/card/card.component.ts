@@ -42,11 +42,23 @@ export class CardComponent {
                 })
             },
             error:(err)=>{
-                Toast.fire({
-                    title:"Failed !!!",
+                if(err.status===401){
+                    Toast.fire({
+                    title:`you must login to use this feature`,
                     icon:"error"
                 })
-            }
+                }
+                else if(err.status===0){
+                    Toast.fire({
+                    title:`check your internet connection`,
+                    icon:"error"
+                })
+                }
+                else{Toast.fire({
+                    title:`${err.error.message}`,
+                    icon:"error"
+                })
+            }}
         })
     }
 }
