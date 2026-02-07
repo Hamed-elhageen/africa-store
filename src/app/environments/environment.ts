@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    api: "https://africastorebackend.up.railway.appom"
+    api: "https://africastorebackend.up.railway.app"
 };
